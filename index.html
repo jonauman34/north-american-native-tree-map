@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>North American Tree Map</title>
+  <title>North American Native Tree Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
@@ -10,43 +10,189 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; font-family: Arial, sans-serif; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+    /* Sidebar - left side */
     #sidebar {
-      position: absolute; top: 10px; right: 10px; background: white;
-      border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      z-index: 1; width: 260px; max-height: calc(100vh - 20px);
-      display: flex; flex-direction: column;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      z-index: 1;
+      width: 280px;
+      max-height: calc(100vh - 20px);
+      display: flex;
+      flex-direction: column;
     }
-    #sidebar-header { padding: 12px 14px 8px; border-bottom: 1px solid #eee; flex-shrink: 0; }
-    #sidebar-header h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #555; margin-bottom: 8px; }
-    #search-box { width: 100%; padding: 6px 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 13px; outline: none; }
-    #search-box:focus { border-color: #aaa; }
-    #species-count { font-size: 11px; color: #999; margin-top: 5px; }
-    #legend { overflow-y: auto; flex: 1; padding: 6px 0; }
-    .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 14px; cursor: pointer; }
-    .legend-item:hover { background: #f5f5f5; }
-    .legend-item input[type="checkbox"] { cursor: pointer; width: 13px; height: 13px; flex-shrink: 0; }
-    .legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
-    .legend-label { font-size: 12px; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .legend-label.disabled { color: #bbb; text-decoration: line-through; }
+
+    #sidebar-header {
+      padding: 12px 14px 8px;
+      border-bottom: 1px solid #eee;
+      flex-shrink: 0;
+    }
+
+    #sidebar-header h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    #search-box {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 13px;
+      outline: none;
+      background: #f9f9f9;
+    }
+
+    #search-box:focus { border-color: #aaa; background: white; }
+
+    #sidebar-controls {
+      display: flex;
+      gap: 6px;
+      margin-top: 7px;
+    }
+
+    .control-btn {
+      flex: 1;
+      padding: 5px 8px;
+      font-size: 11px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #f5f5f5;
+      cursor: pointer;
+      color: #555;
+      text-align: center;
+    }
+
+    .control-btn:hover { background: #e8e8e8; }
+
+    #species-count {
+      font-size: 11px;
+      color: #999;
+      margin-top: 5px;
+    }
+
+    /* Dropdown list */
+    #legend {
+      overflow-y: auto;
+      flex: 1;
+      padding: 4px 0;
+      display: none; /* hidden until search or expand */
+    }
+
+    #legend.visible { display: block; }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .legend-item:hover { background: #f0f0f0; }
     .legend-item.hidden-item { display: none; }
-    .popup-content { font-family: Arial, sans-serif; font-size: 13px; color: #333; padding: 6px 8px; max-width: 220px; }
-    .popup-content h4 { margin: 0 0 6px 0; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
-    .popup-species { display: flex; align-items: flex-start; gap: 8px; margin: 4px 0; }
-    .popup-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; margin-top: 2px; }
-    .popup-name { font-weight: bold; font-size: 13px; }
-    .popup-latin { font-style: italic; font-size: 11px; color: #777; }
+
+    .legend-item input[type="checkbox"] {
+      cursor: pointer;
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .legend-label {
+      font-size: 12px;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .legend-label.disabled { color: #bbb; text-decoration: line-through; }
+
+    .zoom-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0 2px;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+
+    .zoom-btn:hover { color: #333; }
+
+    /* Popup */
+    .mapboxgl-popup-content {
+      background: rgba(20, 20, 20, 0.75) !important;
+      backdrop-filter: blur(6px);
+      border-radius: 8px !important;
+      padding: 10px 12px !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+      color: white;
+    }
+
+    .mapboxgl-popup-tip { display: none !important; }
+
+    .popup-content h4 {
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 6px;
+    }
+
+    .popup-species {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 5px 0;
+    }
+
+    .popup-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .popup-name { font-weight: bold; font-size: 13px; color: white; }
+    .popup-latin { font-style: italic; font-size: 11px; color: rgba(255,255,255,0.65); }
   </style>
 </head>
 <body>
 <div id="map"></div>
+
 <div id="sidebar">
   <div id="sidebar-header">
-    <h3>Tree Species</h3>
-    <input type="text" id="search-box" placeholder="Search species...">
+    <h3>Native Tree Species</h3>
+    <input type="text" id="search-box" placeholder="Search species..." autocomplete="off">
+    <div id="sidebar-controls">
+      <div class="control-btn" id="select-all-btn">Select All</div>
+      <div class="control-btn" id="deselect-all-btn">Deselect All</div>
+      <div class="control-btn" id="toggle-list-btn">Show List ▾</div>
+    </div>
     <div id="species-count"></div>
   </div>
   <div id="legend"></div>
 </div>
+
 <script>
 const species = [
   { id: 'abieamab', name: 'Pacific silver fir', latin: 'Abies amabilis', file: 'abieamab.geojson', color: '#bd2828' },
@@ -730,47 +876,50 @@ const species = [
   { id: 'zanthirs', name: 'Texas Hercules club', latin: 'Zanthoxylum hirsutum', file: 'zanthirs.geojson', color: '#d64159' },
 ];
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXVtYW4iLCJhIjoiY21zbDFpam9zMDRidjJ5cHZiazk2eHFtZSJ9.bML0bt0b6r2UXDdw7MxccA';
+mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
 
 const map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mapbox/light-v11',
+  style: 'mapbox://styles/mapbox/outdoors-v12',
   center: [-96, 50],
   zoom: 3
 });
 
+// Add navigation controls
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
 const legend = document.getElementById('legend');
 const countEl = document.getElementById('species-count');
+const searchBox = document.getElementById('search-box');
+const toggleListBtn = document.getElementById('toggle-list-btn');
+let listVisible = false;
+let mapLoaded = false;
+
+// Track highlighted species
+let highlightedId = null;
 
 function updateCount() {
-  const visible = document.querySelectorAll('.legend-item:not(.hidden-item)').length;
-  countEl.textContent = visible + ' of ' + species.length + ' species shown';
+  const total = document.querySelectorAll('.legend-item').length;
+  const hidden = document.querySelectorAll('.legend-item.hidden-item').length;
+  const showing = total - hidden;
+  countEl.textContent = showing + ' of ' + species.length + ' species';
 }
 
-species.forEach(s => {
-  const item = document.createElement('div');
-  item.className = 'legend-item';
-  item.dataset.name = s.name.toLowerCase();
-  item.dataset.latin = s.latin.toLowerCase();
-  item.innerHTML = `
-    <input type="checkbox" id="toggle-${s.id}" checked>
-    <div class="legend-swatch" style="background:${s.color}"></div>
-    <label class="legend-label" for="toggle-${s.id}" title="${s.name} (${s.latin})">${s.name}</label>
-  `;
-  legend.appendChild(item);
-
-  item.querySelector('input').addEventListener('change', (e) => {
-    if (map.getLayer(s.id)) {
-      map.setLayoutProperty(s.id, 'visibility', e.target.checked ? 'visible' : 'none');
-    }
-    item.querySelector('.legend-label').classList.toggle('disabled', !e.target.checked);
-  });
+// Toggle list visibility
+toggleListBtn.addEventListener('click', () => {
+  listVisible = !listVisible;
+  legend.classList.toggle('visible', listVisible);
+  toggleListBtn.textContent = listVisible ? 'Hide List ▴' : 'Show List ▾';
 });
 
-updateCount();
-
-document.getElementById('search-box').addEventListener('input', (e) => {
+// Show list automatically when searching
+searchBox.addEventListener('input', (e) => {
   const query = e.target.value.toLowerCase().trim();
+  if (query && !listVisible) {
+    listVisible = true;
+    legend.classList.add('visible');
+    toggleListBtn.textContent = 'Hide List ▴';
+  }
   document.querySelectorAll('.legend-item').forEach(item => {
     const match = !query || item.dataset.name.includes(query) || item.dataset.latin.includes(query);
     item.classList.toggle('hidden-item', !match);
@@ -778,22 +927,178 @@ document.getElementById('search-box').addEventListener('input', (e) => {
   updateCount();
 });
 
-const popup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+// Select all / deselect all
+document.getElementById('select-all-btn').addEventListener('click', () => {
+  document.querySelectorAll('.legend-item input').forEach(cb => {
+    cb.checked = true;
+    const id = cb.id.replace('toggle-', '');
+    if (mapLoaded && map.getLayer(id)) {
+      map.setLayoutProperty(id, 'visibility', 'visible');
+    }
+    cb.closest('.legend-item').querySelector('.legend-label').classList.remove('disabled');
+  });
+});
+
+document.getElementById('deselect-all-btn').addEventListener('click', () => {
+  document.querySelectorAll('.legend-item input').forEach(cb => {
+    cb.checked = false;
+    const id = cb.id.replace('toggle-', '');
+    if (mapLoaded && map.getLayer(id)) {
+      map.setLayoutProperty(id, 'visibility', 'none');
+    }
+    cb.closest('.legend-item').querySelector('.legend-label').classList.add('disabled');
+  });
+});
+
+// Build legend items
+species.forEach(s => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.dataset.name = s.name.toLowerCase();
+  item.dataset.latin = s.latin.toLowerCase();
+  item.dataset.id = s.id;
+  item.innerHTML = `
+    <input type="checkbox" id="toggle-${s.id}" checked>
+    <div class="legend-swatch" style="background:${s.color}"></div>
+    <label class="legend-label" for="toggle-${s.id}" title="${s.name} (${s.latin})">${s.name}</label>
+    <button class="zoom-btn" title="Zoom to ${s.name}" data-id="${s.id}">⌖</button>
+  `;
+  legend.appendChild(item);
+
+  // Toggle visibility
+  item.querySelector('input').addEventListener('change', (e) => {
+    if (mapLoaded && map.getLayer(s.id)) {
+      map.setLayoutProperty(s.id, 'visibility', e.target.checked ? 'visible' : 'none');
+    }
+    item.querySelector('.legend-label').classList.toggle('disabled', !e.target.checked);
+  });
+
+  // Zoom to species range
+  item.querySelector('.zoom-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    zoomToSpecies(s.id);
+  });
+});
+
+updateCount();
+
+// Zoom to species and highlight it
+function zoomToSpecies(id) {
+  const source = map.getSource(id);
+  if (!source) return;
+
+  const data = source._data;
+  if (!data || !data.features || data.features.length === 0) return;
+
+  // Calculate bounding box
+  let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity;
+
+  data.features.forEach(f => {
+    const coords = f.geometry.type === 'Polygon'
+      ? f.geometry.coordinates[0]
+      : f.geometry.coordinates.flat(2);
+    coords.forEach(([lng, lat]) => {
+      if (lng < minLng) minLng = lng;
+      if (lat < minLat) minLat = lat;
+      if (lng > maxLng) maxLng = lng;
+      if (lat > maxLat) maxLat = lat;
+    });
+  });
+
+  map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 60, duration: 1000 });
+
+  // Highlight this species
+  highlightSpecies(id);
+}
+
+function highlightSpecies(id) {
+  // Reset previous highlight
+  if (highlightedId && map.getLayer(highlightedId + '-highlight')) {
+    map.removeLayer(highlightedId + '-highlight');
+  }
+
+  highlightedId = id;
+
+  // Add highlight layer on top
+  if (!map.getLayer(id + '-highlight')) {
+    map.addLayer({
+      id: id + '-highlight',
+      type: 'fill',
+      source: id,
+      paint: {
+        'fill-color': '#ffffff',
+        'fill-opacity': 0.35
+      }
+    });
+  }
+
+  // Remove highlight after 3 seconds
+  setTimeout(() => {
+    if (map.getLayer(id + '-highlight')) {
+      map.removeLayer(id + '-highlight');
+    }
+    highlightedId = null;
+  }, 3000);
+}
+
+// Shared hover popup
+const popup = new mapboxgl.Popup({
+  closeButton: false,
+  closeOnClick: false,
+  offset: 12
+});
 
 map.on('load', () => {
+  mapLoaded = true;
+
   species.forEach(s => {
-    map.addSource(s.id, { type: 'geojson', data: s.file });
+    map.addSource(s.id, {
+      type: 'geojson',
+      data: s.file
+    });
+
+    // Base layer - low opacity
     map.addLayer({
-      id: s.id, type: 'fill', source: s.id,
-      paint: { 'fill-color': s.color, 'fill-opacity': 0.5 }
+      id: s.id,
+      type: 'fill',
+      source: s.id,
+      paint: {
+        'fill-color': s.color,
+        'fill-opacity': 0.2
+      }
+    });
+
+    // Hover layer - higher opacity, initially hidden
+    map.addLayer({
+      id: s.id + '-hover',
+      type: 'fill',
+      source: s.id,
+      paint: {
+        'fill-color': s.color,
+        'fill-opacity': 0.65
+      },
+      filter: ['==', '$type', 'Polygon'],
+      layout: { visibility: 'none' }
     });
   });
 
   const layerIDs = species.map(s => s.id);
+  let currentHoveredLayers = [];
 
   map.on('mousemove', (e) => {
-    const visibleLayers = layerIDs.filter(id => map.getLayoutProperty(id, 'visibility') !== 'none');
+    const visibleLayers = layerIDs.filter(id =>
+      map.getLayoutProperty(id, 'visibility') !== 'none'
+    );
+
     const features = map.queryRenderedFeatures(e.point, { layers: visibleLayers });
+
+    // Reset previously hovered layers
+    currentHoveredLayers.forEach(id => {
+      if (map.getLayer(id + '-hover')) {
+        map.setLayoutProperty(id + '-hover', 'visibility', 'none');
+      }
+    });
+    currentHoveredLayers = [];
 
     if (features.length === 0) {
       popup.remove();
@@ -804,6 +1109,15 @@ map.on('load', () => {
     const presentIDs = [...new Set(features.map(f => f.layer.id))];
     const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
 
+    // Show hover layers
+    presentIDs.forEach(id => {
+      if (map.getLayer(id + '-hover')) {
+        map.setLayoutProperty(id + '-hover', 'visibility', 'visible');
+        currentHoveredLayers.push(id);
+      }
+    });
+
+    // Build popup
     const rows = presentSpecies.map(s => `
       <div class="popup-species">
         <div class="popup-swatch" style="background:${s.color}"></div>
@@ -816,10 +1130,20 @@ map.on('load', () => {
     popup.setLngLat(e.lngLat)
       .setHTML(`<div class="popup-content"><h4>Species at this location</h4>${rows}</div>`)
       .addTo(map);
+
     map.getCanvas().style.cursor = 'pointer';
   });
 
-  map.on('mouseleave', () => { popup.remove(); map.getCanvas().style.cursor = ''; });
+  map.on('mouseleave', () => {
+    currentHoveredLayers.forEach(id => {
+      if (map.getLayer(id + '-hover')) {
+        map.setLayoutProperty(id + '-hover', 'visibility', 'none');
+      }
+    });
+    currentHoveredLayers = [];
+    popup.remove();
+    map.getCanvas().style.cursor = '';
+  });
 });
 </script>
 </body>
