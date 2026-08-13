@@ -11,174 +11,43 @@
     html, body { width: 100%; height: 100%; font-family: Arial, sans-serif; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 
-    /* Sidebar - left side */
     #sidebar {
-      position: absolute;
-      top: 10px;
-      left: 10px;
+      position: absolute; top: 10px; left: 10px;
       background: rgba(255,255,255,0.95);
-      border-radius: 8px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      z-index: 1;
-      width: 280px;
-      max-height: calc(100vh - 20px);
-      display: flex;
-      flex-direction: column;
+      border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      z-index: 1; width: 280px; max-height: calc(100vh - 20px);
+      display: flex; flex-direction: column;
     }
-
-    #sidebar-header {
-      padding: 12px 14px 8px;
-      border-bottom: 1px solid #eee;
-      flex-shrink: 0;
-    }
-
-    #sidebar-header h3 {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #555;
-      margin-bottom: 8px;
-    }
-
-    #search-box {
-      width: 100%;
-      padding: 7px 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 13px;
-      outline: none;
-      background: #f9f9f9;
-    }
-
+    #sidebar-header { padding: 12px 14px 8px; border-bottom: 1px solid #eee; flex-shrink: 0; }
+    #sidebar-header h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #555; margin-bottom: 8px; }
+    #search-box { width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 13px; outline: none; background: #f9f9f9; }
     #search-box:focus { border-color: #aaa; background: white; }
-
-    #sidebar-controls {
-      display: flex;
-      gap: 6px;
-      margin-top: 7px;
-    }
-
-    .control-btn {
-      flex: 1;
-      padding: 5px 8px;
-      font-size: 11px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background: #f5f5f5;
-      cursor: pointer;
-      color: #555;
-      text-align: center;
-    }
-
+    #sidebar-controls { display: flex; gap: 6px; margin-top: 7px; }
+    .control-btn { flex: 1; padding: 5px 8px; font-size: 11px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer; color: #555; text-align: center; }
     .control-btn:hover { background: #e8e8e8; }
-
-    #species-count {
-      font-size: 11px;
-      color: #999;
-      margin-top: 5px;
-    }
-
-    /* Dropdown list */
-    #legend {
-      overflow-y: auto;
-      flex: 1;
-      padding: 4px 0;
-      display: none; /* hidden until search or expand */
-    }
-
+    #species-count { font-size: 11px; color: #999; margin-top: 5px; }
+    #legend { overflow-y: auto; flex: 1; padding: 4px 0; display: none; }
     #legend.visible { display: block; }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 14px;
-      cursor: pointer;
-      transition: background 0.1s;
-    }
-
+    .legend-item { display: flex; align-items: center; gap: 8px; padding: 5px 14px; cursor: pointer; transition: background 0.1s; }
     .legend-item:hover { background: #f0f0f0; }
     .legend-item.hidden-item { display: none; }
-
-    .legend-item input[type="checkbox"] {
-      cursor: pointer;
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
-    }
-
-    .legend-swatch {
-      width: 12px;
-      height: 12px;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    .legend-label {
-      font-size: 12px;
-      color: #333;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 1;
-    }
-
+    .legend-item input[type="checkbox"] { cursor: pointer; width: 13px; height: 13px; flex-shrink: 0; }
+    .legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+    .legend-label { font-size: 12px; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
     .legend-label.disabled { color: #bbb; text-decoration: line-through; }
-
-    .zoom-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      padding: 0 2px;
-      color: #aaa;
-      flex-shrink: 0;
-    }
-
+    .zoom-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 0 2px; color: #aaa; flex-shrink: 0; }
     .zoom-btn:hover { color: #333; }
-
-    /* Popup */
-    .mapboxgl-popup-content {
-      background: rgba(20, 20, 20, 0.75) !important;
-      backdrop-filter: blur(6px);
-      border-radius: 8px !important;
-      padding: 10px 12px !important;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
-      color: white;
-    }
-
+    .mapboxgl-popup-content { background: rgba(20,20,20,0.75) !important; backdrop-filter: blur(6px); border-radius: 8px !important; padding: 10px 12px !important; box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important; color: white; }
     .mapboxgl-popup-tip { display: none !important; }
-
-    .popup-content h4 {
-      font-size: 10px;
-      color: rgba(255,255,255,0.6);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin-bottom: 6px;
-    }
-
-    .popup-species {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      margin: 5px 0;
-    }
-
-    .popup-swatch {
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
+    .popup-content h4 { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+    .popup-species { display: flex; align-items: flex-start; gap: 8px; margin: 5px 0; }
+    .popup-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; margin-top: 3px; }
     .popup-name { font-weight: bold; font-size: 13px; color: white; }
     .popup-latin { font-style: italic; font-size: 11px; color: rgba(255,255,255,0.65); }
   </style>
 </head>
 <body>
 <div id="map"></div>
-
 <div id="sidebar">
   <div id="sidebar-header">
     <h3>Native Tree Species</h3>
@@ -192,727 +61,907 @@
   </div>
   <div id="legend"></div>
 </div>
-
 <script>
 const species = [
-  { id: 'abieamab', name: 'Pacific silver fir', latin: 'Abies amabilis', file: 'abieamab.geojson', color: '#bd2828' },
-  { id: 'abiebals', name: 'balsam fir', latin: 'Abies balsamea', file: 'abiebals.geojson', color: '#1fdf57' },
-  { id: 'abiebrac', name: 'bristlecone fir', latin: 'Abies bracteata', file: 'abiebrac.geojson', color: '#9c2aed' },
-  { id: 'abieconc', name: 'white fir', latin: 'Abies concolor', file: 'abieconc.geojson', color: '#dbca56' },
-  { id: 'abiefras', name: 'Fraser fir', latin: 'Abies fraseri', file: 'abiefras.geojson', color: '#1cacc8' },
-  { id: 'abiegran', name: 'grand fir', latin: 'Abies grandis', file: 'abiegran.geojson', color: '#eb1388' },
-  { id: 'abielasi', name: 'subalpine fir', latin: 'Abies lasiocarpa', file: 'abielasi.geojson', color: '#66d641' },
-  { id: 'abiemagn', name: 'California red fir', latin: 'Abies magnifica', file: 'abiemagn.geojson', color: '#534ce5' },
-  { id: 'abieproc', name: 'noble fir', latin: 'Abies procera', file: 'abieproc.geojson', color: '#d45211' },
-  { id: 'acacberl', name: 'Berlandier acacia', latin: 'Acacia berlandieri', file: 'acacberl.geojson', color: '#2cd294' },
-  { id: 'acacchor', name: 'cinnecord', latin: 'Acacia choriophylla', file: 'acacchor.geojson', color: '#d436e2' },
-  { id: 'acacfarn', name: 'sweet acacia', latin: 'Acacia farnesiana', file: 'acacfarn.geojson', color: '#cbef42' },
-  { id: 'acacgreg', name: 'catclaw acacia', latin: 'Acacia greggii', file: 'acacgreg.geojson', color: '#2872bd' },
-  { id: 'acacmacr', name: 'long spine acacia', latin: 'Acacia macracantha', file: 'acacmacr.geojson', color: '#df1f47' },
-  { id: 'acacrigi', name: 'blackbrush acacia', latin: 'Acacia rigidula', file: 'acacrigi.geojson', color: '#2aed3b' },
-  { id: 'acacroem', name: 'Roemer acacia', latin: 'Acacia roemeriana', file: 'acacroem.geojson', color: '#8856db' },
-  { id: 'acactort', name: 'twisted acacia', latin: 'Acacia tortuosa', file: 'acactort.geojson', color: '#c88f1c' },
-  { id: 'acacwrig', name: 'Wright acacia', latin: 'Acacia wrightii', file: 'acacwrig.geojson', color: '#13ebe3' },
-  { id: 'acerbarb', name: 'Florida maple', latin: 'Acer barbatum', file: 'acerbarb.geojson', color: '#d641b1' },
-  { id: 'acercirc', name: 'vine maple', latin: 'Acer circinatum', file: 'acercirc.geojson', color: '#92e54c' },
-  { id: 'acerglab', name: 'Rocky Mountain maple', latin: 'Acer glabrum', file: 'acerglab.geojson', color: '#1131d4' },
-  { id: 'acergran', name: 'bigtooth maple', latin: 'Acer grandidentatum', file: 'acergran.geojson', color: '#d2412c' },
-  { id: 'acerleuc', name: 'chalk maple', latin: 'Acer leucoderme', file: 'acerleuc.geojson', color: '#36e27e' },
-  { id: 'acermacr', name: 'bigleaf maple', latin: 'Acer macrophyllum', file: 'acermacr.geojson', color: '#bd42ef' },
-  { id: 'acernegu', name: 'boxelder', latin: 'Acer negundo', file: 'acernegu.geojson', color: '#bcbd28' },
-  { id: 'acernigr', name: 'black maple', latin: 'Acer nigrum', file: 'acernigr.geojson', color: '#1fa6df' },
-  { id: 'acerpens', name: 'striped maple', latin: 'Acer pensylvanicum', file: 'acerpens.geojson', color: '#ed2a7b' },
-  { id: 'acerrubr', name: 'red maple', latin: 'Acer rubrum', file: 'acerrubr.geojson', color: '#66db56' },
-  { id: 'acersacc', name: 'silver maple', latin: 'Acer saccharinum', file: 'acersacc.geojson', color: '#3a1cc8' },
-  { id: 'acersacr', name: 'sugar maple', latin: 'Acer saccharum', file: 'acersacr.geojson', color: '#eb7713' },
-  { id: 'acerspic', name: 'mountain maple', latin: 'Acer spicatum', file: 'acerspic.geojson', color: '#41d6b2' },
-  { id: 'acoewrig', name: 'paurotis palm', latin: 'Acoelorrhaphe wrightii', file: 'acoewrig.geojson', color: '#e54cde' },
-  { id: 'aesccali', name: 'California buckeye', latin: 'Aesculus californica', file: 'aesccali.geojson', color: '#92d411' },
-  { id: 'aescglab', name: 'Ohio buckeye', latin: 'Aesculus glabra', file: 'aescglab.geojson', color: '#2c6ad2' },
-  { id: 'aescocta', name: 'yellow buckeye', latin: 'Aesculus octandra', file: 'aescocta.geojson', color: '#e23643' },
-  { id: 'aescparv', name: 'bottlebrush buckeye', latin: 'Aesculus parviflora', file: 'aescparv.geojson', color: '#42ef67' },
-  { id: 'aescpavi', name: 'red buckeye', latin: 'Aesculus pavia', file: 'aescpavi.geojson', color: '#7328bd' },
-  { id: 'aescsylv', name: 'painted buckeye', latin: 'Aesculus sylvatica', file: 'aescsylv.geojson', color: '#dfb81f' },
-  { id: 'agavutah', name: 'Utah agave', latin: 'Agave utahensis', file: 'agavutah.geojson', color: '#2adced' },
-  { id: 'alnumari', name: 'seaside alder', latin: 'Alnus maritima', file: 'alnumari.geojson', color: '#db56a8' },
-  { id: 'alnuoblo', name: 'Arizona alder', latin: 'Alnus oblongifolia', file: 'alnuoblo.geojson', color: '#55c81c' },
-  { id: 'alnurhom', name: 'white alder', latin: 'Alnus rhombifolia', file: 'alnurhom.geojson', color: '#131aeb' },
-  { id: 'alnurubr', name: 'red alder', latin: 'Alnus rubra', file: 'alnurubr.geojson', color: '#d66741' },
-  { id: 'alnurugo', name: 'speckled alder', latin: 'Alnus rugosa', file: 'alnurugo.geojson', color: '#4ce5a0' },
-  { id: 'alnuserr', name: 'hazel alder', latin: 'Alnus serrulata', file: 'alnuserr.geojson', color: '#b411d4' },
-  { id: 'alnusinu', name: 'Sitka alder', latin: 'Alnus sinuata', file: 'alnusinu.geojson', color: '#bcd22c' },
-  { id: 'alnutenu', name: 'thinleaf alder', latin: 'Alnus tenuifolia', file: 'alnutenu.geojson', color: '#3699e2' },
-  { id: 'alvaamor', name: 'Mexican alvaradoa', latin: 'Alvaradoa amorphoides', file: 'alvaamor.geojson', color: '#ef4273' },
-  { id: 'amelalni', name: 'western serviceberry', latin: 'Amelanchier alnifolia', file: 'amelalni.geojson', color: '#28bd29' },
-  { id: 'amelarbo', name: 'downy serviceberry', latin: 'Amelanchier arborea', file: 'amelarbo.geojson', color: '#581fdf' },
-  { id: 'amelinte', name: 'inland serviceberry', latin: 'Amelanchier interior', file: 'amelinte.geojson', color: '#ed9d2a' },
-  { id: 'amelsang', name: 'roundleaf serviceberry', latin: 'Amelanchier sanguinea', file: 'amelsang.geojson', color: '#56dbcb' },
-  { id: 'amelutah', name: 'Utah serviceberry', latin: 'Amelanchier utahensis', file: 'amelutah.geojson', color: '#c81caa' },
-  { id: 'amphlati', name: 'black calabash', latin: 'Amphitecna latifolia', file: 'amphlati.geojson', color: '#86eb13' },
-  { id: 'amyrbals', name: 'balsam torchwood', latin: 'Amyris balsamifera', file: 'amyrbals.geojson', color: '#4165d6' },
-  { id: 'amyrelem', name: 'torchwood', latin: 'Amyris elemifera', file: 'amyrelem.geojson', color: '#e5534c' },
-  { id: 'annoglab', name: 'pond apple', latin: 'Annona glabra', file: 'annoglab.geojson', color: '#11d453' },
-  { id: 'aralspin', name: 'devils walkingstick', latin: 'Aralia spinosa', file: 'aralspin.geojson', color: '#952cd2' },
-  { id: 'arbuariz', name: 'Arizona madrone', latin: 'Arbutus arizonica', file: 'arbuariz.geojson', color: '#e2d536' },
-  { id: 'arbumenz', name: 'Pacific madrone', latin: 'Arbutus menziesii', file: 'arbumenz.geojson', color: '#42caef' },
-  { id: 'arbutexa', name: 'Texas madrone', latin: 'Arbutus texana', file: 'arbutexa.geojson', color: '#bd2871' },
-  { id: 'arctprin', name: 'Pringle manzanita', latin: 'Arctostaphylos pringlei', file: 'arctprin.geojson', color: '#46df1f' },
-  { id: 'ardiesca', name: 'marlberry', latin: 'Ardisia escallonioides', file: 'ardiesca.geojson', color: '#3c2aed' },
-  { id: 'artetrid', name: 'big sagebrush', latin: 'Artemisia tridentata', file: 'artetrid.geojson', color: '#db8956' },
-  { id: 'asimparv', name: 'smallflower pawpaw', latin: 'Asimina parviflora', file: 'asimparv.geojson', color: '#1cc890' },
-  { id: 'asimtril', name: 'pawpaw', latin: 'Asimina triloba', file: 'asimtril.geojson', color: '#e413eb' },
-  { id: 'avicgerm', name: 'black mangrove', latin: 'Avicennia germinans', file: 'avicgerm.geojson', color: '#b0d641' },
-  { id: 'bacchali', name: 'eastern baccharis', latin: 'Baccharis halimifolia', file: 'bacchali.geojson', color: '#4c91e5' },
-  { id: 'betualle', name: 'yellow birch', latin: 'Betula alleghaniensis', file: 'betualle.geojson', color: '#d4112f' },
-  { id: 'betulent', name: 'sweet birch', latin: 'Betula lenta', file: 'betulent.geojson', color: '#2cd242' },
-  { id: 'betunana', name: 'dwarf birch', latin: 'Betula nana', file: 'betunana.geojson', color: '#7f36e2' },
-  { id: 'betunigr', name: 'river birch', latin: 'Betula nigra', file: 'betunigr.geojson', color: '#efbe42' },
-  { id: 'betuocci', name: 'water birch', latin: 'Betula occidentalis', file: 'betuocci.geojson', color: '#28bbbd' },
-  { id: 'betupapy', name: 'paper birch', latin: 'Betula papyrifera', file: 'betupapy.geojson', color: '#df1fa5' },
-  { id: 'betupopu', name: 'gray birch', latin: 'Betula populifolia', file: 'betupopu.geojson', color: '#7aed2a' },
-  { id: 'betuuber', name: 'Ashe birch', latin: 'Betula uber', file: 'betuuber.geojson', color: '#5665db' },
-  { id: 'bourovat', name: 'Bahama strongbark', latin: 'Bourreria ovata', file: 'bourovat.geojson', color: '#c83b1c' },
-  { id: 'bourradu', name: 'rough strongbark', latin: 'Bourreria radula', file: 'bourradu.geojson', color: '#13eb78' },
-  { id: 'bumecela', name: 'saffron plum', latin: 'Bumelia celastrina', file: 'bumecela.geojson', color: '#b341d6' },
-  { id: 'bumelanu', name: 'gum bumelia', latin: 'Bumelia lanuginosa', file: 'bumelanu.geojson', color: '#dde54c' },
-  { id: 'bumelyci', name: 'buckthorn bumelia', latin: 'Bumelia lycioides', file: 'bumelyci.geojson', color: '#1191d4' },
-  { id: 'bumetena', name: 'tough bumelia', latin: 'Bumelia tenax', file: 'bumetena.geojson', color: '#d22c68' },
-  { id: 'bursfaga', name: 'fragrant bursera', latin: 'Bursera fagaroides', file: 'bursfaga.geojson', color: '#42e236' },
-  { id: 'bursmicr', name: 'elephanttree', latin: 'Bursera microphylla', file: 'bursmicr.geojson', color: '#6842ef' },
-  { id: 'burssima', name: 'gumbo limbo', latin: 'Bursera simaruba', file: 'burssima.geojson', color: '#bd7428' },
-  { id: 'byrsluci', name: 'key byrsonima', latin: 'Byrsonima lucida', file: 'byrsluci.geojson', color: '#1fdfb9' },
-  { id: 'caesmexi', name: 'Mexican poinciana', latin: 'Caesalpinia mexicana', file: 'caesmexi.geojson', color: '#ed2adb' },
-  { id: 'calypall', name: 'pale lidflower', latin: 'Calyptranthes pallens', file: 'calypall.geojson', color: '#a8db56' },
-  { id: 'calyzuzy', name: 'myrtle of the river', latin: 'Calyptranthes zuzygium', file: 'calyzuzy.geojson', color: '#1c54c8' },
-  { id: 'canewint', name: 'canella', latin: 'Canella winterana', file: 'canewint.geojson', color: '#eb1319' },
-  { id: 'canoholo', name: 'canotia', latin: 'Canotia holacantha', file: 'canoholo.geojson', color: '#41d668' },
-  { id: 'cappcyno', name: 'Jamaica caper', latin: 'Capparis cynophallophora', file: 'cappcyno.geojson', color: '#a14ce5' },
-  { id: 'cappflex', name: 'limber caper', latin: 'Capparis flexuosa', file: 'cappflex.geojson', color: '#d4b611' },
-  { id: 'carpcaro', name: 'American hornbeam', latin: 'Carpinus caroliniana', file: 'carpcaro.geojson', color: '#2cbbd2' },
-  { id: 'caryaqua', name: 'water hickory', latin: 'Carya aquatica', file: 'caryaqua.geojson', color: '#e23698' },
-  { id: 'carycord', name: 'bitternut hickory', latin: 'Carya cordiformis', file: 'carycord.geojson', color: '#72ef42' },
-  { id: 'caryflor', name: 'scrub hickory', latin: 'Carya floridana', file: 'caryflor.geojson', color: '#2a28bd' },
-  { id: 'caryglab', name: 'pignut hickory', latin: 'Carya glabra', file: 'caryglab.geojson', color: '#df5a1f' },
-  { id: 'caryilli', name: 'pecan', latin: 'Carya illinoensis', file: 'caryilli.geojson', color: '#2aed9f' },
-  { id: 'carylaci', name: 'shellbark hickory', latin: 'Carya laciniosa', file: 'carylaci.geojson', color: '#cc56db' },
-  { id: 'carymyri', name: 'nutmeg hickory', latin: 'Carya myristicaeformis', file: 'carymyri.geojson', color: '#a9c81c' },
-  { id: 'caryovat', name: 'shagbark hickory', latin: 'Carya ovata', file: 'caryovat.geojson', color: '#1385eb' },
-  { id: 'carypall', name: 'sand hickory', latin: 'Carya pallida', file: 'carypall.geojson', color: '#d64164' },
-  { id: 'carytexa', name: 'black hickory', latin: 'Carya texana', file: 'carytexa.geojson', color: '#4ce554' },
-  { id: 'carytome', name: 'mockernut hickory', latin: 'Carya tomentosa', file: 'carytome.geojson', color: '#5411d4' },
-  { id: 'castalni', name: 'Florida chinkapin', latin: 'Castanea alnifolia', file: 'castalni.geojson', color: '#d2962c' },
-  { id: 'castchry', name: 'golden chinkapin', latin: 'Castanopsis chrysophylla', file: 'castchry.geojson', color: '#36e2d6' },
-  { id: 'castdent', name: 'American chestnut', latin: 'Castanea dentata', file: 'castdent.geojson', color: '#ef42c9' },
-  { id: 'castozar', name: 'Ozark chinkapin', latin: 'Castanea ozarkensis', file: 'castozar.geojson', color: '#70bd28' },
-  { id: 'castpumi', name: 'Allegheny chinkapin', latin: 'Castanea pumila', file: 'castpumi.geojson', color: '#1f44df' },
-  { id: 'catabign', name: 'southern catalpa', latin: 'Catalpa bignonioides', file: 'catabign.geojson', color: '#ed3d2a' },
-  { id: 'cataspec', name: 'northern catalpa', latin: 'Catalpa speciosa', file: 'cataspec.geojson', color: '#56db8a' },
-  { id: 'ceanarbo', name: 'feltleaf ceanothus', latin: 'Ceanothus arboreus', file: 'ceanarbo.geojson', color: '#921cc8' },
-  { id: 'ceanspin', name: 'spiny ceanothus', latin: 'Ceanothus spinosus', file: 'ceanspin.geojson', color: '#ebe613' },
-  { id: 'ceanthyr', name: 'blueblossom', latin: 'Ceanothus thyrsiflorus', file: 'ceanthyr.geojson', color: '#41afd6' },
-  { id: 'celtlaev', name: 'sugarberry', latin: 'Celtis laevigata', file: 'celtlaev.geojson', color: '#e54c90' },
-  { id: 'celtlind', name: 'Lindheimer hackberry', latin: 'Celtis lindheimeri', file: 'celtlind.geojson', color: '#2ed411' },
-  { id: 'celtocci', name: 'hackberry', latin: 'Celtis occidentalis', file: 'celtocci.geojson', color: '#432cd2' },
-  { id: 'celtreti', name: 'netleaf hackberry', latin: 'Celtis reticulata', file: 'celtreti.geojson', color: '#e28036' },
-  { id: 'celttenu', name: 'Georgia hackberry', latin: 'Celtis tenuifolia', file: 'celttenu.geojson', color: '#42efbf' },
-  { id: 'cephocci', name: 'common buttonbush', latin: 'Cephalanthus occidentalis', file: 'cephocci.geojson', color: '#bd28ba' },
-  { id: 'cercbetu', name: 'birchleaf cercocarpus', latin: 'Cercocarpus betuloides', file: 'cercbetu.geojson', color: '#a4df1f' },
-  { id: 'cercbrev', name: 'hairy cercocarpus', latin: 'Cercocarpus breviflorus', file: 'cercbrev.geojson', color: '#2a78ed' },
-  { id: 'cerccana', name: 'eastern redbud', latin: 'Cercis canadensis', file: 'cerccana.geojson', color: '#db5665' },
-  { id: 'cercflor', name: 'blue paloverde', latin: 'Cercidium floridum', file: 'cercflor.geojson', color: '#1cc83c' },
-  { id: 'cercledi', name: 'curlleaf cercocarpus', latin: 'Cercocarpus ledifolius', file: 'cercledi.geojson', color: '#7a13eb' },
-  { id: 'cercmacr', name: 'border paloverde', latin: 'Cercidium macrum', file: 'cercmacr.geojson', color: '#d6b441' },
-  { id: 'cercmicr', name: 'yellow paloverde', latin: 'Cercidium microphyllum', file: 'cercmicr.geojson', color: '#4cdce5' },
-  { id: 'cercocci', name: 'California redbud', latin: 'Cercis occidentalis', file: 'cercocci.geojson', color: '#d4118f' },
-  { id: 'cerctras', name: 'Catalina cercocarpus', latin: 'Cercocarpus traskiae', file: 'cerctras.geojson', color: '#67d22c' },
-  { id: 'ceregiga', name: 'saguaro', latin: 'Cereus giganteus', file: 'ceregiga.geojson', color: '#3641e2' },
-  { id: 'cererobi', name: 'key tree cactus', latin: 'Cereus robinii', file: 'cererobi.geojson', color: '#ef6942' },
-  { id: 'chamlaws', name: 'Port Orford cedar', latin: 'Chamaecyparis lawsoniana', file: 'chamlaws.geojson', color: '#28bd75' },
-  { id: 'chamnoot', name: 'Alaska cedar', latin: 'Chamaecyparis nootkatensis', file: 'chamnoot.geojson', color: '#ba1fdf' },
-  { id: 'chamthyo', name: 'Atlantic white cedar', latin: 'Chamaecyparis thyoides', file: 'chamthyo.geojson', color: '#daed2a' },
-  { id: 'chilline', name: 'desert willow', latin: 'Chilopsis linearis', file: 'chilline.geojson', color: '#56a7db' },
-  { id: 'chiovirg', name: 'fringetree', latin: 'Chionanthus virginicus', file: 'chiovirg.geojson', color: '#c81c52' },
-  { id: 'chryicac', name: 'cocoplum', latin: 'Chrysobalanus icaco', file: 'chryicac.geojson', color: '#18eb13' },
-  { id: 'chryoliv', name: 'satinleaf', latin: 'Chrysophyllum oliviforme', file: 'chryoliv.geojson', color: '#6941d6' },
-  { id: 'cithberl', name: 'Berlandier fiddlewood', latin: 'Citharexylum berlandieri', file: 'cithberl.geojson', color: '#e5a24c' },
-  { id: 'cithfrut', name: 'Florida fiddlewood', latin: 'Citharexylum fruticosum', file: 'cithfrut.geojson', color: '#11d4b7' },
-  { id: 'cladkent', name: 'yellowwood', latin: 'Cladrastis kentukea', file: 'cladkent.geojson', color: '#d22cba' },
-  { id: 'cletacum', name: 'cinnamon clethra', latin: 'Clethra acuminata', file: 'cletacum.geojson', color: '#97e236' },
-  { id: 'clifmono', name: 'buckwheat tree', latin: 'Cliftonia monophylla', file: 'clifmono.geojson', color: '#4271ef' },
-  { id: 'clusrose', name: 'Florida clusia', latin: 'Clusia rosea', file: 'clusrose.geojson', color: '#bd2b28' },
-  { id: 'coccarge', name: 'Florida silverpalm', latin: 'Coccothrinax argentata', file: 'coccarge.geojson', color: '#1fdf5b' },
-  { id: 'coccdive', name: 'pigeon plum', latin: 'Coccoloba diversifolia', file: 'coccdive.geojson', color: '#a02aed' },
-  { id: 'coccuvif', name: 'seagrape', latin: 'Coccoloba uvifera', file: 'coccuvif.geojson', color: '#dbcd56' },
-  { id: 'coluarbo', name: 'coffee colubrina', latin: 'Colubrina arborescens', file: 'coluarbo.geojson', color: '#1ca8c8' },
-  { id: 'colucube', name: 'Cuba colubrina', latin: 'Colubrina cubensis', file: 'colucube.geojson', color: '#eb1384' },
-  { id: 'coluelli', name: 'soldierwood', latin: 'Colubrina elliptica', file: 'coluelli.geojson', color: '#63d641' },
-  { id: 'condglob', name: 'bitter condalia', latin: 'Condalia globosa', file: 'condglob.geojson', color: '#554ce5' },
-  { id: 'condhook', name: 'bluewood', latin: 'Condalia hookeri', file: 'condhook.geojson', color: '#d45611' },
-  { id: 'conoerec', name: 'button mangrove', latin: 'Conocarpus erectus', file: 'conoerec.geojson', color: '#2cd297' },
-  { id: 'cordbois', name: 'anacahuita', latin: 'Cordia boissieri', file: 'cordbois.geojson', color: '#d736e2' },
-  { id: 'cordsebe', name: 'Geiger tree', latin: 'Cordia sebestena', file: 'cordsebe.geojson', color: '#c7ef42' },
-  { id: 'cornalte', name: 'alternate leaf dogwood', latin: 'Cornus alternifolia', file: 'cornalte.geojson', color: '#286fbd' },
-  { id: 'corndrum', name: 'roughleaf dogwood', latin: 'Cornus drummondii', file: 'corndrum.geojson', color: '#df1f43' },
-  { id: 'cornflor', name: 'flowering dogwood', latin: 'Cornus florida', file: 'cornflor.geojson', color: '#2aed3f' },
-  { id: 'cornglab', name: 'brown dogwood', latin: 'Cornus glabrata', file: 'cornglab.geojson', color: '#8b56db' },
-  { id: 'cornnutt', name: 'Pacific dogwood', latin: 'Cornus nuttallii', file: 'cornnutt.geojson', color: '#c8931c' },
-  { id: 'cornocci', name: 'western dogwood', latin: 'Cornus occidentalis', file: 'cornocci.geojson', color: '#13ebe7' },
-  { id: 'cornrace', name: 'gray dogwood', latin: 'Cornus racemosa', file: 'cornrace.geojson', color: '#d641ae' },
-  { id: 'cornrugo', name: 'roundleaf dogwood', latin: 'Cornus rugosa', file: 'cornrugo.geojson', color: '#8fe54c' },
-  { id: 'cornsess', name: 'blackfruit dogwood', latin: 'Cornus sessilis', file: 'cornsess.geojson', color: '#112dd4' },
-  { id: 'cornstol', name: 'red osier dogwood', latin: 'Cornus stolonifera', file: 'cornstol.geojson', color: '#d2442c' },
-  { id: 'cornstri', name: 'stiffcornel dogwood', latin: 'Cornus stricta', file: 'cornstri.geojson', color: '#36e281' },
-  { id: 'corycorn', name: 'beaked hazel', latin: 'Corylus cornuta', file: 'corycorn.geojson', color: '#c042ef' },
-  { id: 'cotiobov', name: 'American smoketree', latin: 'Cotinus obovatus', file: 'cotiobov.geojson', color: '#b9bd28' },
-  { id: 'cowamexi', name: 'cliffrose', latin: 'Cowania mexicana', file: 'cowamexi.geojson', color: '#1fa3df' },
-  { id: 'cratchry', name: 'fireberry hawthorn', latin: 'Crataegus chrysocarpa', file: 'cratchry.geojson', color: '#ed2a77' },
-  { id: 'cratcolu', name: 'Columbia hawthorn', latin: 'Crataegus columbiana', file: 'cratcolu.geojson', color: '#64db56' },
-  { id: 'cratdoug', name: 'black hawthorn', latin: 'Crataegus douglasii', file: 'cratdoug.geojson', color: '#3d1cc8' },
-  { id: 'crateryt', name: 'Cerro hawthorn', latin: 'Crataegus erythropoda', file: 'crateryt.geojson', color: '#eb7b13' },
-  { id: 'cratsali', name: 'willow hawthorn', latin: 'Crataegus saligna', file: 'cratsali.geojson', color: '#41d6b5' },
-  { id: 'cratsucc', name: 'fleshy hawthorn', latin: 'Crataegus succulenta', file: 'cratsucc.geojson', color: '#e54cdb' },
-  { id: 'crattrac', name: 'Tracy hawthorn', latin: 'Crataegus tracyi', file: 'crattrac.geojson', color: '#8ed411' },
-  { id: 'crosrhac', name: 'Florida crossopetalum', latin: 'Crossopetalum rhacoma', file: 'crosrhac.geojson', color: '#2c66d2' },
-  { id: 'cupaglab', name: 'Florida cupania', latin: 'Cupania glabra', file: 'cupaglab.geojson', color: '#e23640' },
-  { id: 'cuprariz', name: 'Arizona cypress', latin: 'Cupressus arizonica', file: 'cuprariz.geojson', color: '#42ef6a' },
-  { id: 'cuprbake', name: 'Modoc cypress', latin: 'Cupressus bakeri', file: 'cuprbake.geojson', color: '#7628bd' },
-  { id: 'cuprgove', name: 'Gowen cypress', latin: 'Cupressus goveniana', file: 'cuprgove.geojson', color: '#dfbb1f' },
-  { id: 'cuprguad', name: 'Tecate cypress', latin: 'Cupressus guadalupensis', file: 'cuprguad.geojson', color: '#2ad8ed' },
-  { id: 'cuprmacn', name: 'MacNab cypress', latin: 'Cupressus macnabiana', file: 'cuprmacn.geojson', color: '#db56a6' },
-  { id: 'cuprmacr', name: 'Monterey cypress', latin: 'Cupressus macrocarpa', file: 'cuprmacr.geojson', color: '#51c81c' },
-  { id: 'cuprsarg', name: 'Sargent cypress', latin: 'Cupressus sargentii', file: 'cuprsarg.geojson', color: '#1316eb' },
-  { id: 'cyrirace', name: 'swamp cyrilla', latin: 'Cyrilla racemiflora', file: 'cyrirace.geojson', color: '#d66a41' },
-  { id: 'dalespin', name: 'smokethorn', latin: 'Dalea spinosa', file: 'dalespin.geojson', color: '#4ce5a3' },
-  { id: 'diostexa', name: 'Texas persimmon', latin: 'Diospyros texana', file: 'diostexa.geojson', color: '#b811d4' },
-  { id: 'diosvirg', name: 'common persimmon', latin: 'Diospyros virginiana', file: 'diosvirg.geojson', color: '#b9d22c' },
-  { id: 'diphsali', name: 'willow bustic', latin: 'Dipholis salicifolia', file: 'diphsali.geojson', color: '#3696e2' },
-  { id: 'dodovisc', name: 'hopbush', latin: 'Dodonaea viscosa', file: 'dodovisc.geojson', color: '#ef4270' },
-  { id: 'drypdive', name: 'milkbark', latin: 'Drypetes diversifolia', file: 'drypdive.geojson', color: '#28bd2b' },
-  { id: 'dryplate', name: 'Guiana plum', latin: 'Drypetes lateriflora', file: 'dryplate.geojson', color: '#5c1fdf' },
-  { id: 'ehreanac', name: 'anaqua', latin: 'Ehretia anacua', file: 'ehreanac.geojson', color: '#eda12a' },
-  { id: 'ellirace', name: 'elliottia', latin: 'Elliottia racemosa', file: 'ellirace.geojson', color: '#56dbce' },
-  { id: 'erytflab', name: 'southwestern coralbean', latin: 'Erythrina flabelliformis', file: 'erytflab.geojson', color: '#c81ca7' },
-  { id: 'erytherb', name: 'eastern coralbean', latin: 'Erythrina herbacea', file: 'erytherb.geojson', color: '#82eb13' },
-  { id: 'esenberl', name: 'Berlandier esenbeckia', latin: 'Esenbeckia berlandieri', file: 'esenberl.geojson', color: '#4163d6' },
-  { id: 'eugeaxil', name: 'white stopper', latin: 'Eugenia axillaris', file: 'eugeaxil.geojson', color: '#e5564c' },
-  { id: 'eugeconf', name: 'redberry stopper', latin: 'Eugenia confusa', file: 'eugeconf.geojson', color: '#11d457' },
-  { id: 'eugefoet', name: 'boxleaf stopper', latin: 'Eugenia foetida', file: 'eugefoet.geojson', color: '#982cd2' },
-  { id: 'eugerhom', name: 'red stopper', latin: 'Eugenia rhombea', file: 'eugerhom.geojson', color: '#e2d836' },
-  { id: 'euonatro', name: 'eastern wahoo', latin: 'Euonymus atropurpureus', file: 'euonatro.geojson', color: '#42c6ef' },
-  { id: 'euonocci', name: 'western wahoo', latin: 'Euonymus occidentalis', file: 'euonocci.geojson', color: '#bd286e' },
-  { id: 'exoscari', name: 'princewood', latin: 'Exostema caribaeum', file: 'exoscari.geojson', color: '#42df1f' },
-  { id: 'exotpani', name: 'inkwood', latin: 'Exothea paniculata', file: 'exotpani.geojson', color: '#402aed' },
-  { id: 'eysepoly', name: 'kidneywood', latin: 'Eysenhardtia polystachya', file: 'eysepoly.geojson', color: '#db8c56' },
-  { id: 'eysetexa', name: 'Texas kidneywood', latin: 'Eysenhardtia texana', file: 'eysetexa.geojson', color: '#1cc894' },
-  { id: 'fagugran', name: 'American beech', latin: 'Fagus grandifolia', file: 'fagugran.geojson', color: '#e813eb' },
-  { id: 'ficuaure', name: 'Florida strangler fig', latin: 'Ficus aurea', file: 'ficuaure.geojson', color: '#add641' },
-  { id: 'ficucitr', name: 'shortleaf fig', latin: 'Ficus citrifolia', file: 'ficucitr.geojson', color: '#4c8ee5' },
-  { id: 'foreacum', name: 'swamp privet', latin: 'Forestiera acuminata', file: 'foreacum.geojson', color: '#d4112c' },
-  { id: 'foreangu', name: 'Texas forestiera', latin: 'Forestiera angustifolia', file: 'foreangu.geojson', color: '#2cd246' },
-  { id: 'forephil', name: 'desert olive forestiera', latin: 'Forestiera phillyreoides', file: 'forephil.geojson', color: '#8236e2' },
-  { id: 'foresegr', name: 'Florida privet', latin: 'Forestiera segregata', file: 'foresegr.geojson', color: '#efc242' },
-  { id: 'franalat', name: 'franklinia', latin: 'Franklinia alatamaha', file: 'franalat.geojson', color: '#28b9bd' },
-  { id: 'fraxamer', name: 'white ash', latin: 'Fraxinus americana', file: 'fraxamer.geojson', color: '#df1fa1' },
-  { id: 'fraxanom', name: 'singleleaf ash', latin: 'Fraxinus anomala', file: 'fraxanom.geojson', color: '#76ed2a' },
-  { id: 'fraxberl', name: 'Berlandier ash', latin: 'Fraxinus berlandieriana', file: 'fraxberl.geojson', color: '#5663db' },
-  { id: 'fraxcaro', name: 'Carolina ash', latin: 'Fraxinus caroliniana', file: 'fraxcaro.geojson', color: '#c83e1c' },
-  { id: 'fraxcusp', name: 'fragrant ash', latin: 'Fraxinus cuspidata', file: 'fraxcusp.geojson', color: '#13eb7c' },
-  { id: 'fraxdipe', name: 'two petal ash', latin: 'Fraxinus dipetala', file: 'fraxdipe.geojson', color: '#b541d6' },
-  { id: 'fraxgood', name: 'Goodding ash', latin: 'Fraxinus gooddingii', file: 'fraxgood.geojson', color: '#dae54c' },
-  { id: 'fraxgreg', name: 'Gregg ash', latin: 'Fraxinus greggii', file: 'fraxgreg.geojson', color: '#118dd4' },
-  { id: 'fraxlati', name: 'Oregon ash', latin: 'Fraxinus latifolia', file: 'fraxlati.geojson', color: '#d22c65' },
-  { id: 'fraxnigr', name: 'black ash', latin: 'Fraxinus nigra', file: 'fraxnigr.geojson', color: '#3fe236' },
-  { id: 'fraxpapi', name: 'Chihuahua ash', latin: 'Fraxinus papillosa', file: 'fraxpapi.geojson', color: '#6b42ef' },
-  { id: 'fraxpenn', name: 'green ash', latin: 'Fraxinus pennsylvanica', file: 'fraxpenn.geojson', color: '#bd7728' },
-  { id: 'fraxprof', name: 'pumpkin ash', latin: 'Fraxinus profunda', file: 'fraxprof.geojson', color: '#1fdfbd' },
-  { id: 'fraxquad', name: 'blue ash', latin: 'Fraxinus quadrangulata', file: 'fraxquad.geojson', color: '#ed2ad7' },
-  { id: 'fraxtexe', name: 'Texas ash', latin: 'Fraxinus texensis', file: 'fraxtexe.geojson', color: '#a5db56' },
-  { id: 'fraxvelu', name: 'velvet ash', latin: 'Fraxinus velutina', file: 'fraxvelu.geojson', color: '#1c50c8' },
-  { id: 'fremcali', name: 'California fremontia', latin: 'Fremontodendron californicum', file: 'fremcali.geojson', color: '#eb1315' },
-  { id: 'fremmexi', name: 'Mexican fremontia', latin: 'Fremontodendron mexicanum', file: 'fremmexi.geojson', color: '#41d66b' },
-  { id: 'garrelli', name: 'wavyleaf silktassel', latin: 'Garrya elliptica', file: 'garrelli.geojson', color: '#a44ce5' },
-  { id: 'geniclus', name: 'seven year apple', latin: 'Genipa clusiifolia', file: 'geniclus.geojson', color: '#d4b911' },
-  { id: 'gledaqua', name: 'waterlocust', latin: 'Gleditsia aquatica', file: 'gledaqua.geojson', color: '#2cb8d2' },
-  { id: 'gledtria', name: 'honeylocust', latin: 'Gleditsia triacanthos', file: 'gledtria.geojson', color: '#e23695' },
-  { id: 'gordlasi', name: 'loblolly bay', latin: 'Gordonia lasianthus', file: 'gordlasi.geojson', color: '#6fef42' },
-  { id: 'guaiangu', name: 'Texas lignumvitae', latin: 'Guaiacum angustifolium', file: 'guaiangu.geojson', color: '#2c28bd' },
-  { id: 'guaisanc', name: 'roughbark lignumvitae', latin: 'Guaiacum sanctum', file: 'guaisanc.geojson', color: '#df5d1f' },
-  { id: 'guapdisc', name: 'blolly', latin: 'Guapira discolor', file: 'guapdisc.geojson', color: '#2aeda2' },
-  { id: 'guetelli', name: 'elliptic leaf velvetseed', latin: 'Guettarda elliptica', file: 'guetelli.geojson', color: '#cf56db' },
-  { id: 'guetscab', name: 'roughleaf velvetseed', latin: 'Guettarda scabra', file: 'guetscab.geojson', color: '#a6c81c' },
-  { id: 'gymilati', name: 'falsebox', latin: 'Gyminda latifolia', file: 'gymilati.geojson', color: '#1381eb' },
-  { id: 'gymndioi', name: 'Kentucky coffeetree', latin: 'Gymnocladus dioicus', file: 'gymndioi.geojson', color: '#d64162' },
-  { id: 'gymnluci', name: 'oysterwood', latin: 'Gymnanthes lucida', file: 'gymnluci.geojson', color: '#4ce557' },
-  { id: 'halecaro', name: 'Carolina silverbell', latin: 'Halesia carolina', file: 'halecaro.geojson', color: '#5811d4' },
-  { id: 'haledipt', name: 'two wing silverbell', latin: 'Halesia diptera', file: 'haledipt.geojson', color: '#d2992c' },
-  { id: 'haleparv', name: 'little silverbell', latin: 'Halesia parviflora', file: 'haleparv.geojson', color: '#36e2d9' },
-  { id: 'hamavirg', name: 'witch hazel', latin: 'Hamamelis virginiana', file: 'hamavirg.geojson', color: '#ef42c5' },
-  { id: 'hamepate', name: 'scarletbush', latin: 'Hamelia patens', file: 'hamepate.geojson', color: '#6dbd28' },
-  { id: 'heliparv', name: 'barreta', latin: 'Helietta parvifolia', file: 'heliparv.geojson', color: '#1f41df' },
-  { id: 'hippmanc', name: 'manchineel', latin: 'Hippomane mancinella', file: 'hippmanc.geojson', color: '#ed412a' },
-  { id: 'holaemor', name: 'holacantha', latin: 'Holacantha emoryi', file: 'holaemor.geojson', color: '#56db8c' },
-  { id: 'hypetrif', name: 'hypelate', latin: 'Hypelate trifoliata', file: 'hypetrif.geojson', color: '#951cc8' },
-  { id: 'ilexambi', name: 'Carolina holly', latin: 'Ilex ambigua', file: 'ilexambi.geojson', color: '#ebea13' },
-  { id: 'ilexamel', name: 'sarvis holly', latin: 'Ilex amelanchier', file: 'ilexamel.geojson', color: '#41acd6' },
-  { id: 'ilexcass', name: 'dahoon', latin: 'Ilex cassine', file: 'ilexcass.geojson', color: '#e54c8d' },
-  { id: 'ilexcori', name: 'large gallberry', latin: 'Ilex coriacea', file: 'ilexcori.geojson', color: '#2ad411' },
-  { id: 'ilexdeci', name: 'possumhaw', latin: 'Ilex decidua', file: 'ilexdeci.geojson', color: '#472cd2' },
-  { id: 'ilexkrug', name: 'tawnyberry holly', latin: 'Ilex krugiana', file: 'ilexkrug.geojson', color: '#e28336' },
-  { id: 'ilexlaev', name: 'smooth winterberry', latin: 'Ilex laevigata', file: 'ilexlaev.geojson', color: '#42efc3' },
-  { id: 'ilexlong', name: 'Georgia holly', latin: 'Ilex longipes', file: 'ilexlong.geojson', color: '#bd28b8' },
-  { id: 'ilexmont', name: 'mountain winterberry', latin: 'Ilex montana', file: 'ilexmont.geojson', color: '#a0df1f' },
-  { id: 'ilexmyrt', name: 'myrtle dahoon', latin: 'Ilex myrtifolia', file: 'ilexmyrt.geojson', color: '#2a75ed' },
-  { id: 'ilexopac', name: 'American holly', latin: 'Ilex opaca', file: 'ilexopac.geojson', color: '#db5662' },
-  { id: 'ilexvert', name: 'common winterberry', latin: 'Ilex verticillata', file: 'ilexvert.geojson', color: '#1cc83f' },
-  { id: 'ilexvomi', name: 'yaupon', latin: 'Ilex vomitoria', file: 'ilexvomi.geojson', color: '#7e13eb' },
-  { id: 'illiflor', name: 'Florida anise tree', latin: 'Illicium floridanum', file: 'illiflor.geojson', color: '#d6b641' },
-  { id: 'illiparv', name: 'yellow anise tree', latin: 'Illicium parviflorum', file: 'illiparv.geojson', color: '#4cd9e5' },
-  { id: 'jacqkeye', name: 'joewood', latin: 'Jacquinia keyensis', file: 'jacqkeye.geojson', color: '#d4118c' },
-  { id: 'juglcali', name: 'California walnut', latin: 'Juglans californica', file: 'juglcali.geojson', color: '#64d22c' },
-  { id: 'juglcine', name: 'butternut', latin: 'Juglans cinerea', file: 'juglcine.geojson', color: '#363ee2' },
-  { id: 'juglhind', name: 'Hinds walnut', latin: 'Juglans hindsii', file: 'juglhind.geojson', color: '#ef6c42' },
-  { id: 'juglmajo', name: 'Arizona walnut', latin: 'Juglans major', file: 'juglmajo.geojson', color: '#28bd78' },
-  { id: 'juglmicr', name: 'little walnut', latin: 'Juglans microcarpa', file: 'juglmicr.geojson', color: '#be1fdf' },
-  { id: 'juglnigr', name: 'black walnut', latin: 'Juglans nigra', file: 'juglnigr.geojson', color: '#d6ed2a' },
-  { id: 'juniashe', name: 'Ashe juniper', latin: 'Juniperus ashei', file: 'juniashe.geojson', color: '#56a4db' },
-  { id: 'junicali', name: 'California juniper', latin: 'Juniperus californica', file: 'junicali.geojson', color: '#c81c4f' },
-  { id: 'junicomm', name: 'common juniper', latin: 'Juniperus communis', file: 'junicomm.geojson', color: '#14eb13' },
-  { id: 'junidepp', name: 'alligator juniper', latin: 'Juniperus deppeana', file: 'junidepp.geojson', color: '#6c41d6' },
-  { id: 'junieryt', name: 'redberry juniper', latin: 'Juniperus erythrocarpa', file: 'junieryt.geojson', color: '#e5a54c' },
-  { id: 'juniflac', name: 'drooping juniper', latin: 'Juniperus flaccida', file: 'juniflac.geojson', color: '#11d4bb' },
-  { id: 'junihori', name: 'creeping juniper', latin: 'Juniperus horizontalis', file: 'junihori.geojson', color: '#d22cb7' },
-  { id: 'junimono', name: 'one seed juniper', latin: 'Juniperus monosperma', file: 'junimono.geojson', color: '#94e236' },
-  { id: 'juniocci', name: 'western juniper', latin: 'Juniperus occidentalis', file: 'juniocci.geojson', color: '#426eef' },
-  { id: 'junioste', name: 'Utah juniper', latin: 'Juniperus osteosperma', file: 'junioste.geojson', color: '#bd2d28' },
-  { id: 'junipinc', name: 'Pinchot juniper', latin: 'Juniperus pinchotii', file: 'junipinc.geojson', color: '#1fdf5f' },
-  { id: 'juniscop', name: 'Rocky Mountain juniper', latin: 'Juniperus scopulorum', file: 'juniscop.geojson', color: '#a42aed' },
-  { id: 'junisili', name: 'southern redcedar', latin: 'Juniperus silicicola', file: 'junisili.geojson', color: '#dbcf56' },
-  { id: 'junivirg', name: 'eastern redcedar', latin: 'Juniperus virginiana', file: 'junivirg.geojson', color: '#1ca5c8' },
-  { id: 'kalmlati', name: 'mountain laurel', latin: 'Kalmia latifolia', file: 'kalmlati.geojson', color: '#eb1380' },
-  { id: 'koebspin', name: 'allthorn', latin: 'Koeberlinia spinosa', file: 'koebspin.geojson', color: '#61d641' },
-  { id: 'krugferr', name: 'leadwood', latin: 'Krugiodendron ferreum', file: 'krugferr.geojson', color: '#584ce5' },
-  { id: 'lagurace', name: 'white mangrove', latin: 'Laguncularia racemosa', file: 'lagurace.geojson', color: '#d45911' },
-  { id: 'larilari', name: 'tamarack', latin: 'Larix laricina', file: 'larilari.geojson', color: '#2cd29a' },
-  { id: 'larilyal', name: 'subalpine larch', latin: 'Larix lyallii', file: 'larilyal.geojson', color: '#da36e2' },
-  { id: 'lariocci', name: 'western larch', latin: 'Larix occidentalis', file: 'lariocci.geojson', color: '#c4ef42' },
-  { id: 'larrdiva', name: 'creosote bush', latin: 'Larrea divaricata', file: 'larrdiva.geojson', color: '#286cbd' },
-  { id: 'leitflor', name: 'corkwood', latin: 'Leitneria floridana', file: 'leitflor.geojson', color: '#df1f40' },
-  { id: 'leucpulv', name: 'great leadtree', latin: 'Leucaena pulverulenta', file: 'leucpulv.geojson', color: '#2aed42' },
-  { id: 'leucretu', name: 'littleleaf leadtree', latin: 'Leucaena retusa', file: 'leucretu.geojson', color: '#8d56db' },
-  { id: 'libodecu', name: 'incense cedar', latin: 'Libocedrus decurrens', file: 'libodecu.geojson', color: '#c8961c' },
-  { id: 'licatria', name: 'Florida licaria', latin: 'Licaria triandra', file: 'licatria.geojson', color: '#13ebeb' },
-  { id: 'liqustyr', name: 'sweetgum', latin: 'Liquidambar styraciflua', file: 'liqustyr.geojson', color: '#d641ab' },
-  { id: 'lirituli', name: 'yellow poplar', latin: 'Liriodendron tulipifera', file: 'lirituli.geojson', color: '#8ce54c' },
-  { id: 'lithdens', name: 'tanoak', latin: 'Lithocarpus densiflorus', file: 'lithdens.geojson', color: '#1129d4' },
-  { id: 'lyonferr', name: 'tree lyonia', latin: 'Lyonia ferruginea', file: 'lyonferr.geojson', color: '#d2482c' },
-  { id: 'lyonflor', name: 'Lyontree', latin: 'Lyonothamnus floribundus', file: 'lyonflor.geojson', color: '#36e285' },
-  { id: 'lysilati', name: 'Bahama lysiloma', latin: 'Lysiloma latisiliquum', file: 'lysilati.geojson', color: '#c442ef' },
-  { id: 'lysimicr', name: 'littleleaf lysiloma', latin: 'Lysiloma microphylla', file: 'lysimicr.geojson', color: '#b7bd28' },
-  { id: 'maclpomi', name: 'Osage orange', latin: 'Maclura pomifera', file: 'maclpomi.geojson', color: '#1f9fdf' },
-  { id: 'magnacum', name: 'cucumbertree', latin: 'Magnolia acuminata', file: 'magnacum.geojson', color: '#ed2a73' },
-  { id: 'magnashe', name: 'Ashe magnolia', latin: 'Magnolia ashei', file: 'magnashe.geojson', color: '#61db56' },
-  { id: 'magnfras', name: 'Fraser magnolia', latin: 'Magnolia fraseri', file: 'magnfras.geojson', color: '#401cc8' },
-  { id: 'magngran', name: 'southern magnolia', latin: 'Magnolia grandiflora', file: 'magngran.geojson', color: '#eb7f13' },
-  { id: 'magnmacr', name: 'bigleaf magnolia', latin: 'Magnolia macrophylla', file: 'magnmacr.geojson', color: '#41d6b7' },
-  { id: 'magnpyra', name: 'pyramid magnolia', latin: 'Magnolia pyramidata', file: 'magnpyra.geojson', color: '#e54cd8' },
-  { id: 'magntrip', name: 'umbrella magnolia', latin: 'Magnolia tripetala', file: 'magntrip.geojson', color: '#8ad411' },
-  { id: 'magnvirg', name: 'sweetbay', latin: 'Magnolia virginiana', file: 'magnvirg.geojson', color: '#2c63d2' },
-  { id: 'maluangu', name: 'southern crab apple', latin: 'Malus angustifolia', file: 'maluangu.geojson', color: '#e2363d' },
-  { id: 'malucoro', name: 'sweet crab apple', latin: 'Malus coronaria', file: 'malucoro.geojson', color: '#42ef6d' },
-  { id: 'maludive', name: 'Oregon crab apple', latin: 'Malus diversifolia', file: 'maludive.geojson', color: '#7928bd' },
-  { id: 'maluioen', name: 'prairie crab apple', latin: 'Malus ioensis', file: 'maluioen.geojson', color: '#dfbf1f' },
-  { id: 'manibaha', name: 'wild dilly', latin: 'Manilkara bahamensis', file: 'manibaha.geojson', color: '#2ad5ed' },
-  { id: 'mastfoet', name: 'false mastic', latin: 'Mastichodendron foetidissimum', file: 'mastfoet.geojson', color: '#db56a3' },
-  { id: 'maytphyl', name: 'Florida mayten', latin: 'Maytenus phyllanthoides', file: 'maytphyl.geojson', color: '#4ec81c' },
-  { id: 'metotoxi', name: 'Florida poisontree', latin: 'Metopium toxiferum', file: 'metotoxi.geojson', color: '#1313eb' },
-  { id: 'morumicr', name: 'Texas mulberry', latin: 'Morus microphylla', file: 'morumicr.geojson', color: '#d66d41' },
-  { id: 'morurubr', name: 'red mulberry', latin: 'Morus rubra', file: 'morurubr.geojson', color: '#4ce5a6' },
-  { id: 'myrcfrag', name: 'twinberry stopper', latin: 'Myrcianthes fragrans', file: 'myrcfrag.geojson', color: '#bc11d4' },
-  { id: 'myricali', name: 'Pacific bayberry', latin: 'Myrica californica', file: 'myricali.geojson', color: '#b6d22c' },
-  { id: 'myriceri', name: 'southern bayberry', latin: 'Myrica cerifera', file: 'myriceri.geojson', color: '#3692e2' },
-  { id: 'myrihete', name: 'evergreen bayberry', latin: 'Myrica heterophylla', file: 'myrihete.geojson', color: '#ef426d' },
-  { id: 'myriinod', name: 'odorless bayberry', latin: 'Myrica inodora', file: 'myriinod.geojson', color: '#28bd2e' },
-  { id: 'myripens', name: 'northern bayberry', latin: 'Myrica pensylvanica', file: 'myripens.geojson', color: '#601fdf' },
-  { id: 'nectcori', name: 'Florida nectandra', latin: 'Nectandra coriacea', file: 'nectcori.geojson', color: '#eda52a' },
-  { id: 'nemocoll', name: 'mountain holly', latin: 'Nemopanthus collinus', file: 'nemocoll.geojson', color: '#56dbd0' },
-  { id: 'nolibige', name: 'Bigelow nolina', latin: 'Nolina bigelovii', file: 'nolibige.geojson', color: '#c81ca4' },
-  { id: 'nyssaqua', name: 'water tupelo', latin: 'Nyssa aquatica', file: 'nyssaqua.geojson', color: '#7eeb13' },
-  { id: 'nyssogec', name: 'Ogeechee tupelo', latin: 'Nyssa ogeche', file: 'nyssogec.geojson', color: '#4160d6' },
-  { id: 'nysssylv', name: 'black tupelo, blackgum', latin: 'Nyssa sylvatica', file: 'nysssylv.geojson', color: '#e5594c' },
-  { id: 'olneteso', name: 'tesota', latin: 'Olneya tesota', file: 'olneteso.geojson', color: '#11d45b' },
-  { id: 'opunfulg', name: 'jumping cholla', latin: 'Opuntia fulgida', file: 'opunfulg.geojson', color: '#9b2cd2' },
-  { id: 'osmaamer', name: 'devilwood', latin: 'Osmanthus americanus', file: 'osmaamer.geojson', color: '#e2db36' },
-  { id: 'ostrchis', name: 'Chisos hophornbean', latin: 'Ostrya chisosensis', file: 'ostrchis.geojson', color: '#42c3ef' },
-  { id: 'ostrknow', name: 'Knowlton hophornbeam', latin: 'Ostrya knowltonii', file: 'ostrknow.geojson', color: '#bd286b' },
-  { id: 'ostrvirg', name: 'eastern hophornbeam', latin: 'Ostrya virginiana', file: 'ostrvirg.geojson', color: '#3edf1f' },
-  { id: 'oxydarbo', name: 'sourwood', latin: 'Oxydendrum arboreum', file: 'oxydarbo.geojson', color: '#442aed' },
-  { id: 'parkacul', name: 'Jerusalem thorn', latin: 'Parkinsonia aculeata', file: 'parkacul.geojson', color: '#db8e56' },
-  { id: 'persborb', name: 'redbay', latin: 'Persea borbonia', file: 'persborb.geojson', color: '#1cc897' },
-  { id: 'photarbu', name: 'Christmas berry', latin: 'Photinia arbutifolia', file: 'photarbu.geojson', color: '#eb13ea' },
-  { id: 'picebrew', name: 'Brewer spruce', latin: 'Picea breweriana', file: 'picebrew.geojson', color: '#aad641' },
-  { id: 'picechih', name: 'chihuahua spruce', latin: 'Picea chihuahuana', file: 'picechih.geojson', color: '#4c8be5' },
-  { id: 'piceenge', name: 'Engelmann spruce', latin: 'Picea engelmannii', file: 'piceenge.geojson', color: '#d41128' },
-  { id: 'piceglau', name: 'white spruce', latin: 'Picea glauca', file: 'piceglau.geojson', color: '#2cd249' },
-  { id: 'picemari', name: 'black spruce', latin: 'Picea mariana', file: 'picemari.geojson', color: '#8636e2' },
-  { id: 'picepung', name: 'blue spruce', latin: 'Picea pungens', file: 'picepung.geojson', color: '#efc542' },
-  { id: 'picerube', name: 'red spruce', latin: 'Picea rubens', file: 'picerube.geojson', color: '#28b6bd' },
-  { id: 'picesitc', name: 'Sitka spruce', latin: 'Picea sitchensis', file: 'picesitc.geojson', color: '#df1f9e' },
-  { id: 'picrpent', name: 'bitterbush', latin: 'Picramnia pentandra', file: 'picrpent.geojson', color: '#72ed2a' },
-  { id: 'pincpube', name: 'pinckneya', latin: 'Pinckneya pubens', file: 'pincpube.geojson', color: '#5660db' },
-  { id: 'pinualbi', name: 'whitebark pine', latin: 'Pinus albicaulis', file: 'pinualbi.geojson', color: '#c8411c' },
-  { id: 'pinuaris', name: 'bristlecone pine', latin: 'Pinus aristata', file: 'pinuaris.geojson', color: '#13eb81' },
-  { id: 'pinuatte', name: 'knobcone pine', latin: 'Pinus attenuata', file: 'pinuatte.geojson', color: '#b841d6' },
-  { id: 'pinuayac', name: 'Mexican white pine', latin: 'Pinus ayacahuite', file: 'pinuayac.geojson', color: '#d7e54c' },
-  { id: 'pinubalf', name: 'foxtail pine', latin: 'Pinus balfouriana', file: 'pinubalf.geojson', color: '#1189d4' },
-  { id: 'pinubank', name: 'jack pine', latin: 'Pinus banksiana', file: 'pinubank.geojson', color: '#d22c62' },
-  { id: 'pinucari', name: 'Caribbean pine', latin: 'Pinus caribaea', file: 'pinucari.geojson', color: '#3ce236' },
-  { id: 'pinucemb', name: 'Mexican pinyon', latin: 'Pinus cembroides', file: 'pinucemb.geojson', color: '#6f42ef' },
-  { id: 'pinuclau', name: 'sand pine', latin: 'Pinus clausa', file: 'pinuclau.geojson', color: '#bd7a28' },
-  { id: 'pinucont', name: 'lodgepole pine', latin: 'Pinus contorta', file: 'pinucont.geojson', color: '#1fdfc0' },
-  { id: 'pinucoop', name: 'Cooper pine', latin: 'Pinus cooperi', file: 'pinucoop.geojson', color: '#ed2ad3' },
-  { id: 'pinucoul', name: 'Coulter pine', latin: 'Pinus coulteri', file: 'pinucoul.geojson', color: '#a2db56' },
-  { id: 'pinucube', name: 'Cuban pine', latin: 'Pinus cubensis', file: 'pinucube.geojson', color: '#1c4dc8' },
-  { id: 'pinuculm', name: 'Potosi pinyon', latin: 'Pinus culminicola', file: 'pinuculm.geojson', color: '#eb1413' },
-  { id: 'pinudoug', name: 'Douglas pine', latin: 'Pinus douglasiana', file: 'pinudoug.geojson', color: '#41d66e' },
-  { id: 'pinudura', name: 'Durango pine', latin: 'Pinus durangensis', file: 'pinudura.geojson', color: '#a74ce5' },
-  { id: 'pinuechi', name: 'shortleaf pine', latin: 'Pinus echinata', file: 'pinuechi.geojson', color: '#d4bd11' },
-  { id: 'pinuedul', name: 'pinyon', latin: 'Pinus edulis', file: 'pinuedul.geojson', color: '#2cb5d2' },
-  { id: 'pinuelli', name: 'slash pine', latin: 'Pinus elliottii', file: 'pinuelli.geojson', color: '#e23691' },
-  { id: 'pinuenge', name: 'Apache pine', latin: 'Pinus engelmannii', file: 'pinuenge.geojson', color: '#6cef42' },
-  { id: 'pinuflex', name: 'limber pine', latin: 'Pinus flexilis', file: 'pinuflex.geojson', color: '#2f28bd' },
-  { id: 'pinuglab', name: 'spruce pine', latin: 'Pinus glabra', file: 'pinuglab.geojson', color: '#df611f' },
-  { id: 'pinugreg', name: 'Gregg pine', latin: 'Pinus greggii', file: 'pinugreg.geojson', color: '#2aeda6' },
-  { id: 'pinuhart', name: 'Hartweg pine', latin: 'Pinus hartwegii', file: 'pinuhart.geojson', color: '#d156db' },
-  { id: 'pinujeff', name: 'Jeffrey pine', latin: 'Pinus jeffreyi', file: 'pinujeff.geojson', color: '#a3c81c' },
-  { id: 'pinulamb', name: 'sugar pine', latin: 'Pinus lambertiana', file: 'pinulamb.geojson', color: '#137deb' },
-  { id: 'pinulaws', name: 'Lawson pine', latin: 'Pinus lawsonii', file: 'pinulaws.geojson', color: '#d6415f' },
-  { id: 'pinuleio', name: 'Chihuahua pine', latin: 'Pinus leiophylla', file: 'pinuleio.geojson', color: '#4ce55a' },
-  { id: 'pinulong', name: 'Intermountain bristlecone pine', latin: 'Pinus longaeva', file: 'pinulong.geojson', color: '#5c11d4' },
-  { id: 'pinulumh', name: 'Lumholtz pine', latin: 'Pinus lumholtzii', file: 'pinulumh.geojson', color: '#d29c2c' },
-  { id: 'pinumaxi', name: 'Mart?nez pinyon', latin: 'Pinus maximartinezii', file: 'pinumaxi.geojson', color: '#36e2dd' },
-  { id: 'pinumich', name: 'Michoacï¿½n pine', latin: 'Pinus michoacana', file: 'pinumich.geojson', color: '#ef42c2' },
-  { id: 'pinumono', name: 'singleleaf pinyon', latin: 'Pinus monophylla', file: 'pinumono.geojson', color: '#6abd28' },
-  { id: 'pinumont', name: 'western white pine', latin: 'Pinus monticola', file: 'pinumont.geojson', color: '#1f3ddf' },
-  { id: 'pinumtez', name: 'Montezuma pine', latin: 'Pinus montezumae', file: 'pinumtez.geojson', color: '#ed452a' },
-  { id: 'pinumuri', name: 'bishop pine', latin: 'Pinus muricata', file: 'pinumuri.geojson', color: '#56db8f' },
-  { id: 'pinunels', name: 'Nelson pinyon', latin: 'Pinus nelsonii', file: 'pinunels.geojson', color: '#981cc8' },
-  { id: 'pinuocci', name: 'West Indian pine', latin: 'Pinus occidentalis', file: 'pinuocci.geojson', color: '#e9eb13' },
-  { id: 'pinuooca', name: 'Nicaraguan pitch pine; ocote pine', latin: 'Pinus oocarpa', file: 'pinuooca.geojson', color: '#41a9d6' },
-  { id: 'pinupalu', name: 'longleaf pine', latin: 'Pinus palustris', file: 'pinupalu.geojson', color: '#e54c8a' },
-  { id: 'pinupatu', name: 'Mexican weeping pine', latin: 'Pinus patula', file: 'pinupatu.geojson', color: '#27d411' },
-  { id: 'pinupinc', name: 'Pince pinyon', latin: 'Pinus pinceana', file: 'pinupinc.geojson', color: '#4a2cd2' },
-  { id: 'pinupond', name: 'ponderosa pine', latin: 'Pinus ponderosa', file: 'pinupond.geojson', color: '#e28736' },
-  { id: 'pinuprin', name: 'Pringle pine', latin: 'Pinus pringlei', file: 'pinuprin.geojson', color: '#42efc6' },
-  { id: 'pinupseu', name: 'False Weymouth pine', latin: 'Pinus pseudostrobus', file: 'pinupseu.geojson', color: '#bd28b5' },
-  { id: 'pinupung', name: 'Table Mountain pine', latin: 'Pinus pungens', file: 'pinupung.geojson', color: '#9cdf1f' },
-  { id: 'pinuquad', name: 'Parry pinyon', latin: 'Pinus quadrifolia', file: 'pinuquad.geojson', color: '#2a71ed' },
-  { id: 'pinuradi', name: 'Monterey pine', latin: 'Pinus radiata', file: 'pinuradi.geojson', color: '#db5660' },
-  { id: 'pinuresi', name: 'red pine', latin: 'Pinus resinosa', file: 'pinuresi.geojson', color: '#1cc842' },
-  { id: 'pinurigi', name: 'pitch pine', latin: 'Pinus rigida', file: 'pinurigi.geojson', color: '#8213eb' },
-  { id: 'pinusabi', name: 'Digger pine', latin: 'Pinus sabiniana', file: 'pinusabi.geojson', color: '#d6b941' },
-  { id: 'pinusero', name: 'pond pine', latin: 'Pinus serotina', file: 'pinusero.geojson', color: '#4cd6e5' },
-  { id: 'pinustrb', name: 'eastern white pine', latin: 'Pinus strobus', file: 'pinustrb.geojson', color: '#d41188' },
-  { id: 'pinustro', name: 'southwestern white pine', latin: 'Pinus strobiformis', file: 'pinustro.geojson', color: '#61d22c' },
-  { id: 'pinutaed', name: 'loblolly pine', latin: 'Pinus taeda', file: 'pinutaed.geojson', color: '#363ae2' },
-  { id: 'pinuteoc', name: 'Twisted  leaves pine; Aztec pine', latin: 'Pinus teocote', file: 'pinuteoc.geojson', color: '#ef7042' },
-  { id: 'pinutorr', name: 'Torrey pine', latin: 'Pinus torreyana', file: 'pinutorr.geojson', color: '#28bd7b' },
-  { id: 'pinutrop', name: 'tropical pine', latin: 'Pinus tropicalis', file: 'pinutrop.geojson', color: '#c21fdf' },
-  { id: 'pinuvirg', name: 'Virginia pine', latin: 'Pinus virginiana', file: 'pinuvirg.geojson', color: '#d2ed2a' },
-  { id: 'pinuwash', name: 'Washoe pine', latin: 'Pinus washoensis', file: 'pinuwash.geojson', color: '#56a2db' },
-  { id: 'piscpisc', name: 'Florida fishpoison tree', latin: 'Piscidia piscipula', file: 'piscpisc.geojson', color: '#c81c4c' },
-  { id: 'pisorotu', name: 'pisonia', latin: 'Pisonia rotundata', file: 'pisorotu.geojson', color: '#13eb16' },
-  { id: 'pisttexa', name: 'Texas pistache', latin: 'Pistacia texana', file: 'pisttexa.geojson', color: '#6f41d6' },
-  { id: 'pithflex', name: 'ebony blackbead', latin: 'Pithecellobium flexicaule', file: 'pithflex.geojson', color: '#e5a84c' },
-  { id: 'pithguad', name: 'Guadeloupe blackbead', latin: 'Pithecellobium guadalupense', file: 'pithguad.geojson', color: '#11d4be' },
-  { id: 'pithpall', name: 'huajillo', latin: 'Pithecellobium pallens', file: 'pithpall.geojson', color: '#d22cb4' },
-  { id: 'pithungu', name: 'catclaw blackbead', latin: 'Pithecellobium unguis-cati', file: 'pithungu.geojson', color: '#90e236' },
-  { id: 'planaqua', name: 'planertree', latin: 'Planera aquatica', file: 'planaqua.geojson', color: '#426aef' },
-  { id: 'platocci', name: 'American sycamore', latin: 'Platanus occidentalis', file: 'platocci.geojson', color: '#bd3028' },
-  { id: 'platrace', name: 'California sycamore', latin: 'Platanus racemosa', file: 'platrace.geojson', color: '#1fdf62' },
-  { id: 'platwrig', name: 'Arizona sycamore', latin: 'Platanus wrightii', file: 'platwrig.geojson', color: '#a72aed' },
-  { id: 'popuangu', name: 'narrowleaf cottonwood', latin: 'Populus angustifolia', file: 'popuangu.geojson', color: '#dbd256' },
-  { id: 'popuariz', name: 'Arizona cottonwood', latin: 'Populus arizonica', file: 'popuariz.geojson', color: '#1ca2c8' },
-  { id: 'popubals', name: 'balsam poplar', latin: 'Populus balsamifera', file: 'popubals.geojson', color: '#eb137b' },
-  { id: 'popudelt', name: 'eastern cottonwood', latin: 'Populus deltoides', file: 'popudelt.geojson', color: '#5ed641' },
-  { id: 'popufrem', name: 'Fremont cottonwood', latin: 'Populus fremontii', file: 'popufrem.geojson', color: '#5b4ce5' },
-  { id: 'popugran', name: 'bigtooth aspen', latin: 'Populus grandidentata', file: 'popugran.geojson', color: '#d45d11' },
-  { id: 'popuhete', name: 'swamp cottonwood', latin: 'Populus heterophylla', file: 'popuhete.geojson', color: '#2cd29d' },
-  { id: 'popuhinc', name: 'Hinckley cottonwood', latin: 'Populus hinckleyana', file: 'popuhinc.geojson', color: '#de36e2' },
-  { id: 'poputrem', name: 'quaking aspen', latin: 'Populus tremuloides', file: 'poputrem.geojson', color: '#c1ef42' },
-  { id: 'poputric', name: 'black cottonwood', latin: 'Populus trichocarpa', file: 'poputric.geojson', color: '#2869bd' },
-  { id: 'prosjuli', name: 'mesquite', latin: 'Prosopis juliflora', file: 'prosjuli.geojson', color: '#df1f3c' },
-  { id: 'prospube', name: 'screwbean mesquite', latin: 'Prosopis pubescens', file: 'prospube.geojson', color: '#2aed46' },
-  { id: 'prunalle', name: 'Allegheny plum', latin: 'Prunus alleghaniensis', file: 'prunalle.geojson', color: '#9056db' },
-  { id: 'prunamer', name: 'American plum', latin: 'Prunus americana', file: 'prunamer.geojson', color: '#c8991c' },
-  { id: 'prunangu', name: 'Chickasaw plum', latin: 'Prunus angustifolia', file: 'prunangu.geojson', color: '#13e7eb' },
-  { id: 'pruncaro', name: 'Carolina laurelcherry', latin: 'Prunus caroliniana', file: 'pruncaro.geojson', color: '#d641a8' },
-  { id: 'prunemar', name: 'bitter cherry', latin: 'Prunus emarginata', file: 'prunemar.geojson', color: '#89e54c' },
-  { id: 'prunfrem', name: 'desert apricot', latin: 'Prunus fremontii', file: 'prunfrem.geojson', color: '#1125d4' },
-  { id: 'prunhort', name: 'hortulan plum', latin: 'Prunus hortulana', file: 'prunhort.geojson', color: '#d24b2c' },
-  { id: 'prunilic', name: 'hollyleaf cherry', latin: 'Prunus ilicifolia', file: 'prunilic.geojson', color: '#36e288' },
-  { id: 'prunlyon', name: 'Catalina cherry', latin: 'Prunus lyonii', file: 'prunlyon.geojson', color: '#c742ef' },
-  { id: 'prunmexi', name: 'Mexican plum', latin: 'Prunus mexicana', file: 'prunmexi.geojson', color: '#b4bd28' },
-  { id: 'prunmuns', name: 'wildgoose plum', latin: 'Prunus munsoniana', file: 'prunmuns.geojson', color: '#1f9bdf' },
-  { id: 'prunmyrt', name: 'West Indies cherry', latin: 'Prunus myrtifolia', file: 'prunmyrt.geojson', color: '#ed2a70' },
-  { id: 'prunnigr', name: 'Canada plum', latin: 'Prunus nigra', file: 'prunnigr.geojson', color: '#5fdb56' },
-  { id: 'prunpens', name: 'pin cherry', latin: 'Prunus pensylvanica', file: 'prunpens.geojson', color: '#431cc8' },
-  { id: 'prunsero', name: 'black cherry', latin: 'Prunus serotina', file: 'prunsero.geojson', color: '#eb8313' },
-  { id: 'prunsubc', name: 'Klamath plum', latin: 'Prunus subcordata', file: 'prunsubc.geojson', color: '#41d6ba' },
-  { id: 'prunumbe', name: 'flatwoods plum', latin: 'Prunus umbellata', file: 'prunumbe.geojson', color: '#e54cd5' },
-  { id: 'prunvirg', name: 'common chokecherry', latin: 'Prunus virginiana', file: 'prunvirg.geojson', color: '#87d411' },
-  { id: 'pseumacr', name: 'bigcone Douglas fir', latin: 'Pseudotsuga macrocarpa', file: 'pseumacr.geojson', color: '#2c60d2' },
-  { id: 'pseumenz', name: 'Douglas fir', latin: 'Pseudotsuga menziesii', file: 'pseumenz.geojson', color: '#e23639' },
-  { id: 'pseusarg', name: 'buccaneer palm', latin: 'Pseudophoenix sargentii', file: 'pseusarg.geojson', color: '#42ef71' },
-  { id: 'psidlong', name: 'long stalk stopper', latin: 'Psidium longipes', file: 'psidlong.geojson', color: '#7c28bd' },
-  { id: 'ptelcren', name: 'California hoptree', latin: 'Ptelea crenulata', file: 'ptelcren.geojson', color: '#dfc31f' },
-  { id: 'pteltrif', name: 'common hoptree', latin: 'Ptelea trifoliata', file: 'pteltrif.geojson', color: '#2ad1ed' },
-  { id: 'queragri', name: 'California live oak', latin: 'Quercus agrifolia', file: 'queragri.geojson', color: '#db56a1' },
-  { id: 'querajoe', name: 'Ajo oak', latin: 'Quercus ajoensis', file: 'querajoe.geojson', color: '#4bc81c' },
-  { id: 'queralba', name: 'white oak', latin: 'Quercus alba', file: 'queralba.geojson', color: '#1713eb' },
-  { id: 'querariz', name: 'Arizona white oak', latin: 'Quercus arizonica', file: 'querariz.geojson', color: '#d67041' },
-  { id: 'querarka', name: 'Arkansas oak', latin: 'Quercus arkansana', file: 'querarka.geojson', color: '#4ce5a9' },
-  { id: 'querbico', name: 'swamp white oak', latin: 'Quercus bicolor', file: 'querbico.geojson', color: '#c011d4' },
-  { id: 'querchap', name: 'Chapman oak', latin: 'Quercus chapmanii', file: 'querchap.geojson', color: '#b3d22c' },
-  { id: 'querchry', name: 'canyon live oak', latin: 'Quercus chrysolepis', file: 'querchry.geojson', color: '#368fe2' },
-  { id: 'quercocc', name: 'scarlet oak', latin: 'Quercus coccinea', file: 'quercocc.geojson', color: '#ef4269' },
-  { id: 'querdoug', name: 'blue oak', latin: 'Quercus douglasii', file: 'querdoug.geojson', color: '#28bd31' },
-  { id: 'querdunn', name: 'Dunn oak', latin: 'Quercus dunnii', file: 'querdunn.geojson', color: '#631fdf' },
-  { id: 'querdura', name: 'Durand oak', latin: 'Quercus durandii', file: 'querdura.geojson', color: '#eda92a' },
-  { id: 'querelli', name: 'northern pin oak', latin: 'Quercus ellipsoidalis', file: 'querelli.geojson', color: '#56dbd3' },
-  { id: 'queremor', name: 'Emory oak', latin: 'Quercus emoryi', file: 'queremor.geojson', color: '#c81ca1' },
-  { id: 'querenge', name: 'Engelmann oak', latin: 'Quercus engelmannii', file: 'querenge.geojson', color: '#7aeb13' },
-  { id: 'querfalc', name: 'southern red oak', latin: 'Quercus falcata', file: 'querfalc.geojson', color: '#415dd6' },
-  { id: 'quergamb', name: 'Gambel oak', latin: 'Quercus gambelii', file: 'quergamb.geojson', color: '#e55c4c' },
-  { id: 'quergarr', name: 'Oregon white oak', latin: 'Quercus garryana', file: 'quergarr.geojson', color: '#11d45e' },
-  { id: 'quergeor', name: 'Georgia oak', latin: 'Quercus georgiana', file: 'quergeor.geojson', color: '#9f2cd2' },
-  { id: 'querglau', name: 'Lacey oak', latin: 'Quercus glaucoides', file: 'querglau.geojson', color: '#e2df36' },
-  { id: 'quergrac', name: 'Chisos oak', latin: 'Quercus graciliformis', file: 'quergrac.geojson', color: '#42c0ef' },
-  { id: 'quergrav', name: 'Graves oak incl. Q. tardifolia (Muller) lateleaf oak', latin: 'Quercus gravesii', file: 'quergrav.geojson', color: '#bd2868' },
-  { id: 'quergris', name: 'gray oak', latin: 'Quercus grisea', file: 'quergris.geojson', color: '#3bdf1f' },
-  { id: 'querhava', name: 'Havard oak', latin: 'Quercus havardii', file: 'querhava.geojson', color: '#472aed' },
-  { id: 'querhypo', name: 'silverleaf oak', latin: 'Quercus hypoleucoides', file: 'querhypo.geojson', color: '#db9156' },
-  { id: 'querilic', name: 'bear oak', latin: 'Quercus ilicifolia', file: 'querilic.geojson', color: '#1cc89a' },
-  { id: 'querimbr', name: 'shingle oak', latin: 'Quercus imbricaria', file: 'querimbr.geojson', color: '#eb13e6' },
-  { id: 'querinca', name: 'bluejack oak', latin: 'Quercus incana', file: 'querinca.geojson', color: '#a7d641' },
-  { id: 'querkell', name: 'California black oak', latin: 'Quercus kelloggii', file: 'querkell.geojson', color: '#4c88e5' },
-  { id: 'querlaev', name: 'turkey oak', latin: 'Quercus laevis', file: 'querlaev.geojson', color: '#d41124' },
-  { id: 'querlaur', name: 'laurel oak', latin: 'Quercus laurifolia', file: 'querlaur.geojson', color: '#2cd24c' },
-  { id: 'querloba', name: 'California white oak', latin: 'Quercus lobata', file: 'querloba.geojson', color: '#8936e2' },
-  { id: 'querlyra', name: 'overcup oak', latin: 'Quercus lyrata', file: 'querlyra.geojson', color: '#efc842' },
-  { id: 'quermacd', name: 'McDonald oak', latin: 'Quercus macdonaldii', file: 'quermacd.geojson', color: '#28b3bd' },
-  { id: 'quermacr', name: 'bur oak', latin: 'Quercus macrocarpa', file: 'quermacr.geojson', color: '#df1f9a' },
-  { id: 'quermari', name: 'blackjack oak', latin: 'Quercus marilandica', file: 'quermari.geojson', color: '#6eed2a' },
-  { id: 'quermich', name: 'swamp chestnut oak', latin: 'Quercus michauxii', file: 'quermich.geojson', color: '#565edb' },
-  { id: 'quermohr', name: 'Mohrs oak', latin: 'Quercus mohriana', file: 'quermohr.geojson', color: '#c8451c' },
-  { id: 'quermueh', name: 'chinkapin oak', latin: 'Quercus muehlenbergii', file: 'quermueh.geojson', color: '#13eb85' },
-  { id: 'quermyrt', name: 'myrtle oak', latin: 'Quercus myrtifolia', file: 'quermyrt.geojson', color: '#bb41d6' },
-  { id: 'quernigr', name: 'water oak', latin: 'Quercus nigra', file: 'quernigr.geojson', color: '#d4e54c' },
-  { id: 'quernutt', name: 'Nuttall oak', latin: 'Quercus nuttallii', file: 'quernutt.geojson', color: '#1185d4' },
-  { id: 'queroblo', name: 'Mexican blue oak', latin: 'Quercus oblongifolia', file: 'queroblo.geojson', color: '#d22c5f' },
-  { id: 'querogle', name: 'Oglethorpe oak', latin: 'Quercus oglethorpensis', file: 'querogle.geojson', color: '#38e236' },
-  { id: 'querpalu', name: 'pin oak', latin: 'Quercus palustris', file: 'querpalu.geojson', color: '#7242ef' },
-  { id: 'querphel', name: 'willow oak', latin: 'Quercus phellos', file: 'querphel.geojson', color: '#bd7d28' },
-  { id: 'querprin', name: 'chestnut oak', latin: 'Quercus prinus', file: 'querprin.geojson', color: '#1fdfc4' },
-  { id: 'querpung', name: 'sandpaper oak', latin: 'Quercus pungens', file: 'querpung.geojson', color: '#ed2ad0' },
-  { id: 'querrubr', name: 'northern red oak', latin: 'Quercus rubra', file: 'querrubr.geojson', color: '#a0db56' },
-  { id: 'querrugo', name: 'netleaf oak', latin: 'Quercus rugosa', file: 'querrugo.geojson', color: '#1c4ac8' },
-  { id: 'quershum', name: 'Shumard oak', latin: 'Quercus shumardii', file: 'quershum.geojson', color: '#eb1913' },
-  { id: 'querstel', name: 'post oak', latin: 'Quercus stellata', file: 'querstel.geojson', color: '#41d671' },
-  { id: 'quertome', name: 'island live oak', latin: 'Quercus tomentella', file: 'quertome.geojson', color: '#aa4ce5' },
-  { id: 'quertoum', name: 'Toumey oak', latin: 'Quercus toumeyi', file: 'quertoum.geojson', color: '#d4c111' },
-  { id: 'querturb', name: 'shrub live oak', latin: 'Quercus turbinella', file: 'querturb.geojson', color: '#2cb2d2' },
-  { id: 'quervelu', name: 'black oak', latin: 'Quercus velutina', file: 'quervelu.geojson', color: '#e2368e' },
-  { id: 'quervirg', name: 'live oak', latin: 'Quercus virginiana', file: 'quervirg.geojson', color: '#68ef42' },
-  { id: 'querwisl', name: 'interior live oak', latin: 'Quercus wislizeni', file: 'querwisl.geojson', color: '#3228bd' },
-  { id: 'rapapunc', name: 'Florida rapanea', latin: 'Rapanea punctata', file: 'rapapunc.geojson', color: '#df651f' },
-  { id: 'reynsept', name: 'darling plum', latin: 'Reynosia septentrionalis', file: 'reynsept.geojson', color: '#2aedaa' },
-  { id: 'rhambetu', name: 'birchleaf buckthorn', latin: 'Rhamnus betulaefolia', file: 'rhambetu.geojson', color: '#d456db' },
-  { id: 'rhamcali', name: 'California buckthorn', latin: 'Rhamnus californica', file: 'rhamcali.geojson', color: '#9fc81c' },
-  { id: 'rhamcaro', name: 'Carolina buckthorn', latin: 'Rhamnus caroliniana', file: 'rhamcaro.geojson', color: '#1379eb' },
-  { id: 'rhamcroc', name: 'hollyleaf buckthorn', latin: 'Rhamnus crocea', file: 'rhamcroc.geojson', color: '#d6415c' },
-  { id: 'rhampurs', name: 'cascara buckthorn', latin: 'Rhamnus purshiana', file: 'rhampurs.geojson', color: '#4ce55d' },
-  { id: 'rhizmang', name: 'mangrove', latin: 'Rhizophora mangle', file: 'rhizmang.geojson', color: '#6011d4' },
-  { id: 'rhodcata', name: 'Catawba rhododendron', latin: 'Rhododendron catawbiense', file: 'rhodcata.geojson', color: '#d2a02c' },
-  { id: 'rhodmacr', name: 'Pacific rhododendron', latin: 'Rhododendron macrophyllum', file: 'rhodmacr.geojson', color: '#36e2e0' },
-  { id: 'rhodmaxi', name: 'rosebay rhododendron', latin: 'Rhododendron maximum', file: 'rhodmaxi.geojson', color: '#ef42bf' },
-  { id: 'rhuschor', name: 'Mearns sumac', latin: 'Rhus choriophylla', file: 'rhuschor.geojson', color: '#68bd28' },
-  { id: 'rhuscopa', name: 'shining sumac', latin: 'Rhus copallina', file: 'rhuscopa.geojson', color: '#1f39df' },
-  { id: 'rhusglab', name: 'smooth sumac', latin: 'Rhus glabra', file: 'rhusglab.geojson', color: '#ed492a' },
-  { id: 'rhusinte', name: 'lemonade sumac', latin: 'Rhus integrifolia', file: 'rhusinte.geojson', color: '#56db92' },
-  { id: 'rhuskear', name: 'Kearney sumac', latin: 'Rhus kearneyi', file: 'rhuskear.geojson', color: '#9b1cc8' },
-  { id: 'rhuslanc', name: 'prairie sumac', latin: 'Rhus lanceolata', file: 'rhuslanc.geojson', color: '#e5eb13' },
-  { id: 'rhuslaur', name: 'laurel sumac', latin: 'Rhus laurina', file: 'rhuslaur.geojson', color: '#41a6d6' },
-  { id: 'rhusmicr', name: 'littleleaf sumac', latin: 'Rhus microphylla', file: 'rhusmicr.geojson', color: '#e54c87' },
-  { id: 'rhusovat', name: 'sugar sumac', latin: 'Rhus ovata', file: 'rhusovat.geojson', color: '#23d411' },
-  { id: 'rhustyph', name: 'staghorn sumac', latin: 'Rhus typhina', file: 'rhustyph.geojson', color: '#4d2cd2' },
-  { id: 'robikels', name: 'Kelsey locust', latin: 'Robinia kelseyi', file: 'robikels.geojson', color: '#e28a36' },
-  { id: 'robineom', name: 'New Mexican locust', latin: 'Robinia neomexicana', file: 'robineom.geojson', color: '#42efc9' },
-  { id: 'robipseu', name: 'black locust', latin: 'Robinia pseudoacacia', file: 'robipseu.geojson', color: '#bd28b2' },
-  { id: 'robivisc', name: 'clammy locust', latin: 'Robinia viscosa', file: 'robivisc.geojson', color: '#99df1f' },
-  { id: 'royselat', name: 'Florida royalpalm', latin: 'Roystonea elata', file: 'royselat.geojson', color: '#2a6ded' },
-  { id: 'sabamexi', name: 'Mexican palmetto', latin: 'Sabal mexicana', file: 'sabamexi.geojson', color: '#db565d' },
-  { id: 'sabamino', name: 'dwarf palmetto', latin: 'Sabal minor', file: 'sabamino.geojson', color: '#1cc846' },
-  { id: 'sabapalm', name: 'cabbage palmetto', latin: 'Sabal palmetto', file: 'sabapalm.geojson', color: '#8613eb' },
-  { id: 'salialax', name: 'feltleaf willow', latin: 'Salix alaxensis', file: 'salialax.geojson', color: '#d6bc41' },
-  { id: 'saliamyg', name: 'peachleaf willow', latin: 'Salix amygdaloides', file: 'saliamyg.geojson', color: '#4cd3e5' },
-  { id: 'saliarbu', name: 'peachleaf willow', latin: 'Salix arbusculoides', file: 'saliarbu.geojson', color: '#d41184' },
-  { id: 'salibebb', name: 'Bebb willow', latin: 'Salix bebbiana', file: 'salibebb.geojson', color: '#5ed22c' },
-  { id: 'salibonp', name: 'Bonpland willow', latin: 'Salix bonplandiana', file: 'salibonp.geojson', color: '#3637e2' },
-  { id: 'salicaro', name: 'Coastal Plain willow', latin: 'Salix caroliniana', file: 'salicaro.geojson', color: '#ef7342' },
-  { id: 'salidisc', name: 'pussy willow', latin: 'Salix discolor', file: 'salidisc.geojson', color: '#28bd7d' },
-  { id: 'saliexig', name: 'coyote willow', latin: 'Salix exigua', file: 'saliexig.geojson', color: '#c51fdf' },
-  { id: 'saliflor', name: 'Florida willow', latin: 'Salix floridana', file: 'saliflor.geojson', color: '#ceed2a' },
-  { id: 'salifluv', name: 'river willow', latin: 'Salix fluviatilis', file: 'salifluv.geojson', color: '#569fdb' },
-  { id: 'saligeye', name: 'Geyer willow', latin: 'Salix geyeriana', file: 'saligeye.geojson', color: '#c81c49' },
-  { id: 'salihind', name: 'Hinds willow', latin: 'Salix hindsiana', file: 'salihind.geojson', color: '#13eb1a' },
-  { id: 'salihook', name: 'Hooker willow', latin: 'Salix hookeriana', file: 'salihook.geojson', color: '#7241d6' },
-  { id: 'salilaev', name: 'red willow', latin: 'Salix laevigata', file: 'salilaev.geojson', color: '#e5ab4c' },
-  { id: 'salilasi', name: 'Pacific willow', latin: 'Salix lasiandra', file: 'salilasi.geojson', color: '#11d4c2' },
-  { id: 'salilaso', name: 'arroyo willow', latin: 'Salix lasiolepis', file: 'salilaso.geojson', color: '#d22cb0' },
-  { id: 'saliluci', name: 'shining willow', latin: 'Salix lucida', file: 'saliluci.geojson', color: '#8de236' },
-  { id: 'salimack', name: 'Mackenzie willow', latin: 'Salix mackenzieana', file: 'salimack.geojson', color: '#4267ef' },
-  { id: 'salinigr', name: 'black willow', latin: 'Salix nigra', file: 'salinigr.geojson', color: '#bd3328' },
-  { id: 'salipell', name: 'satiny willow', latin: 'Salix pellita', file: 'salipell.geojson', color: '#1fdf66' },
-  { id: 'salipeti', name: 'meadow willow', latin: 'Salix petiolaris', file: 'salipeti.geojson', color: '#ab2aed' },
-  { id: 'salipyri', name: 'balsam willow', latin: 'Salix pyrifolia', file: 'salipyri.geojson', color: '#dbd456' },
-  { id: 'saliscou', name: 'Scouler willow', latin: 'Salix scouleriana', file: 'saliscou.geojson', color: '#1c9ec8' },
-  { id: 'saliseri', name: 'silky willow', latin: 'Salix sericea', file: 'saliseri.geojson', color: '#eb1377' },
-  { id: 'salisess', name: 'northwest willow', latin: 'Salix sessilifolia', file: 'salisess.geojson', color: '#5bd641' },
-  { id: 'salisitc', name: 'Sitka willow', latin: 'Salix sitchensis', file: 'salisitc.geojson', color: '#5e4ce5' },
-  { id: 'salitaxi', name: 'yewleaf willow', latin: 'Salix taxifolia', file: 'salitaxi.geojson', color: '#d46111' },
-  { id: 'salitrac', name: 'Tracy willow', latin: 'Salix tracyi', file: 'salitrac.geojson', color: '#2cd2a1' },
-  { id: 'sambcall', name: 'Pacific red elder', latin: 'Sambucus callicarpa', file: 'sambcall.geojson', color: '#e136e2' },
-  { id: 'sambcana', name: 'American elder', latin: 'Sambucus canadensis', file: 'sambcana.geojson', color: '#beef42' },
-  { id: 'sambglau', name: 'blueberry elder', latin: 'Sambucus glauca', file: 'sambglau.geojson', color: '#2867bd' },
-  { id: 'sambmela', name: 'blackbead elder', latin: 'Sambucus melanocarpa', file: 'sambmela.geojson', color: '#df1f38' },
-  { id: 'sambmexi', name: 'Mexican elder', latin: 'Sambucus mexicana', file: 'sambmexi.geojson', color: '#2aed4a' },
-  { id: 'sambvelu', name: 'velvet elder', latin: 'Sambucus velutina', file: 'sambvelu.geojson', color: '#9256db' },
-  { id: 'sapibilo', name: 'jumping bean sapium', latin: 'Sapium biloculare', file: 'sapibilo.geojson', color: '#c89d1c' },
-  { id: 'sapidrum', name: 'western soapberry', latin: 'Sapindus drummondii', file: 'sapidrum.geojson', color: '#13e3eb' },
-  { id: 'sapisapo', name: 'wingleaf soapberry', latin: 'Sapindus saponaria', file: 'sapisapo.geojson', color: '#d641a5' },
-  { id: 'sassalbi', name: 'sassafras', latin: 'Sassafras albidum', file: 'sassalbi.geojson', color: '#86e54c' },
-  { id: 'savibaha', name: 'maidenbush', latin: 'Savia bahamensis', file: 'savibaha.geojson', color: '#1122d4' },
-  { id: 'schafrut', name: 'Florida boxwood', latin: 'Schaefferia frutescens', file: 'schafrut.geojson', color: '#d24e2c' },
-  { id: 'schochry', name: 'graytwig', latin: 'Schoepfia chrysophylloides', file: 'schochry.geojson', color: '#36e28b' },
-  { id: 'sequgiga', name: 'giant sequoia', latin: 'Sequoiadendron giganteum', file: 'sequgiga.geojson', color: '#ca42ef' },
-  { id: 'sequsemp', name: 'redwood', latin: 'Sequoia sempervirens', file: 'sequsemp.geojson', color: '#b1bd28' },
-  { id: 'sererepe', name: 'saw palmetto', latin: 'Serenoa repens', file: 'sererepe.geojson', color: '#1f98df' },
-  { id: 'sheparge', name: 'silver buffaloberry', latin: 'Shepherdia argentea', file: 'sheparge.geojson', color: '#ed2a6c' },
-  { id: 'simaglau', name: 'paradise tree', latin: 'Simarouba glauca', file: 'simaglau.geojson', color: '#5cdb56' },
-  { id: 'solaeria', name: 'mullein nightshade', latin: 'Solanum erianthum', file: 'solaeria.geojson', color: '#471cc8' },
-  { id: 'sophaffi', name: 'Texas sophora', latin: 'Sophora affinis', file: 'sophaffi.geojson', color: '#eb8713' },
-  { id: 'sophsecu', name: 'mescalbean', latin: 'Sophora secundiflora', file: 'sophsecu.geojson', color: '#41d6bd' },
-  { id: 'sorbamer', name: 'American mountain ash', latin: 'Sorbus americana', file: 'sorbamer.geojson', color: '#e54cd2' },
-  { id: 'sorbdeco', name: 'showy mountain ash', latin: 'Sorbus decora', file: 'sorbdeco.geojson', color: '#83d411' },
-  { id: 'sorbscop', name: 'Greene mountain ash', latin: 'Sorbus scopulina', file: 'sorbscop.geojson', color: '#2c5dd2' },
-  { id: 'sorbsitc', name: 'Sitka mountain ash', latin: 'Sorbus sitchensis', file: 'sorbsitc.geojson', color: '#e23636' },
-  { id: 'stapbola', name: 'Sierra bladdernut', latin: 'Staphylea bolanderi', file: 'stapbola.geojson', color: '#42ef74' },
-  { id: 'staptrif', name: 'American bladdernut', latin: 'Staphylea trifolia', file: 'staptrif.geojson', color: '#7e28bd' },
-  { id: 'stewmala', name: 'Virginia stewartia', latin: 'Stewartia malacodendron', file: 'stewmala.geojson', color: '#dfc61f' },
-  { id: 'stewovat', name: 'mountain stewartia', latin: 'Stewartia ovata', file: 'stewovat.geojson', color: '#2acded' },
-  { id: 'styramer', name: 'American snowbell', latin: 'Styrax americana', file: 'styramer.geojson', color: '#db569e' },
-  { id: 'styrgran', name: 'bigleaf snowbell', latin: 'Styrax grandifolia', file: 'styrgran.geojson', color: '#47c81c' },
-  { id: 'styrplat', name: 'sycamore leaf snowbell', latin: 'Styrax platanifolia', file: 'styrplat.geojson', color: '#1b13eb' },
-  { id: 'surimari', name: 'baycedar', latin: 'Suriana maritima', file: 'surimari.geojson', color: '#d67341' },
-  { id: 'swiemaha', name: 'West Indies mahogany', latin: 'Swietenia mahagoni', file: 'swiemaha.geojson', color: '#4ce5ac' },
-  { id: 'symptinc', name: 'common sweetleaf', latin: 'Symplocos tinctoria', file: 'symptinc.geojson', color: '#c311d4' },
-  { id: 'taxodist', name: 'baldcypress', latin: 'Taxodium distichum', file: 'taxodist.geojson', color: '#afd22c' },
-  { id: 'taxomucr', name: 'Montezuma baldcypress', latin: 'Taxodium mucronatum', file: 'taxomucr.geojson', color: '#368ce2' },
-  { id: 'taxubrev', name: 'Pacific yew', latin: 'Taxus brevifolia', file: 'taxubrev.geojson', color: '#ef4266' },
-  { id: 'taxucana', name: 'Canada yew', latin: 'Taxus canadensis', file: 'taxucana.geojson', color: '#28bd34' },
-  { id: 'taxuflor', name: 'Florida yew', latin: 'Taxus floridana', file: 'taxuflor.geojson', color: '#671fdf' },
-  { id: 'tetrbico', name: 'Florida tetrazygia', latin: 'Tetrazygia bicolor', file: 'tetrbico.geojson', color: '#edac2a' },
-  { id: 'thrimorr', name: 'key thatchpalm', latin: 'Thrinax morrisii', file: 'thrimorr.geojson', color: '#56dbd5' },
-  { id: 'thriradi', name: 'Florida thatchpalm', latin: 'Thrinax radiata', file: 'thriradi.geojson', color: '#c81c9d' },
-  { id: 'thujocci', name: 'northern white cedar', latin: 'Thuja occidentalis', file: 'thujocci.geojson', color: '#76eb13' },
-  { id: 'thujplic', name: 'western redcedar', latin: 'Thuja plicata', file: 'thujplic.geojson', color: '#415ad6' },
-  { id: 'tiliamer', name: 'American basswood', latin: 'Tilia americana', file: 'tiliamer.geojson', color: '#e55f4c' },
-  { id: 'tilicaro', name: 'Carolina basswood', latin: 'Tilia caroliniana', file: 'tilicaro.geojson', color: '#11d462' },
-  { id: 'tilihete', name: 'white basswood', latin: 'Tilia heterophylla', file: 'tilihete.geojson', color: '#a22cd2' },
-  { id: 'torrcali', name: 'California torreya', latin: 'Torreya californica', file: 'torrcali.geojson', color: '#e2e236' },
-  { id: 'torrtaxi', name: 'Florida torreya', latin: 'Torreya taxifolia', file: 'torrtaxi.geojson', color: '#42bcef' },
-  { id: 'toxivern', name: 'poison sumac', latin: 'Toxicodendron vernix', file: 'toxivern.geojson', color: '#bd2866' },
-  { id: 'tremlama', name: 'West Indies trema', latin: 'Trema lamarckiana', file: 'tremlama.geojson', color: '#37df1f' },
-  { id: 'tremmicr', name: 'Florida trema', latin: 'Trema micrantha', file: 'tremmicr.geojson', color: '#4b2aed' },
-  { id: 'tsugcana', name: 'eastern hemlock', latin: 'Tsuga canadensis', file: 'tsugcana.geojson', color: '#db9356' },
-  { id: 'tsugcaro', name: 'Carolina hemlock', latin: 'Tsuga caroliniana', file: 'tsugcaro.geojson', color: '#1cc89e' },
-  { id: 'tsughete', name: 'western hemlock', latin: 'Tsuga heterophylla', file: 'tsughete.geojson', color: '#eb13e2' },
-  { id: 'tsugmert', name: 'mountain hemlock', latin: 'Tsuga mertensiana', file: 'tsugmert.geojson', color: '#a4d641' },
-  { id: 'ulmualat', name: 'winged elm', latin: 'Ulmus alata', file: 'ulmualat.geojson', color: '#4c85e5' },
-  { id: 'ulmuamer', name: 'American elm', latin: 'Ulmus americana', file: 'ulmuamer.geojson', color: '#d41120' },
-  { id: 'ulmucras', name: 'cedar elm', latin: 'Ulmus crassifolia', file: 'ulmucras.geojson', color: '#2cd24f' },
-  { id: 'ulmurubr', name: 'slippery elm', latin: 'Ulmus rubra', file: 'ulmurubr.geojson', color: '#8c36e2' },
-  { id: 'ulmusero', name: 'September elm', latin: 'Ulmus serotina', file: 'ulmusero.geojson', color: '#efcc42' },
-  { id: 'ulmuthom', name: 'rock elm', latin: 'Ulmus thomasii', file: 'ulmuthom.geojson', color: '#28b0bd' },
-  { id: 'umbecali', name: 'California laurel', latin: 'Umbellularia californica', file: 'umbecali.geojson', color: '#df1f96' },
-  { id: 'ungnspec', name: 'Mexican buckeye', latin: 'Ungnadia speciosa', file: 'ungnspec.geojson', color: '#6bed2a' },
-  { id: 'vaccarbo', name: 'tree sparkleberry', latin: 'Vaccinium arboreum', file: 'vaccarbo.geojson', color: '#565bdb' },
-  { id: 'vauqcali', name: 'Torrey vauquelinia', latin: 'Vauquelinia californica', file: 'vauqcali.geojson', color: '#c8481c' },
-  { id: 'vauqpauc', name: 'fewflower vauquelinia', latin: 'Vauquelinia pauciflora', file: 'vauqpauc.geojson', color: '#13eb89' },
-  { id: 'vibulent', name: 'nannyberry', latin: 'Viburnum lentago', file: 'vibulent.geojson', color: '#be41d6' },
-  { id: 'vibunudu', name: 'possumhaw viburnum', latin: 'Viburnum nudum', file: 'vibunudu.geojson', color: '#d1e54c' },
-  { id: 'vibuobov', name: 'Walter viburnum', latin: 'Viburnum obovatum', file: 'vibuobov.geojson', color: '#1182d4' },
-  { id: 'vibuprun', name: 'blackhaw', latin: 'Viburnum prunifolium', file: 'vibuprun.geojson', color: '#d22c5c' },
-  { id: 'viburufi', name: 'rusty blackhaw', latin: 'Viburnum rufidulum', file: 'viburufi.geojson', color: '#36e236' },
-  { id: 'vibutril', name: 'American cranberrybush', latin: 'Viburnum trilobum', file: 'vibutril.geojson', color: '#7542ef' },
-  { id: 'washfili', name: 'California washingtonia', latin: 'Washingtonia filifera', file: 'washfili.geojson', color: '#bd7f28' },
-  { id: 'ximeamer', name: 'tallowwood', latin: 'Ximenia americana', file: 'ximeamer.geojson', color: '#1fdfc8' },
-  { id: 'yuccaloi', name: 'aloe yucca', latin: 'Yucca aloifolia', file: 'yuccaloi.geojson', color: '#ed2acc' },
-  { id: 'yuccbrev', name: 'Joshua tree', latin: 'Yucca brevifolia', file: 'yuccbrev.geojson', color: '#9ddb56' },
-  { id: 'yucccarn', name: 'Carneros yucca', latin: 'Yucca carnerosana', file: 'yucccarn.geojson', color: '#1c46c8' },
-  { id: 'yuccelat', name: 'soaptree yucca', latin: 'Yucca elata', file: 'yuccelat.geojson', color: '#eb1d13' },
-  { id: 'yuccfaxo', name: 'Faxon yucca', latin: 'Yucca faxoniana', file: 'yuccfaxo.geojson', color: '#41d674' },
-  { id: 'yuccglor', name: 'moundlily yucca', latin: 'Yucca gloriosa', file: 'yuccglor.geojson', color: '#ac4ce5' },
-  { id: 'yuccmoha', name: 'Mohave yucca', latin: 'Yucca mohavensis', file: 'yuccmoha.geojson', color: '#d4c511' },
-  { id: 'yuccrost', name: 'beaked yucca', latin: 'Yucca rostrata', file: 'yuccrost.geojson', color: '#2caed2' },
-  { id: 'yuccscho', name: 'Schotts yucca', latin: 'Yucca schottii', file: 'yuccscho.geojson', color: '#e2368b' },
-  { id: 'yucctorr', name: 'Torrey yucca', latin: 'Yucca torreyi', file: 'yucctorr.geojson', color: '#65ef42' },
-  { id: 'yucctrec', name: 'Trecul yucca', latin: 'Yucca treculeana', file: 'yucctrec.geojson', color: '#3528bd' },
-  { id: 'zantamer', name: 'common prickly ash', latin: 'Zanthoxylum americanum', file: 'zantamer.geojson', color: '#df681f' },
-  { id: 'zantclav', name: 'Hercules club', latin: 'Zanthoxylum clava-herculis', file: 'zantclav.geojson', color: '#2aedae' },
-  { id: 'zantcori', name: 'Biscayne prickly ash', latin: 'Zanthoxylum coriaceum', file: 'zantcori.geojson', color: '#d656db' },
-  { id: 'zantfaga', name: 'lime prickly ash', latin: 'Zanthoxylum fagara', file: 'zantfaga.geojson', color: '#9cc81c' },
-  { id: 'zantflav', name: 'West Indies satinwood', latin: 'Zanthoxylum flavum', file: 'zantflav.geojson', color: '#1374eb' },
-  { id: 'zanthirs', name: 'Texas Hercules club', latin: 'Zanthoxylum hirsutum', file: 'zanthirs.geojson', color: '#d64159' },
+  { id: 'abieamab', name: 'Pacific silver fir', latin: 'Abies amabilis', color: '#bd2828' },
+  { id: 'abiebals', name: 'balsam fir', latin: 'Abies balsamea', color: '#1fdf57' },
+  { id: 'abiebrac', name: 'bristlecone fir', latin: 'Abies bracteata', color: '#9c2aed' },
+  { id: 'abieconc', name: 'white fir', latin: 'Abies concolor', color: '#dbca56' },
+  { id: 'abiefras', name: 'Fraser fir', latin: 'Abies fraseri', color: '#1cacc8' },
+  { id: 'abiegran', name: 'grand fir', latin: 'Abies grandis', color: '#eb1388' },
+  { id: 'abielasi', name: 'subalpine fir', latin: 'Abies lasiocarpa', color: '#66d641' },
+  { id: 'abiemagn', name: 'California red fir', latin: 'Abies magnifica', color: '#534ce5' },
+  { id: 'abieproc', name: 'noble fir', latin: 'Abies procera', color: '#d45211' },
+  { id: 'acacberl', name: 'Berlandier acacia', latin: 'Acacia berlandieri', color: '#2cd294' },
+  { id: 'acacchor', name: 'cinnecord', latin: 'Acacia choriophylla', color: '#d436e2' },
+  { id: 'acacfarn', name: 'sweet acacia', latin: 'Acacia farnesiana', color: '#cbef42' },
+  { id: 'acacgreg', name: 'catclaw acacia', latin: 'Acacia greggii', color: '#2872bd' },
+  { id: 'acacmacr', name: 'long spine acacia', latin: 'Acacia macracantha', color: '#df1f47' },
+  { id: 'acacrigi', name: 'blackbrush acacia', latin: 'Acacia rigidula', color: '#2aed3b' },
+  { id: 'acacroem', name: 'Roemer acacia', latin: 'Acacia roemeriana', color: '#8856db' },
+  { id: 'acactort', name: 'twisted acacia', latin: 'Acacia tortuosa', color: '#c88f1c' },
+  { id: 'acacwrig', name: 'Wright acacia', latin: 'Acacia wrightii', color: '#13ebe3' },
+  { id: 'acerbarb', name: 'Florida maple', latin: 'Acer barbatum', color: '#d641b1' },
+  { id: 'acercirc', name: 'vine maple', latin: 'Acer circinatum', color: '#92e54c' },
+  { id: 'acerglab', name: 'Rocky Mountain maple', latin: 'Acer glabrum', color: '#1131d4' },
+  { id: 'acergran', name: 'bigtooth maple', latin: 'Acer grandidentatum', color: '#d2412c' },
+  { id: 'acerleuc', name: 'chalk maple', latin: 'Acer leucoderme', color: '#36e27e' },
+  { id: 'acermacr', name: 'bigleaf maple', latin: 'Acer macrophyllum', color: '#bd42ef' },
+  { id: 'acernegu', name: 'boxelder', latin: 'Acer negundo', color: '#bcbd28' },
+  { id: 'acernigr', name: 'black maple', latin: 'Acer nigrum', color: '#1fa6df' },
+  { id: 'acerpens', name: 'striped maple', latin: 'Acer pensylvanicum', color: '#ed2a7b' },
+  { id: 'acerrubr', name: 'red maple', latin: 'Acer rubrum', color: '#66db56' },
+  { id: 'acersacc', name: 'silver maple', latin: 'Acer saccharinum', color: '#3a1cc8' },
+  { id: 'acersacr', name: 'sugar maple', latin: 'Acer saccharum', color: '#eb7713' },
+  { id: 'acerspic', name: 'mountain maple', latin: 'Acer spicatum', color: '#41d6b2' },
+  { id: 'acoewrig', name: 'paurotis palm', latin: 'Acoelorrhaphe wrightii', color: '#e54cde' },
+  { id: 'aesccali', name: 'California buckeye', latin: 'Aesculus californica', color: '#92d411' },
+  { id: 'aescglab', name: 'Ohio buckeye', latin: 'Aesculus glabra', color: '#2c6ad2' },
+  { id: 'aescocta', name: 'yellow buckeye', latin: 'Aesculus octandra', color: '#e23643' },
+  { id: 'aescparv', name: 'bottlebrush buckeye', latin: 'Aesculus parviflora', color: '#42ef67' },
+  { id: 'aescpavi', name: 'red buckeye', latin: 'Aesculus pavia', color: '#7328bd' },
+  { id: 'aescsylv', name: 'painted buckeye', latin: 'Aesculus sylvatica', color: '#dfb81f' },
+  { id: 'agavutah', name: 'Utah agave', latin: 'Agave utahensis', color: '#2adced' },
+  { id: 'alnumari', name: 'seaside alder', latin: 'Alnus maritima', color: '#db56a8' },
+  { id: 'alnuoblo', name: 'Arizona alder', latin: 'Alnus oblongifolia', color: '#55c81c' },
+  { id: 'alnurhom', name: 'white alder', latin: 'Alnus rhombifolia', color: '#131aeb' },
+  { id: 'alnurubr', name: 'red alder', latin: 'Alnus rubra', color: '#d66741' },
+  { id: 'alnurugo', name: 'speckled alder', latin: 'Alnus rugosa', color: '#4ce5a0' },
+  { id: 'alnuserr', name: 'hazel alder', latin: 'Alnus serrulata', color: '#b411d4' },
+  { id: 'alnusinu', name: 'Sitka alder', latin: 'Alnus sinuata', color: '#bcd22c' },
+  { id: 'alnutenu', name: 'thinleaf alder', latin: 'Alnus tenuifolia', color: '#3699e2' },
+  { id: 'alvaamor', name: 'Mexican alvaradoa', latin: 'Alvaradoa amorphoides', color: '#ef4273' },
+  { id: 'amelalni', name: 'western serviceberry', latin: 'Amelanchier alnifolia', color: '#28bd29' },
+  { id: 'amelarbo', name: 'downy serviceberry', latin: 'Amelanchier arborea', color: '#581fdf' },
+  { id: 'amelinte', name: 'inland serviceberry', latin: 'Amelanchier interior', color: '#ed9d2a' },
+  { id: 'amelsang', name: 'roundleaf serviceberry', latin: 'Amelanchier sanguinea', color: '#56dbcb' },
+  { id: 'amelutah', name: 'Utah serviceberry', latin: 'Amelanchier utahensis', color: '#c81caa' },
+  { id: 'amphlati', name: 'black calabash', latin: 'Amphitecna latifolia', color: '#86eb13' },
+  { id: 'amyrbals', name: 'balsam torchwood', latin: 'Amyris balsamifera', color: '#4165d6' },
+  { id: 'amyrelem', name: 'torchwood', latin: 'Amyris elemifera', color: '#e5534c' },
+  { id: 'annoglab', name: 'pond apple', latin: 'Annona glabra', color: '#11d453' },
+  { id: 'aralspin', name: 'devils walkingstick', latin: 'Aralia spinosa', color: '#952cd2' },
+  { id: 'arbuariz', name: 'Arizona madrone', latin: 'Arbutus arizonica', color: '#e2d536' },
+  { id: 'arbumenz', name: 'Pacific madrone', latin: 'Arbutus menziesii', color: '#42caef' },
+  { id: 'arbutexa', name: 'Texas madrone', latin: 'Arbutus texana', color: '#bd2871' },
+  { id: 'arctprin', name: 'Pringle manzanita', latin: 'Arctostaphylos pringlei', color: '#46df1f' },
+  { id: 'ardiesca', name: 'marlberry', latin: 'Ardisia escallonioides', color: '#3c2aed' },
+  { id: 'artetrid', name: 'big sagebrush', latin: 'Artemisia tridentata', color: '#db8956' },
+  { id: 'asimparv', name: 'smallflower pawpaw', latin: 'Asimina parviflora', color: '#1cc890' },
+  { id: 'asimtril', name: 'pawpaw', latin: 'Asimina triloba', color: '#e413eb' },
+  { id: 'avicgerm', name: 'black mangrove', latin: 'Avicennia germinans', color: '#b0d641' },
+  { id: 'bacchali', name: 'eastern baccharis', latin: 'Baccharis halimifolia', color: '#4c91e5' },
+  { id: 'betualle', name: 'yellow birch', latin: 'Betula alleghaniensis', color: '#d4112f' },
+  { id: 'betulent', name: 'sweet birch', latin: 'Betula lenta', color: '#2cd242' },
+  { id: 'betunana', name: 'dwarf birch', latin: 'Betula nana', color: '#7f36e2' },
+  { id: 'betunigr', name: 'river birch', latin: 'Betula nigra', color: '#efbe42' },
+  { id: 'betuocci', name: 'water birch', latin: 'Betula occidentalis', color: '#28bbbd' },
+  { id: 'betupapy', name: 'paper birch', latin: 'Betula papyrifera', color: '#df1fa5' },
+  { id: 'betupopu', name: 'gray birch', latin: 'Betula populifolia', color: '#7aed2a' },
+  { id: 'betuuber', name: 'Ashe birch', latin: 'Betula uber', color: '#5665db' },
+  { id: 'bourovat', name: 'Bahama strongbark', latin: 'Bourreria ovata', color: '#c83b1c' },
+  { id: 'bourradu', name: 'rough strongbark', latin: 'Bourreria radula', color: '#13eb78' },
+  { id: 'bumecela', name: 'saffron plum', latin: 'Bumelia celastrina', color: '#b341d6' },
+  { id: 'bumelanu', name: 'gum bumelia', latin: 'Bumelia lanuginosa', color: '#dde54c' },
+  { id: 'bumelyci', name: 'buckthorn bumelia', latin: 'Bumelia lycioides', color: '#1191d4' },
+  { id: 'bumetena', name: 'tough bumelia', latin: 'Bumelia tenax', color: '#d22c68' },
+  { id: 'bursfaga', name: 'fragrant bursera', latin: 'Bursera fagaroides', color: '#42e236' },
+  { id: 'bursmicr', name: 'elephanttree', latin: 'Bursera microphylla', color: '#6842ef' },
+  { id: 'burssima', name: 'gumbo limbo', latin: 'Bursera simaruba', color: '#bd7428' },
+  { id: 'byrsluci', name: 'key byrsonima', latin: 'Byrsonima lucida', color: '#1fdfb9' },
+  { id: 'caesmexi', name: 'Mexican poinciana', latin: 'Caesalpinia mexicana', color: '#ed2adb' },
+  { id: 'calypall', name: 'pale lidflower', latin: 'Calyptranthes pallens', color: '#a8db56' },
+  { id: 'calyzuzy', name: 'myrtle of the river', latin: 'Calyptranthes zuzygium', color: '#1c54c8' },
+  { id: 'canewint', name: 'canella', latin: 'Canella winterana', color: '#eb1319' },
+  { id: 'canoholo', name: 'canotia', latin: 'Canotia holacantha', color: '#41d668' },
+  { id: 'cappcyno', name: 'Jamaica caper', latin: 'Capparis cynophallophora', color: '#a14ce5' },
+  { id: 'cappflex', name: 'limber caper', latin: 'Capparis flexuosa', color: '#d4b611' },
+  { id: 'carpcaro', name: 'American hornbeam', latin: 'Carpinus caroliniana', color: '#2cbbd2' },
+  { id: 'caryaqua', name: 'water hickory', latin: 'Carya aquatica', color: '#e23698' },
+  { id: 'carycord', name: 'bitternut hickory', latin: 'Carya cordiformis', color: '#72ef42' },
+  { id: 'caryflor', name: 'scrub hickory', latin: 'Carya floridana', color: '#2a28bd' },
+  { id: 'caryglab', name: 'pignut hickory', latin: 'Carya glabra', color: '#df5a1f' },
+  { id: 'caryilli', name: 'pecan', latin: 'Carya illinoensis', color: '#2aed9f' },
+  { id: 'carylaci', name: 'shellbark hickory', latin: 'Carya laciniosa', color: '#cc56db' },
+  { id: 'carymyri', name: 'nutmeg hickory', latin: 'Carya myristicaeformis', color: '#a9c81c' },
+  { id: 'caryovat', name: 'shagbark hickory', latin: 'Carya ovata', color: '#1385eb' },
+  { id: 'carypall', name: 'sand hickory', latin: 'Carya pallida', color: '#d64164' },
+  { id: 'carytexa', name: 'black hickory', latin: 'Carya texana', color: '#4ce554' },
+  { id: 'carytome', name: 'mockernut hickory', latin: 'Carya tomentosa', color: '#5411d4' },
+  { id: 'castalni', name: 'Florida chinkapin', latin: 'Castanea alnifolia', color: '#d2962c' },
+  { id: 'castchry', name: 'golden chinkapin', latin: 'Castanopsis chrysophylla', color: '#36e2d6' },
+  { id: 'castdent', name: 'American chestnut', latin: 'Castanea dentata', color: '#ef42c9' },
+  { id: 'castozar', name: 'Ozark chinkapin', latin: 'Castanea ozarkensis', color: '#70bd28' },
+  { id: 'castpumi', name: 'Allegheny chinkapin', latin: 'Castanea pumila', color: '#1f44df' },
+  { id: 'catabign', name: 'southern catalpa', latin: 'Catalpa bignonioides', color: '#ed3d2a' },
+  { id: 'cataspec', name: 'northern catalpa', latin: 'Catalpa speciosa', color: '#56db8a' },
+  { id: 'ceanarbo', name: 'feltleaf ceanothus', latin: 'Ceanothus arboreus', color: '#921cc8' },
+  { id: 'ceanspin', name: 'spiny ceanothus', latin: 'Ceanothus spinosus', color: '#ebe613' },
+  { id: 'ceanthyr', name: 'blueblossom', latin: 'Ceanothus thyrsiflorus', color: '#41afd6' },
+  { id: 'celtlaev', name: 'sugarberry', latin: 'Celtis laevigata', color: '#e54c90' },
+  { id: 'celtlind', name: 'Lindheimer hackberry', latin: 'Celtis lindheimeri', color: '#2ed411' },
+  { id: 'celtocci', name: 'hackberry', latin: 'Celtis occidentalis', color: '#432cd2' },
+  { id: 'celtreti', name: 'netleaf hackberry', latin: 'Celtis reticulata', color: '#e28036' },
+  { id: 'celttenu', name: 'Georgia hackberry', latin: 'Celtis tenuifolia', color: '#42efbf' },
+  { id: 'cephocci', name: 'common buttonbush', latin: 'Cephalanthus occidentalis', color: '#bd28ba' },
+  { id: 'cercbetu', name: 'birchleaf cercocarpus', latin: 'Cercocarpus betuloides', color: '#a4df1f' },
+  { id: 'cercbrev', name: 'hairy cercocarpus', latin: 'Cercocarpus breviflorus', color: '#2a78ed' },
+  { id: 'cerccana', name: 'eastern redbud', latin: 'Cercis canadensis', color: '#db5665' },
+  { id: 'cercflor', name: 'blue paloverde', latin: 'Cercidium floridum', color: '#1cc83c' },
+  { id: 'cercledi', name: 'curlleaf cercocarpus', latin: 'Cercocarpus ledifolius', color: '#7a13eb' },
+  { id: 'cercmacr', name: 'border paloverde', latin: 'Cercidium macrum', color: '#d6b441' },
+  { id: 'cercmicr', name: 'yellow paloverde', latin: 'Cercidium microphyllum', color: '#4cdce5' },
+  { id: 'cercocci', name: 'California redbud', latin: 'Cercis occidentalis', color: '#d4118f' },
+  { id: 'cerctras', name: 'Catalina cercocarpus', latin: 'Cercocarpus traskiae', color: '#67d22c' },
+  { id: 'ceregiga', name: 'saguaro', latin: 'Cereus giganteus', color: '#3641e2' },
+  { id: 'cererobi', name: 'key tree cactus', latin: 'Cereus robinii', color: '#ef6942' },
+  { id: 'chamlaws', name: 'Port Orford cedar', latin: 'Chamaecyparis lawsoniana', color: '#28bd75' },
+  { id: 'chamnoot', name: 'Alaska cedar', latin: 'Chamaecyparis nootkatensis', color: '#ba1fdf' },
+  { id: 'chamthyo', name: 'Atlantic white cedar', latin: 'Chamaecyparis thyoides', color: '#daed2a' },
+  { id: 'chilline', name: 'desert willow', latin: 'Chilopsis linearis', color: '#56a7db' },
+  { id: 'chiovirg', name: 'fringetree', latin: 'Chionanthus virginicus', color: '#c81c52' },
+  { id: 'chryicac', name: 'cocoplum', latin: 'Chrysobalanus icaco', color: '#18eb13' },
+  { id: 'chryoliv', name: 'satinleaf', latin: 'Chrysophyllum oliviforme', color: '#6941d6' },
+  { id: 'cithberl', name: 'Berlandier fiddlewood', latin: 'Citharexylum berlandieri', color: '#e5a24c' },
+  { id: 'cithfrut', name: 'Florida fiddlewood', latin: 'Citharexylum fruticosum', color: '#11d4b7' },
+  { id: 'cladkent', name: 'yellowwood', latin: 'Cladrastis kentukea', color: '#d22cba' },
+  { id: 'cletacum', name: 'cinnamon clethra', latin: 'Clethra acuminata', color: '#97e236' },
+  { id: 'clifmono', name: 'buckwheat tree', latin: 'Cliftonia monophylla', color: '#4271ef' },
+  { id: 'clusrose', name: 'Florida clusia', latin: 'Clusia rosea', color: '#bd2b28' },
+  { id: 'coccarge', name: 'Florida silverpalm', latin: 'Coccothrinax argentata', color: '#1fdf5b' },
+  { id: 'coccdive', name: 'pigeon plum', latin: 'Coccoloba diversifolia', color: '#a02aed' },
+  { id: 'coccuvif', name: 'seagrape', latin: 'Coccoloba uvifera', color: '#dbcd56' },
+  { id: 'coluarbo', name: 'coffee colubrina', latin: 'Colubrina arborescens', color: '#1ca8c8' },
+  { id: 'colucube', name: 'Cuba colubrina', latin: 'Colubrina cubensis', color: '#eb1384' },
+  { id: 'coluelli', name: 'soldierwood', latin: 'Colubrina elliptica', color: '#63d641' },
+  { id: 'condglob', name: 'bitter condalia', latin: 'Condalia globosa', color: '#554ce5' },
+  { id: 'condhook', name: 'bluewood', latin: 'Condalia hookeri', color: '#d45611' },
+  { id: 'conoerec', name: 'button mangrove', latin: 'Conocarpus erectus', color: '#2cd297' },
+  { id: 'cordbois', name: 'anacahuita', latin: 'Cordia boissieri', color: '#d736e2' },
+  { id: 'cordsebe', name: 'Geiger tree', latin: 'Cordia sebestena', color: '#c7ef42' },
+  { id: 'cornalte', name: 'alternate leaf dogwood', latin: 'Cornus alternifolia', color: '#286fbd' },
+  { id: 'corndrum', name: 'roughleaf dogwood', latin: 'Cornus drummondii', color: '#df1f43' },
+  { id: 'cornflor', name: 'flowering dogwood', latin: 'Cornus florida', color: '#2aed3f' },
+  { id: 'cornglab', name: 'brown dogwood', latin: 'Cornus glabrata', color: '#8b56db' },
+  { id: 'cornnutt', name: 'Pacific dogwood', latin: 'Cornus nuttallii', color: '#c8931c' },
+  { id: 'cornocci', name: 'western dogwood', latin: 'Cornus occidentalis', color: '#13ebe7' },
+  { id: 'cornrace', name: 'gray dogwood', latin: 'Cornus racemosa', color: '#d641ae' },
+  { id: 'cornrugo', name: 'roundleaf dogwood', latin: 'Cornus rugosa', color: '#8fe54c' },
+  { id: 'cornsess', name: 'blackfruit dogwood', latin: 'Cornus sessilis', color: '#112dd4' },
+  { id: 'cornstol', name: 'red osier dogwood', latin: 'Cornus stolonifera', color: '#d2442c' },
+  { id: 'cornstri', name: 'stiffcornel dogwood', latin: 'Cornus stricta', color: '#36e281' },
+  { id: 'corycorn', name: 'beaked hazel', latin: 'Corylus cornuta', color: '#c042ef' },
+  { id: 'cotiobov', name: 'American smoketree', latin: 'Cotinus obovatus', color: '#b9bd28' },
+  { id: 'cowamexi', name: 'cliffrose', latin: 'Cowania mexicana', color: '#1fa3df' },
+  { id: 'cratchry', name: 'fireberry hawthorn', latin: 'Crataegus chrysocarpa', color: '#ed2a77' },
+  { id: 'cratcolu', name: 'Columbia hawthorn', latin: 'Crataegus columbiana', color: '#64db56' },
+  { id: 'cratdoug', name: 'black hawthorn', latin: 'Crataegus douglasii', color: '#3d1cc8' },
+  { id: 'crateryt', name: 'Cerro hawthorn', latin: 'Crataegus erythropoda', color: '#eb7b13' },
+  { id: 'cratsali', name: 'willow hawthorn', latin: 'Crataegus saligna', color: '#41d6b5' },
+  { id: 'cratsucc', name: 'fleshy hawthorn', latin: 'Crataegus succulenta', color: '#e54cdb' },
+  { id: 'crattrac', name: 'Tracy hawthorn', latin: 'Crataegus tracyi', color: '#8ed411' },
+  { id: 'crosrhac', name: 'Florida crossopetalum', latin: 'Crossopetalum rhacoma', color: '#2c66d2' },
+  { id: 'cupaglab', name: 'Florida cupania', latin: 'Cupania glabra', color: '#e23640' },
+  { id: 'cuprariz', name: 'Arizona cypress', latin: 'Cupressus arizonica', color: '#42ef6a' },
+  { id: 'cuprbake', name: 'Modoc cypress', latin: 'Cupressus bakeri', color: '#7628bd' },
+  { id: 'cuprgove', name: 'Gowen cypress', latin: 'Cupressus goveniana', color: '#dfbb1f' },
+  { id: 'cuprguad', name: 'Tecate cypress', latin: 'Cupressus guadalupensis', color: '#2ad8ed' },
+  { id: 'cuprmacn', name: 'MacNab cypress', latin: 'Cupressus macnabiana', color: '#db56a6' },
+  { id: 'cuprmacr', name: 'Monterey cypress', latin: 'Cupressus macrocarpa', color: '#51c81c' },
+  { id: 'cuprsarg', name: 'Sargent cypress', latin: 'Cupressus sargentii', color: '#1316eb' },
+  { id: 'cyrirace', name: 'swamp cyrilla', latin: 'Cyrilla racemiflora', color: '#d66a41' },
+  { id: 'dalespin', name: 'smokethorn', latin: 'Dalea spinosa', color: '#4ce5a3' },
+  { id: 'diostexa', name: 'Texas persimmon', latin: 'Diospyros texana', color: '#b811d4' },
+  { id: 'diosvirg', name: 'common persimmon', latin: 'Diospyros virginiana', color: '#b9d22c' },
+  { id: 'diphsali', name: 'willow bustic', latin: 'Dipholis salicifolia', color: '#3696e2' },
+  { id: 'dodovisc', name: 'hopbush', latin: 'Dodonaea viscosa', color: '#ef4270' },
+  { id: 'drypdive', name: 'milkbark', latin: 'Drypetes diversifolia', color: '#28bd2b' },
+  { id: 'dryplate', name: 'Guiana plum', latin: 'Drypetes lateriflora', color: '#5c1fdf' },
+  { id: 'ehreanac', name: 'anaqua', latin: 'Ehretia anacua', color: '#eda12a' },
+  { id: 'ellirace', name: 'elliottia', latin: 'Elliottia racemosa', color: '#56dbce' },
+  { id: 'erytflab', name: 'southwestern coralbean', latin: 'Erythrina flabelliformis', color: '#c81ca7' },
+  { id: 'erytherb', name: 'eastern coralbean', latin: 'Erythrina herbacea', color: '#82eb13' },
+  { id: 'esenberl', name: 'Berlandier esenbeckia', latin: 'Esenbeckia berlandieri', color: '#4163d6' },
+  { id: 'eugeaxil', name: 'white stopper', latin: 'Eugenia axillaris', color: '#e5564c' },
+  { id: 'eugeconf', name: 'redberry stopper', latin: 'Eugenia confusa', color: '#11d457' },
+  { id: 'eugefoet', name: 'boxleaf stopper', latin: 'Eugenia foetida', color: '#982cd2' },
+  { id: 'eugerhom', name: 'red stopper', latin: 'Eugenia rhombea', color: '#e2d836' },
+  { id: 'euonatro', name: 'eastern wahoo', latin: 'Euonymus atropurpureus', color: '#42c6ef' },
+  { id: 'euonocci', name: 'western wahoo', latin: 'Euonymus occidentalis', color: '#bd286e' },
+  { id: 'exoscari', name: 'princewood', latin: 'Exostema caribaeum', color: '#42df1f' },
+  { id: 'exotpani', name: 'inkwood', latin: 'Exothea paniculata', color: '#402aed' },
+  { id: 'eysepoly', name: 'kidneywood', latin: 'Eysenhardtia polystachya', color: '#db8c56' },
+  { id: 'eysetexa', name: 'Texas kidneywood', latin: 'Eysenhardtia texana', color: '#1cc894' },
+  { id: 'fagugran', name: 'American beech', latin: 'Fagus grandifolia', color: '#e813eb' },
+  { id: 'ficuaure', name: 'Florida strangler fig', latin: 'Ficus aurea', color: '#add641' },
+  { id: 'ficucitr', name: 'shortleaf fig', latin: 'Ficus citrifolia', color: '#4c8ee5' },
+  { id: 'foreacum', name: 'swamp privet', latin: 'Forestiera acuminata', color: '#d4112c' },
+  { id: 'foreangu', name: 'Texas forestiera', latin: 'Forestiera angustifolia', color: '#2cd246' },
+  { id: 'forephil', name: 'desert olive forestiera', latin: 'Forestiera phillyreoides', color: '#8236e2' },
+  { id: 'foresegr', name: 'Florida privet', latin: 'Forestiera segregata', color: '#efc242' },
+  { id: 'franalat', name: 'franklinia', latin: 'Franklinia alatamaha', color: '#28b9bd' },
+  { id: 'fraxamer', name: 'white ash', latin: 'Fraxinus americana', color: '#df1fa1' },
+  { id: 'fraxanom', name: 'singleleaf ash', latin: 'Fraxinus anomala', color: '#76ed2a' },
+  { id: 'fraxberl', name: 'Berlandier ash', latin: 'Fraxinus berlandieriana', color: '#5663db' },
+  { id: 'fraxcaro', name: 'Carolina ash', latin: 'Fraxinus caroliniana', color: '#c83e1c' },
+  { id: 'fraxcusp', name: 'fragrant ash', latin: 'Fraxinus cuspidata', color: '#13eb7c' },
+  { id: 'fraxdipe', name: 'two petal ash', latin: 'Fraxinus dipetala', color: '#b541d6' },
+  { id: 'fraxgood', name: 'Goodding ash', latin: 'Fraxinus gooddingii', color: '#dae54c' },
+  { id: 'fraxgreg', name: 'Gregg ash', latin: 'Fraxinus greggii', color: '#118dd4' },
+  { id: 'fraxlati', name: 'Oregon ash', latin: 'Fraxinus latifolia', color: '#d22c65' },
+  { id: 'fraxnigr', name: 'black ash', latin: 'Fraxinus nigra', color: '#3fe236' },
+  { id: 'fraxpapi', name: 'Chihuahua ash', latin: 'Fraxinus papillosa', color: '#6b42ef' },
+  { id: 'fraxpenn', name: 'green ash', latin: 'Fraxinus pennsylvanica', color: '#bd7728' },
+  { id: 'fraxprof', name: 'pumpkin ash', latin: 'Fraxinus profunda', color: '#1fdfbd' },
+  { id: 'fraxquad', name: 'blue ash', latin: 'Fraxinus quadrangulata', color: '#ed2ad7' },
+  { id: 'fraxtexe', name: 'Texas ash', latin: 'Fraxinus texensis', color: '#a5db56' },
+  { id: 'fraxvelu', name: 'velvet ash', latin: 'Fraxinus velutina', color: '#1c50c8' },
+  { id: 'fremcali', name: 'California fremontia', latin: 'Fremontodendron californicum', color: '#eb1315' },
+  { id: 'fremmexi', name: 'Mexican fremontia', latin: 'Fremontodendron mexicanum', color: '#41d66b' },
+  { id: 'garrelli', name: 'wavyleaf silktassel', latin: 'Garrya elliptica', color: '#a44ce5' },
+  { id: 'geniclus', name: 'seven year apple', latin: 'Genipa clusiifolia', color: '#d4b911' },
+  { id: 'gledaqua', name: 'waterlocust', latin: 'Gleditsia aquatica', color: '#2cb8d2' },
+  { id: 'gledtria', name: 'honeylocust', latin: 'Gleditsia triacanthos', color: '#e23695' },
+  { id: 'gordlasi', name: 'loblolly bay', latin: 'Gordonia lasianthus', color: '#6fef42' },
+  { id: 'guaiangu', name: 'Texas lignumvitae', latin: 'Guaiacum angustifolium', color: '#2c28bd' },
+  { id: 'guaisanc', name: 'roughbark lignumvitae', latin: 'Guaiacum sanctum', color: '#df5d1f' },
+  { id: 'guapdisc', name: 'blolly', latin: 'Guapira discolor', color: '#2aeda2' },
+  { id: 'guetelli', name: 'elliptic leaf velvetseed', latin: 'Guettarda elliptica', color: '#cf56db' },
+  { id: 'guetscab', name: 'roughleaf velvetseed', latin: 'Guettarda scabra', color: '#a6c81c' },
+  { id: 'gymilati', name: 'falsebox', latin: 'Gyminda latifolia', color: '#1381eb' },
+  { id: 'gymndioi', name: 'Kentucky coffeetree', latin: 'Gymnocladus dioicus', color: '#d64162' },
+  { id: 'gymnluci', name: 'oysterwood', latin: 'Gymnanthes lucida', color: '#4ce557' },
+  { id: 'halecaro', name: 'Carolina silverbell', latin: 'Halesia carolina', color: '#5811d4' },
+  { id: 'haledipt', name: 'two wing silverbell', latin: 'Halesia diptera', color: '#d2992c' },
+  { id: 'haleparv', name: 'little silverbell', latin: 'Halesia parviflora', color: '#36e2d9' },
+  { id: 'hamavirg', name: 'witch hazel', latin: 'Hamamelis virginiana', color: '#ef42c5' },
+  { id: 'hamepate', name: 'scarletbush', latin: 'Hamelia patens', color: '#6dbd28' },
+  { id: 'heliparv', name: 'barreta', latin: 'Helietta parvifolia', color: '#1f41df' },
+  { id: 'hippmanc', name: 'manchineel', latin: 'Hippomane mancinella', color: '#ed412a' },
+  { id: 'holaemor', name: 'holacantha', latin: 'Holacantha emoryi', color: '#56db8c' },
+  { id: 'hypetrif', name: 'hypelate', latin: 'Hypelate trifoliata', color: '#951cc8' },
+  { id: 'ilexambi', name: 'Carolina holly', latin: 'Ilex ambigua', color: '#ebea13' },
+  { id: 'ilexamel', name: 'sarvis holly', latin: 'Ilex amelanchier', color: '#41acd6' },
+  { id: 'ilexcass', name: 'dahoon', latin: 'Ilex cassine', color: '#e54c8d' },
+  { id: 'ilexcori', name: 'large gallberry', latin: 'Ilex coriacea', color: '#2ad411' },
+  { id: 'ilexdeci', name: 'possumhaw', latin: 'Ilex decidua', color: '#472cd2' },
+  { id: 'ilexkrug', name: 'tawnyberry holly', latin: 'Ilex krugiana', color: '#e28336' },
+  { id: 'ilexlaev', name: 'smooth winterberry', latin: 'Ilex laevigata', color: '#42efc3' },
+  { id: 'ilexlong', name: 'Georgia holly', latin: 'Ilex longipes', color: '#bd28b8' },
+  { id: 'ilexmont', name: 'mountain winterberry', latin: 'Ilex montana', color: '#a0df1f' },
+  { id: 'ilexmyrt', name: 'myrtle dahoon', latin: 'Ilex myrtifolia', color: '#2a75ed' },
+  { id: 'ilexopac', name: 'American holly', latin: 'Ilex opaca', color: '#db5662' },
+  { id: 'ilexvert', name: 'common winterberry', latin: 'Ilex verticillata', color: '#1cc83f' },
+  { id: 'ilexvomi', name: 'yaupon', latin: 'Ilex vomitoria', color: '#7e13eb' },
+  { id: 'illiflor', name: 'Florida anise tree', latin: 'Illicium floridanum', color: '#d6b641' },
+  { id: 'illiparv', name: 'yellow anise tree', latin: 'Illicium parviflorum', color: '#4cd9e5' },
+  { id: 'jacqkeye', name: 'joewood', latin: 'Jacquinia keyensis', color: '#d4118c' },
+  { id: 'juglcali', name: 'California walnut', latin: 'Juglans californica', color: '#64d22c' },
+  { id: 'juglcine', name: 'butternut', latin: 'Juglans cinerea', color: '#363ee2' },
+  { id: 'juglhind', name: 'Hinds walnut', latin: 'Juglans hindsii', color: '#ef6c42' },
+  { id: 'juglmajo', name: 'Arizona walnut', latin: 'Juglans major', color: '#28bd78' },
+  { id: 'juglmicr', name: 'little walnut', latin: 'Juglans microcarpa', color: '#be1fdf' },
+  { id: 'juglnigr', name: 'black walnut', latin: 'Juglans nigra', color: '#d6ed2a' },
+  { id: 'juniashe', name: 'Ashe juniper', latin: 'Juniperus ashei', color: '#56a4db' },
+  { id: 'junicali', name: 'California juniper', latin: 'Juniperus californica', color: '#c81c4f' },
+  { id: 'junicomm', name: 'common juniper', latin: 'Juniperus communis', color: '#14eb13' },
+  { id: 'junidepp', name: 'alligator juniper', latin: 'Juniperus deppeana', color: '#6c41d6' },
+  { id: 'junieryt', name: 'redberry juniper', latin: 'Juniperus erythrocarpa', color: '#e5a54c' },
+  { id: 'juniflac', name: 'drooping juniper', latin: 'Juniperus flaccida', color: '#11d4bb' },
+  { id: 'junihori', name: 'creeping juniper', latin: 'Juniperus horizontalis', color: '#d22cb7' },
+  { id: 'junimono', name: 'one seed juniper', latin: 'Juniperus monosperma', color: '#94e236' },
+  { id: 'juniocci', name: 'western juniper', latin: 'Juniperus occidentalis', color: '#426eef' },
+  { id: 'junioste', name: 'Utah juniper', latin: 'Juniperus osteosperma', color: '#bd2d28' },
+  { id: 'junipinc', name: 'Pinchot juniper', latin: 'Juniperus pinchotii', color: '#1fdf5f' },
+  { id: 'juniscop', name: 'Rocky Mountain juniper', latin: 'Juniperus scopulorum', color: '#a42aed' },
+  { id: 'junisili', name: 'southern redcedar', latin: 'Juniperus silicicola', color: '#dbcf56' },
+  { id: 'junivirg', name: 'eastern redcedar', latin: 'Juniperus virginiana', color: '#1ca5c8' },
+  { id: 'kalmlati', name: 'mountain laurel', latin: 'Kalmia latifolia', color: '#eb1380' },
+  { id: 'koebspin', name: 'allthorn', latin: 'Koeberlinia spinosa', color: '#61d641' },
+  { id: 'krugferr', name: 'leadwood', latin: 'Krugiodendron ferreum', color: '#584ce5' },
+  { id: 'lagurace', name: 'white mangrove', latin: 'Laguncularia racemosa', color: '#d45911' },
+  { id: 'larilari', name: 'tamarack', latin: 'Larix laricina', color: '#2cd29a' },
+  { id: 'larilyal', name: 'subalpine larch', latin: 'Larix lyallii', color: '#da36e2' },
+  { id: 'lariocci', name: 'western larch', latin: 'Larix occidentalis', color: '#c4ef42' },
+  { id: 'larrdiva', name: 'creosote bush', latin: 'Larrea divaricata', color: '#286cbd' },
+  { id: 'leitflor', name: 'corkwood', latin: 'Leitneria floridana', color: '#df1f40' },
+  { id: 'leucpulv', name: 'great leadtree', latin: 'Leucaena pulverulenta', color: '#2aed42' },
+  { id: 'leucretu', name: 'littleleaf leadtree', latin: 'Leucaena retusa', color: '#8d56db' },
+  { id: 'libodecu', name: 'incense cedar', latin: 'Libocedrus decurrens', color: '#c8961c' },
+  { id: 'licatria', name: 'Florida licaria', latin: 'Licaria triandra', color: '#13ebeb' },
+  { id: 'liqustyr', name: 'sweetgum', latin: 'Liquidambar styraciflua', color: '#d641ab' },
+  { id: 'lirituli', name: 'yellow poplar', latin: 'Liriodendron tulipifera', color: '#8ce54c' },
+  { id: 'lithdens', name: 'tanoak', latin: 'Lithocarpus densiflorus', color: '#1129d4' },
+  { id: 'lyonferr', name: 'tree lyonia', latin: 'Lyonia ferruginea', color: '#d2482c' },
+  { id: 'lyonflor', name: 'Lyontree', latin: 'Lyonothamnus floribundus', color: '#36e285' },
+  { id: 'lysilati', name: 'Bahama lysiloma', latin: 'Lysiloma latisiliquum', color: '#c442ef' },
+  { id: 'lysimicr', name: 'littleleaf lysiloma', latin: 'Lysiloma microphylla', color: '#b7bd28' },
+  { id: 'maclpomi', name: 'Osage orange', latin: 'Maclura pomifera', color: '#1f9fdf' },
+  { id: 'magnacum', name: 'cucumbertree', latin: 'Magnolia acuminata', color: '#ed2a73' },
+  { id: 'magnashe', name: 'Ashe magnolia', latin: 'Magnolia ashei', color: '#61db56' },
+  { id: 'magnfras', name: 'Fraser magnolia', latin: 'Magnolia fraseri', color: '#401cc8' },
+  { id: 'magngran', name: 'southern magnolia', latin: 'Magnolia grandiflora', color: '#eb7f13' },
+  { id: 'magnmacr', name: 'bigleaf magnolia', latin: 'Magnolia macrophylla', color: '#41d6b7' },
+  { id: 'magnpyra', name: 'pyramid magnolia', latin: 'Magnolia pyramidata', color: '#e54cd8' },
+  { id: 'magntrip', name: 'umbrella magnolia', latin: 'Magnolia tripetala', color: '#8ad411' },
+  { id: 'magnvirg', name: 'sweetbay', latin: 'Magnolia virginiana', color: '#2c63d2' },
+  { id: 'maluangu', name: 'southern crab apple', latin: 'Malus angustifolia', color: '#e2363d' },
+  { id: 'malucoro', name: 'sweet crab apple', latin: 'Malus coronaria', color: '#42ef6d' },
+  { id: 'maludive', name: 'Oregon crab apple', latin: 'Malus diversifolia', color: '#7928bd' },
+  { id: 'maluioen', name: 'prairie crab apple', latin: 'Malus ioensis', color: '#dfbf1f' },
+  { id: 'manibaha', name: 'wild dilly', latin: 'Manilkara bahamensis', color: '#2ad5ed' },
+  { id: 'mastfoet', name: 'false mastic', latin: 'Mastichodendron foetidissimum', color: '#db56a3' },
+  { id: 'maytphyl', name: 'Florida mayten', latin: 'Maytenus phyllanthoides', color: '#4ec81c' },
+  { id: 'metotoxi', name: 'Florida poisontree', latin: 'Metopium toxiferum', color: '#1313eb' },
+  { id: 'morumicr', name: 'Texas mulberry', latin: 'Morus microphylla', color: '#d66d41' },
+  { id: 'morurubr', name: 'red mulberry', latin: 'Morus rubra', color: '#4ce5a6' },
+  { id: 'myrcfrag', name: 'twinberry stopper', latin: 'Myrcianthes fragrans', color: '#bc11d4' },
+  { id: 'myricali', name: 'Pacific bayberry', latin: 'Myrica californica', color: '#b6d22c' },
+  { id: 'myriceri', name: 'southern bayberry', latin: 'Myrica cerifera', color: '#3692e2' },
+  { id: 'myrihete', name: 'evergreen bayberry', latin: 'Myrica heterophylla', color: '#ef426d' },
+  { id: 'myriinod', name: 'odorless bayberry', latin: 'Myrica inodora', color: '#28bd2e' },
+  { id: 'myripens', name: 'northern bayberry', latin: 'Myrica pensylvanica', color: '#601fdf' },
+  { id: 'nectcori', name: 'Florida nectandra', latin: 'Nectandra coriacea', color: '#eda52a' },
+  { id: 'nemocoll', name: 'mountain holly', latin: 'Nemopanthus collinus', color: '#56dbd0' },
+  { id: 'nolibige', name: 'Bigelow nolina', latin: 'Nolina bigelovii', color: '#c81ca4' },
+  { id: 'nyssaqua', name: 'water tupelo', latin: 'Nyssa aquatica', color: '#7eeb13' },
+  { id: 'nyssogec', name: 'Ogeechee tupelo', latin: 'Nyssa ogeche', color: '#4160d6' },
+  { id: 'nysssylv', name: 'black tupelo, blackgum', latin: 'Nyssa sylvatica', color: '#e5594c' },
+  { id: 'olneteso', name: 'tesota', latin: 'Olneya tesota', color: '#11d45b' },
+  { id: 'opunfulg', name: 'jumping cholla', latin: 'Opuntia fulgida', color: '#9b2cd2' },
+  { id: 'osmaamer', name: 'devilwood', latin: 'Osmanthus americanus', color: '#e2db36' },
+  { id: 'ostrchis', name: 'Chisos hophornbean', latin: 'Ostrya chisosensis', color: '#42c3ef' },
+  { id: 'ostrknow', name: 'Knowlton hophornbeam', latin: 'Ostrya knowltonii', color: '#bd286b' },
+  { id: 'ostrvirg', name: 'eastern hophornbeam', latin: 'Ostrya virginiana', color: '#3edf1f' },
+  { id: 'oxydarbo', name: 'sourwood', latin: 'Oxydendrum arboreum', color: '#442aed' },
+  { id: 'parkacul', name: 'Jerusalem thorn', latin: 'Parkinsonia aculeata', color: '#db8e56' },
+  { id: 'persborb', name: 'redbay', latin: 'Persea borbonia', color: '#1cc897' },
+  { id: 'photarbu', name: 'Christmas berry', latin: 'Photinia arbutifolia', color: '#eb13ea' },
+  { id: 'picebrew', name: 'Brewer spruce', latin: 'Picea breweriana', color: '#aad641' },
+  { id: 'picechih', name: 'chihuahua spruce', latin: 'Picea chihuahuana', color: '#4c8be5' },
+  { id: 'piceenge', name: 'Engelmann spruce', latin: 'Picea engelmannii', color: '#d41128' },
+  { id: 'piceglau', name: 'white spruce', latin: 'Picea glauca', color: '#2cd249' },
+  { id: 'picemari', name: 'black spruce', latin: 'Picea mariana', color: '#8636e2' },
+  { id: 'picepung', name: 'blue spruce', latin: 'Picea pungens', color: '#efc542' },
+  { id: 'picerube', name: 'red spruce', latin: 'Picea rubens', color: '#28b6bd' },
+  { id: 'picesitc', name: 'Sitka spruce', latin: 'Picea sitchensis', color: '#df1f9e' },
+  { id: 'picrpent', name: 'bitterbush', latin: 'Picramnia pentandra', color: '#72ed2a' },
+  { id: 'pincpube', name: 'pinckneya', latin: 'Pinckneya pubens', color: '#5660db' },
+  { id: 'pinualbi', name: 'whitebark pine', latin: 'Pinus albicaulis', color: '#c8411c' },
+  { id: 'pinuaris', name: 'bristlecone pine', latin: 'Pinus aristata', color: '#13eb81' },
+  { id: 'pinuatte', name: 'knobcone pine', latin: 'Pinus attenuata', color: '#b841d6' },
+  { id: 'pinuayac', name: 'Mexican white pine', latin: 'Pinus ayacahuite', color: '#d7e54c' },
+  { id: 'pinubalf', name: 'foxtail pine', latin: 'Pinus balfouriana', color: '#1189d4' },
+  { id: 'pinubank', name: 'jack pine', latin: 'Pinus banksiana', color: '#d22c62' },
+  { id: 'pinucari', name: 'Caribbean pine', latin: 'Pinus caribaea', color: '#3ce236' },
+  { id: 'pinucemb', name: 'Mexican pinyon', latin: 'Pinus cembroides', color: '#6f42ef' },
+  { id: 'pinuclau', name: 'sand pine', latin: 'Pinus clausa', color: '#bd7a28' },
+  { id: 'pinucont', name: 'lodgepole pine', latin: 'Pinus contorta', color: '#1fdfc0' },
+  { id: 'pinucoop', name: 'Cooper pine', latin: 'Pinus cooperi', color: '#ed2ad3' },
+  { id: 'pinucoul', name: 'Coulter pine', latin: 'Pinus coulteri', color: '#a2db56' },
+  { id: 'pinucube', name: 'Cuban pine', latin: 'Pinus cubensis', color: '#1c4dc8' },
+  { id: 'pinuculm', name: 'Potosi pinyon', latin: 'Pinus culminicola', color: '#eb1413' },
+  { id: 'pinudoug', name: 'Douglas pine', latin: 'Pinus douglasiana', color: '#41d66e' },
+  { id: 'pinudura', name: 'Durango pine', latin: 'Pinus durangensis', color: '#a74ce5' },
+  { id: 'pinuechi', name: 'shortleaf pine', latin: 'Pinus echinata', color: '#d4bd11' },
+  { id: 'pinuedul', name: 'pinyon', latin: 'Pinus edulis', color: '#2cb5d2' },
+  { id: 'pinuelli', name: 'slash pine', latin: 'Pinus elliottii', color: '#e23691' },
+  { id: 'pinuenge', name: 'Apache pine', latin: 'Pinus engelmannii', color: '#6cef42' },
+  { id: 'pinuflex', name: 'limber pine', latin: 'Pinus flexilis', color: '#2f28bd' },
+  { id: 'pinuglab', name: 'spruce pine', latin: 'Pinus glabra', color: '#df611f' },
+  { id: 'pinugreg', name: 'Gregg pine', latin: 'Pinus greggii', color: '#2aeda6' },
+  { id: 'pinuhart', name: 'Hartweg pine', latin: 'Pinus hartwegii', color: '#d156db' },
+  { id: 'pinujeff', name: 'Jeffrey pine', latin: 'Pinus jeffreyi', color: '#a3c81c' },
+  { id: 'pinulamb', name: 'sugar pine', latin: 'Pinus lambertiana', color: '#137deb' },
+  { id: 'pinulaws', name: 'Lawson pine', latin: 'Pinus lawsonii', color: '#d6415f' },
+  { id: 'pinuleio', name: 'Chihuahua pine', latin: 'Pinus leiophylla', color: '#4ce55a' },
+  { id: 'pinulong', name: 'Intermountain bristlecone pine', latin: 'Pinus longaeva', color: '#5c11d4' },
+  { id: 'pinulumh', name: 'Lumholtz pine', latin: 'Pinus lumholtzii', color: '#d29c2c' },
+  { id: 'pinumaxi', name: 'Mart?nez pinyon', latin: 'Pinus maximartinezii', color: '#36e2dd' },
+  { id: 'pinumich', name: 'Michoacï¿½n pine', latin: 'Pinus michoacana', color: '#ef42c2' },
+  { id: 'pinumono', name: 'singleleaf pinyon', latin: 'Pinus monophylla', color: '#6abd28' },
+  { id: 'pinumont', name: 'western white pine', latin: 'Pinus monticola', color: '#1f3ddf' },
+  { id: 'pinumtez', name: 'Montezuma pine', latin: 'Pinus montezumae', color: '#ed452a' },
+  { id: 'pinumuri', name: 'bishop pine', latin: 'Pinus muricata', color: '#56db8f' },
+  { id: 'pinunels', name: 'Nelson pinyon', latin: 'Pinus nelsonii', color: '#981cc8' },
+  { id: 'pinuocci', name: 'West Indian pine', latin: 'Pinus occidentalis', color: '#e9eb13' },
+  { id: 'pinuooca', name: 'Nicaraguan pitch pine; ocote pine', latin: 'Pinus oocarpa', color: '#41a9d6' },
+  { id: 'pinupalu', name: 'longleaf pine', latin: 'Pinus palustris', color: '#e54c8a' },
+  { id: 'pinupatu', name: 'Mexican weeping pine', latin: 'Pinus patula', color: '#27d411' },
+  { id: 'pinupinc', name: 'Pince pinyon', latin: 'Pinus pinceana', color: '#4a2cd2' },
+  { id: 'pinupond', name: 'ponderosa pine', latin: 'Pinus ponderosa', color: '#e28736' },
+  { id: 'pinuprin', name: 'Pringle pine', latin: 'Pinus pringlei', color: '#42efc6' },
+  { id: 'pinupseu', name: 'False Weymouth pine', latin: 'Pinus pseudostrobus', color: '#bd28b5' },
+  { id: 'pinupung', name: 'Table Mountain pine', latin: 'Pinus pungens', color: '#9cdf1f' },
+  { id: 'pinuquad', name: 'Parry pinyon', latin: 'Pinus quadrifolia', color: '#2a71ed' },
+  { id: 'pinuradi', name: 'Monterey pine', latin: 'Pinus radiata', color: '#db5660' },
+  { id: 'pinuresi', name: 'red pine', latin: 'Pinus resinosa', color: '#1cc842' },
+  { id: 'pinurigi', name: 'pitch pine', latin: 'Pinus rigida', color: '#8213eb' },
+  { id: 'pinusabi', name: 'Digger pine', latin: 'Pinus sabiniana', color: '#d6b941' },
+  { id: 'pinusero', name: 'pond pine', latin: 'Pinus serotina', color: '#4cd6e5' },
+  { id: 'pinustrb', name: 'eastern white pine', latin: 'Pinus strobus', color: '#d41188' },
+  { id: 'pinustro', name: 'southwestern white pine', latin: 'Pinus strobiformis', color: '#61d22c' },
+  { id: 'pinutaed', name: 'loblolly pine', latin: 'Pinus taeda', color: '#363ae2' },
+  { id: 'pinuteoc', name: 'Twisted  leaves pine; Aztec pine', latin: 'Pinus teocote', color: '#ef7042' },
+  { id: 'pinutorr', name: 'Torrey pine', latin: 'Pinus torreyana', color: '#28bd7b' },
+  { id: 'pinutrop', name: 'tropical pine', latin: 'Pinus tropicalis', color: '#c21fdf' },
+  { id: 'pinuvirg', name: 'Virginia pine', latin: 'Pinus virginiana', color: '#d2ed2a' },
+  { id: 'pinuwash', name: 'Washoe pine', latin: 'Pinus washoensis', color: '#56a2db' },
+  { id: 'piscpisc', name: 'Florida fishpoison tree', latin: 'Piscidia piscipula', color: '#c81c4c' },
+  { id: 'pisorotu', name: 'pisonia', latin: 'Pisonia rotundata', color: '#13eb16' },
+  { id: 'pisttexa', name: 'Texas pistache', latin: 'Pistacia texana', color: '#6f41d6' },
+  { id: 'pithflex', name: 'ebony blackbead', latin: 'Pithecellobium flexicaule', color: '#e5a84c' },
+  { id: 'pithguad', name: 'Guadeloupe blackbead', latin: 'Pithecellobium guadalupense', color: '#11d4be' },
+  { id: 'pithpall', name: 'huajillo', latin: 'Pithecellobium pallens', color: '#d22cb4' },
+  { id: 'pithungu', name: 'catclaw blackbead', latin: 'Pithecellobium unguis-cati', color: '#90e236' },
+  { id: 'planaqua', name: 'planertree', latin: 'Planera aquatica', color: '#426aef' },
+  { id: 'platocci', name: 'American sycamore', latin: 'Platanus occidentalis', color: '#bd3028' },
+  { id: 'platrace', name: 'California sycamore', latin: 'Platanus racemosa', color: '#1fdf62' },
+  { id: 'platwrig', name: 'Arizona sycamore', latin: 'Platanus wrightii', color: '#a72aed' },
+  { id: 'popuangu', name: 'narrowleaf cottonwood', latin: 'Populus angustifolia', color: '#dbd256' },
+  { id: 'popuariz', name: 'Arizona cottonwood', latin: 'Populus arizonica', color: '#1ca2c8' },
+  { id: 'popubals', name: 'balsam poplar', latin: 'Populus balsamifera', color: '#eb137b' },
+  { id: 'popudelt', name: 'eastern cottonwood', latin: 'Populus deltoides', color: '#5ed641' },
+  { id: 'popufrem', name: 'Fremont cottonwood', latin: 'Populus fremontii', color: '#5b4ce5' },
+  { id: 'popugran', name: 'bigtooth aspen', latin: 'Populus grandidentata', color: '#d45d11' },
+  { id: 'popuhete', name: 'swamp cottonwood', latin: 'Populus heterophylla', color: '#2cd29d' },
+  { id: 'popuhinc', name: 'Hinckley cottonwood', latin: 'Populus hinckleyana', color: '#de36e2' },
+  { id: 'poputrem', name: 'quaking aspen', latin: 'Populus tremuloides', color: '#c1ef42' },
+  { id: 'poputric', name: 'black cottonwood', latin: 'Populus trichocarpa', color: '#2869bd' },
+  { id: 'prosjuli', name: 'mesquite', latin: 'Prosopis juliflora', color: '#df1f3c' },
+  { id: 'prospube', name: 'screwbean mesquite', latin: 'Prosopis pubescens', color: '#2aed46' },
+  { id: 'prunalle', name: 'Allegheny plum', latin: 'Prunus alleghaniensis', color: '#9056db' },
+  { id: 'prunamer', name: 'American plum', latin: 'Prunus americana', color: '#c8991c' },
+  { id: 'prunangu', name: 'Chickasaw plum', latin: 'Prunus angustifolia', color: '#13e7eb' },
+  { id: 'pruncaro', name: 'Carolina laurelcherry', latin: 'Prunus caroliniana', color: '#d641a8' },
+  { id: 'prunemar', name: 'bitter cherry', latin: 'Prunus emarginata', color: '#89e54c' },
+  { id: 'prunfrem', name: 'desert apricot', latin: 'Prunus fremontii', color: '#1125d4' },
+  { id: 'prunhort', name: 'hortulan plum', latin: 'Prunus hortulana', color: '#d24b2c' },
+  { id: 'prunilic', name: 'hollyleaf cherry', latin: 'Prunus ilicifolia', color: '#36e288' },
+  { id: 'prunlyon', name: 'Catalina cherry', latin: 'Prunus lyonii', color: '#c742ef' },
+  { id: 'prunmexi', name: 'Mexican plum', latin: 'Prunus mexicana', color: '#b4bd28' },
+  { id: 'prunmuns', name: 'wildgoose plum', latin: 'Prunus munsoniana', color: '#1f9bdf' },
+  { id: 'prunmyrt', name: 'West Indies cherry', latin: 'Prunus myrtifolia', color: '#ed2a70' },
+  { id: 'prunnigr', name: 'Canada plum', latin: 'Prunus nigra', color: '#5fdb56' },
+  { id: 'prunpens', name: 'pin cherry', latin: 'Prunus pensylvanica', color: '#431cc8' },
+  { id: 'prunsero', name: 'black cherry', latin: 'Prunus serotina', color: '#eb8313' },
+  { id: 'prunsubc', name: 'Klamath plum', latin: 'Prunus subcordata', color: '#41d6ba' },
+  { id: 'prunumbe', name: 'flatwoods plum', latin: 'Prunus umbellata', color: '#e54cd5' },
+  { id: 'prunvirg', name: 'common chokecherry', latin: 'Prunus virginiana', color: '#87d411' },
+  { id: 'pseumacr', name: 'bigcone Douglas fir', latin: 'Pseudotsuga macrocarpa', color: '#2c60d2' },
+  { id: 'pseumenz', name: 'Douglas fir', latin: 'Pseudotsuga menziesii', color: '#e23639' },
+  { id: 'pseusarg', name: 'buccaneer palm', latin: 'Pseudophoenix sargentii', color: '#42ef71' },
+  { id: 'psidlong', name: 'long stalk stopper', latin: 'Psidium longipes', color: '#7c28bd' },
+  { id: 'ptelcren', name: 'California hoptree', latin: 'Ptelea crenulata', color: '#dfc31f' },
+  { id: 'pteltrif', name: 'common hoptree', latin: 'Ptelea trifoliata', color: '#2ad1ed' },
+  { id: 'queragri', name: 'California live oak', latin: 'Quercus agrifolia', color: '#db56a1' },
+  { id: 'querajoe', name: 'Ajo oak', latin: 'Quercus ajoensis', color: '#4bc81c' },
+  { id: 'queralba', name: 'white oak', latin: 'Quercus alba', color: '#1713eb' },
+  { id: 'querariz', name: 'Arizona white oak', latin: 'Quercus arizonica', color: '#d67041' },
+  { id: 'querarka', name: 'Arkansas oak', latin: 'Quercus arkansana', color: '#4ce5a9' },
+  { id: 'querbico', name: 'swamp white oak', latin: 'Quercus bicolor', color: '#c011d4' },
+  { id: 'querchap', name: 'Chapman oak', latin: 'Quercus chapmanii', color: '#b3d22c' },
+  { id: 'querchry', name: 'canyon live oak', latin: 'Quercus chrysolepis', color: '#368fe2' },
+  { id: 'quercocc', name: 'scarlet oak', latin: 'Quercus coccinea', color: '#ef4269' },
+  { id: 'querdoug', name: 'blue oak', latin: 'Quercus douglasii', color: '#28bd31' },
+  { id: 'querdunn', name: 'Dunn oak', latin: 'Quercus dunnii', color: '#631fdf' },
+  { id: 'querdura', name: 'Durand oak', latin: 'Quercus durandii', color: '#eda92a' },
+  { id: 'querelli', name: 'northern pin oak', latin: 'Quercus ellipsoidalis', color: '#56dbd3' },
+  { id: 'queremor', name: 'Emory oak', latin: 'Quercus emoryi', color: '#c81ca1' },
+  { id: 'querenge', name: 'Engelmann oak', latin: 'Quercus engelmannii', color: '#7aeb13' },
+  { id: 'querfalc', name: 'southern red oak', latin: 'Quercus falcata', color: '#415dd6' },
+  { id: 'quergamb', name: 'Gambel oak', latin: 'Quercus gambelii', color: '#e55c4c' },
+  { id: 'quergarr', name: 'Oregon white oak', latin: 'Quercus garryana', color: '#11d45e' },
+  { id: 'quergeor', name: 'Georgia oak', latin: 'Quercus georgiana', color: '#9f2cd2' },
+  { id: 'querglau', name: 'Lacey oak', latin: 'Quercus glaucoides', color: '#e2df36' },
+  { id: 'quergrac', name: 'Chisos oak', latin: 'Quercus graciliformis', color: '#42c0ef' },
+  { id: 'quergrav', name: 'Graves oak incl. Q. tardifolia (Muller) lateleaf oak', latin: 'Quercus gravesii', color: '#bd2868' },
+  { id: 'quergris', name: 'gray oak', latin: 'Quercus grisea', color: '#3bdf1f' },
+  { id: 'querhava', name: 'Havard oak', latin: 'Quercus havardii', color: '#472aed' },
+  { id: 'querhypo', name: 'silverleaf oak', latin: 'Quercus hypoleucoides', color: '#db9156' },
+  { id: 'querilic', name: 'bear oak', latin: 'Quercus ilicifolia', color: '#1cc89a' },
+  { id: 'querimbr', name: 'shingle oak', latin: 'Quercus imbricaria', color: '#eb13e6' },
+  { id: 'querinca', name: 'bluejack oak', latin: 'Quercus incana', color: '#a7d641' },
+  { id: 'querkell', name: 'California black oak', latin: 'Quercus kelloggii', color: '#4c88e5' },
+  { id: 'querlaev', name: 'turkey oak', latin: 'Quercus laevis', color: '#d41124' },
+  { id: 'querlaur', name: 'laurel oak', latin: 'Quercus laurifolia', color: '#2cd24c' },
+  { id: 'querloba', name: 'California white oak', latin: 'Quercus lobata', color: '#8936e2' },
+  { id: 'querlyra', name: 'overcup oak', latin: 'Quercus lyrata', color: '#efc842' },
+  { id: 'quermacd', name: 'McDonald oak', latin: 'Quercus macdonaldii', color: '#28b3bd' },
+  { id: 'quermacr', name: 'bur oak', latin: 'Quercus macrocarpa', color: '#df1f9a' },
+  { id: 'quermari', name: 'blackjack oak', latin: 'Quercus marilandica', color: '#6eed2a' },
+  { id: 'quermich', name: 'swamp chestnut oak', latin: 'Quercus michauxii', color: '#565edb' },
+  { id: 'quermohr', name: 'Mohrs oak', latin: 'Quercus mohriana', color: '#c8451c' },
+  { id: 'quermueh', name: 'chinkapin oak', latin: 'Quercus muehlenbergii', color: '#13eb85' },
+  { id: 'quermyrt', name: 'myrtle oak', latin: 'Quercus myrtifolia', color: '#bb41d6' },
+  { id: 'quernigr', name: 'water oak', latin: 'Quercus nigra', color: '#d4e54c' },
+  { id: 'quernutt', name: 'Nuttall oak', latin: 'Quercus nuttallii', color: '#1185d4' },
+  { id: 'queroblo', name: 'Mexican blue oak', latin: 'Quercus oblongifolia', color: '#d22c5f' },
+  { id: 'querogle', name: 'Oglethorpe oak', latin: 'Quercus oglethorpensis', color: '#38e236' },
+  { id: 'querpalu', name: 'pin oak', latin: 'Quercus palustris', color: '#7242ef' },
+  { id: 'querphel', name: 'willow oak', latin: 'Quercus phellos', color: '#bd7d28' },
+  { id: 'querprin', name: 'chestnut oak', latin: 'Quercus prinus', color: '#1fdfc4' },
+  { id: 'querpung', name: 'sandpaper oak', latin: 'Quercus pungens', color: '#ed2ad0' },
+  { id: 'querrubr', name: 'northern red oak', latin: 'Quercus rubra', color: '#a0db56' },
+  { id: 'querrugo', name: 'netleaf oak', latin: 'Quercus rugosa', color: '#1c4ac8' },
+  { id: 'quershum', name: 'Shumard oak', latin: 'Quercus shumardii', color: '#eb1913' },
+  { id: 'querstel', name: 'post oak', latin: 'Quercus stellata', color: '#41d671' },
+  { id: 'quertome', name: 'island live oak', latin: 'Quercus tomentella', color: '#aa4ce5' },
+  { id: 'quertoum', name: 'Toumey oak', latin: 'Quercus toumeyi', color: '#d4c111' },
+  { id: 'querturb', name: 'shrub live oak', latin: 'Quercus turbinella', color: '#2cb2d2' },
+  { id: 'quervelu', name: 'black oak', latin: 'Quercus velutina', color: '#e2368e' },
+  { id: 'quervirg', name: 'live oak', latin: 'Quercus virginiana', color: '#68ef42' },
+  { id: 'querwisl', name: 'interior live oak', latin: 'Quercus wislizeni', color: '#3228bd' },
+  { id: 'rapapunc', name: 'Florida rapanea', latin: 'Rapanea punctata', color: '#df651f' },
+  { id: 'reynsept', name: 'darling plum', latin: 'Reynosia septentrionalis', color: '#2aedaa' },
+  { id: 'rhambetu', name: 'birchleaf buckthorn', latin: 'Rhamnus betulaefolia', color: '#d456db' },
+  { id: 'rhamcali', name: 'California buckthorn', latin: 'Rhamnus californica', color: '#9fc81c' },
+  { id: 'rhamcaro', name: 'Carolina buckthorn', latin: 'Rhamnus caroliniana', color: '#1379eb' },
+  { id: 'rhamcroc', name: 'hollyleaf buckthorn', latin: 'Rhamnus crocea', color: '#d6415c' },
+  { id: 'rhampurs', name: 'cascara buckthorn', latin: 'Rhamnus purshiana', color: '#4ce55d' },
+  { id: 'rhizmang', name: 'mangrove', latin: 'Rhizophora mangle', color: '#6011d4' },
+  { id: 'rhodcata', name: 'Catawba rhododendron', latin: 'Rhododendron catawbiense', color: '#d2a02c' },
+  { id: 'rhodmacr', name: 'Pacific rhododendron', latin: 'Rhododendron macrophyllum', color: '#36e2e0' },
+  { id: 'rhodmaxi', name: 'rosebay rhododendron', latin: 'Rhododendron maximum', color: '#ef42bf' },
+  { id: 'rhuschor', name: 'Mearns sumac', latin: 'Rhus choriophylla', color: '#68bd28' },
+  { id: 'rhuscopa', name: 'shining sumac', latin: 'Rhus copallina', color: '#1f39df' },
+  { id: 'rhusglab', name: 'smooth sumac', latin: 'Rhus glabra', color: '#ed492a' },
+  { id: 'rhusinte', name: 'lemonade sumac', latin: 'Rhus integrifolia', color: '#56db92' },
+  { id: 'rhuskear', name: 'Kearney sumac', latin: 'Rhus kearneyi', color: '#9b1cc8' },
+  { id: 'rhuslanc', name: 'prairie sumac', latin: 'Rhus lanceolata', color: '#e5eb13' },
+  { id: 'rhuslaur', name: 'laurel sumac', latin: 'Rhus laurina', color: '#41a6d6' },
+  { id: 'rhusmicr', name: 'littleleaf sumac', latin: 'Rhus microphylla', color: '#e54c87' },
+  { id: 'rhusovat', name: 'sugar sumac', latin: 'Rhus ovata', color: '#23d411' },
+  { id: 'rhustyph', name: 'staghorn sumac', latin: 'Rhus typhina', color: '#4d2cd2' },
+  { id: 'robikels', name: 'Kelsey locust', latin: 'Robinia kelseyi', color: '#e28a36' },
+  { id: 'robineom', name: 'New Mexican locust', latin: 'Robinia neomexicana', color: '#42efc9' },
+  { id: 'robipseu', name: 'black locust', latin: 'Robinia pseudoacacia', color: '#bd28b2' },
+  { id: 'robivisc', name: 'clammy locust', latin: 'Robinia viscosa', color: '#99df1f' },
+  { id: 'royselat', name: 'Florida royalpalm', latin: 'Roystonea elata', color: '#2a6ded' },
+  { id: 'sabamexi', name: 'Mexican palmetto', latin: 'Sabal mexicana', color: '#db565d' },
+  { id: 'sabamino', name: 'dwarf palmetto', latin: 'Sabal minor', color: '#1cc846' },
+  { id: 'sabapalm', name: 'cabbage palmetto', latin: 'Sabal palmetto', color: '#8613eb' },
+  { id: 'salialax', name: 'feltleaf willow', latin: 'Salix alaxensis', color: '#d6bc41' },
+  { id: 'saliamyg', name: 'peachleaf willow', latin: 'Salix amygdaloides', color: '#4cd3e5' },
+  { id: 'saliarbu', name: 'peachleaf willow', latin: 'Salix arbusculoides', color: '#d41184' },
+  { id: 'salibebb', name: 'Bebb willow', latin: 'Salix bebbiana', color: '#5ed22c' },
+  { id: 'salibonp', name: 'Bonpland willow', latin: 'Salix bonplandiana', color: '#3637e2' },
+  { id: 'salicaro', name: 'Coastal Plain willow', latin: 'Salix caroliniana', color: '#ef7342' },
+  { id: 'salidisc', name: 'pussy willow', latin: 'Salix discolor', color: '#28bd7d' },
+  { id: 'saliexig', name: 'coyote willow', latin: 'Salix exigua', color: '#c51fdf' },
+  { id: 'saliflor', name: 'Florida willow', latin: 'Salix floridana', color: '#ceed2a' },
+  { id: 'salifluv', name: 'river willow', latin: 'Salix fluviatilis', color: '#569fdb' },
+  { id: 'saligeye', name: 'Geyer willow', latin: 'Salix geyeriana', color: '#c81c49' },
+  { id: 'salihind', name: 'Hinds willow', latin: 'Salix hindsiana', color: '#13eb1a' },
+  { id: 'salihook', name: 'Hooker willow', latin: 'Salix hookeriana', color: '#7241d6' },
+  { id: 'salilaev', name: 'red willow', latin: 'Salix laevigata', color: '#e5ab4c' },
+  { id: 'salilasi', name: 'Pacific willow', latin: 'Salix lasiandra', color: '#11d4c2' },
+  { id: 'salilaso', name: 'arroyo willow', latin: 'Salix lasiolepis', color: '#d22cb0' },
+  { id: 'saliluci', name: 'shining willow', latin: 'Salix lucida', color: '#8de236' },
+  { id: 'salimack', name: 'Mackenzie willow', latin: 'Salix mackenzieana', color: '#4267ef' },
+  { id: 'salinigr', name: 'black willow', latin: 'Salix nigra', color: '#bd3328' },
+  { id: 'salipell', name: 'satiny willow', latin: 'Salix pellita', color: '#1fdf66' },
+  { id: 'salipeti', name: 'meadow willow', latin: 'Salix petiolaris', color: '#ab2aed' },
+  { id: 'salipyri', name: 'balsam willow', latin: 'Salix pyrifolia', color: '#dbd456' },
+  { id: 'saliscou', name: 'Scouler willow', latin: 'Salix scouleriana', color: '#1c9ec8' },
+  { id: 'saliseri', name: 'silky willow', latin: 'Salix sericea', color: '#eb1377' },
+  { id: 'salisess', name: 'northwest willow', latin: 'Salix sessilifolia', color: '#5bd641' },
+  { id: 'salisitc', name: 'Sitka willow', latin: 'Salix sitchensis', color: '#5e4ce5' },
+  { id: 'salitaxi', name: 'yewleaf willow', latin: 'Salix taxifolia', color: '#d46111' },
+  { id: 'salitrac', name: 'Tracy willow', latin: 'Salix tracyi', color: '#2cd2a1' },
+  { id: 'sambcall', name: 'Pacific red elder', latin: 'Sambucus callicarpa', color: '#e136e2' },
+  { id: 'sambcana', name: 'American elder', latin: 'Sambucus canadensis', color: '#beef42' },
+  { id: 'sambglau', name: 'blueberry elder', latin: 'Sambucus glauca', color: '#2867bd' },
+  { id: 'sambmela', name: 'blackbead elder', latin: 'Sambucus melanocarpa', color: '#df1f38' },
+  { id: 'sambmexi', name: 'Mexican elder', latin: 'Sambucus mexicana', color: '#2aed4a' },
+  { id: 'sambvelu', name: 'velvet elder', latin: 'Sambucus velutina', color: '#9256db' },
+  { id: 'sapibilo', name: 'jumping bean sapium', latin: 'Sapium biloculare', color: '#c89d1c' },
+  { id: 'sapidrum', name: 'western soapberry', latin: 'Sapindus drummondii', color: '#13e3eb' },
+  { id: 'sapisapo', name: 'wingleaf soapberry', latin: 'Sapindus saponaria', color: '#d641a5' },
+  { id: 'sassalbi', name: 'sassafras', latin: 'Sassafras albidum', color: '#86e54c' },
+  { id: 'savibaha', name: 'maidenbush', latin: 'Savia bahamensis', color: '#1122d4' },
+  { id: 'schafrut', name: 'Florida boxwood', latin: 'Schaefferia frutescens', color: '#d24e2c' },
+  { id: 'schochry', name: 'graytwig', latin: 'Schoepfia chrysophylloides', color: '#36e28b' },
+  { id: 'sequgiga', name: 'giant sequoia', latin: 'Sequoiadendron giganteum', color: '#ca42ef' },
+  { id: 'sequsemp', name: 'redwood', latin: 'Sequoia sempervirens', color: '#b1bd28' },
+  { id: 'sererepe', name: 'saw palmetto', latin: 'Serenoa repens', color: '#1f98df' },
+  { id: 'sheparge', name: 'silver buffaloberry', latin: 'Shepherdia argentea', color: '#ed2a6c' },
+  { id: 'simaglau', name: 'paradise tree', latin: 'Simarouba glauca', color: '#5cdb56' },
+  { id: 'solaeria', name: 'mullein nightshade', latin: 'Solanum erianthum', color: '#471cc8' },
+  { id: 'sophaffi', name: 'Texas sophora', latin: 'Sophora affinis', color: '#eb8713' },
+  { id: 'sophsecu', name: 'mescalbean', latin: 'Sophora secundiflora', color: '#41d6bd' },
+  { id: 'sorbamer', name: 'American mountain ash', latin: 'Sorbus americana', color: '#e54cd2' },
+  { id: 'sorbdeco', name: 'showy mountain ash', latin: 'Sorbus decora', color: '#83d411' },
+  { id: 'sorbscop', name: 'Greene mountain ash', latin: 'Sorbus scopulina', color: '#2c5dd2' },
+  { id: 'sorbsitc', name: 'Sitka mountain ash', latin: 'Sorbus sitchensis', color: '#e23636' },
+  { id: 'stapbola', name: 'Sierra bladdernut', latin: 'Staphylea bolanderi', color: '#42ef74' },
+  { id: 'staptrif', name: 'American bladdernut', latin: 'Staphylea trifolia', color: '#7e28bd' },
+  { id: 'stewmala', name: 'Virginia stewartia', latin: 'Stewartia malacodendron', color: '#dfc61f' },
+  { id: 'stewovat', name: 'mountain stewartia', latin: 'Stewartia ovata', color: '#2acded' },
+  { id: 'styramer', name: 'American snowbell', latin: 'Styrax americana', color: '#db569e' },
+  { id: 'styrgran', name: 'bigleaf snowbell', latin: 'Styrax grandifolia', color: '#47c81c' },
+  { id: 'styrplat', name: 'sycamore leaf snowbell', latin: 'Styrax platanifolia', color: '#1b13eb' },
+  { id: 'surimari', name: 'baycedar', latin: 'Suriana maritima', color: '#d67341' },
+  { id: 'swiemaha', name: 'West Indies mahogany', latin: 'Swietenia mahagoni', color: '#4ce5ac' },
+  { id: 'symptinc', name: 'common sweetleaf', latin: 'Symplocos tinctoria', color: '#c311d4' },
+  { id: 'taxodist', name: 'baldcypress', latin: 'Taxodium distichum', color: '#afd22c' },
+  { id: 'taxomucr', name: 'Montezuma baldcypress', latin: 'Taxodium mucronatum', color: '#368ce2' },
+  { id: 'taxubrev', name: 'Pacific yew', latin: 'Taxus brevifolia', color: '#ef4266' },
+  { id: 'taxucana', name: 'Canada yew', latin: 'Taxus canadensis', color: '#28bd34' },
+  { id: 'taxuflor', name: 'Florida yew', latin: 'Taxus floridana', color: '#671fdf' },
+  { id: 'tetrbico', name: 'Florida tetrazygia', latin: 'Tetrazygia bicolor', color: '#edac2a' },
+  { id: 'thrimorr', name: 'key thatchpalm', latin: 'Thrinax morrisii', color: '#56dbd5' },
+  { id: 'thriradi', name: 'Florida thatchpalm', latin: 'Thrinax radiata', color: '#c81c9d' },
+  { id: 'thujocci', name: 'northern white cedar', latin: 'Thuja occidentalis', color: '#76eb13' },
+  { id: 'thujplic', name: 'western redcedar', latin: 'Thuja plicata', color: '#415ad6' },
+  { id: 'tiliamer', name: 'American basswood', latin: 'Tilia americana', color: '#e55f4c' },
+  { id: 'tilicaro', name: 'Carolina basswood', latin: 'Tilia caroliniana', color: '#11d462' },
+  { id: 'tilihete', name: 'white basswood', latin: 'Tilia heterophylla', color: '#a22cd2' },
+  { id: 'torrcali', name: 'California torreya', latin: 'Torreya californica', color: '#e2e236' },
+  { id: 'torrtaxi', name: 'Florida torreya', latin: 'Torreya taxifolia', color: '#42bcef' },
+  { id: 'toxivern', name: 'poison sumac', latin: 'Toxicodendron vernix', color: '#bd2866' },
+  { id: 'tremlama', name: 'West Indies trema', latin: 'Trema lamarckiana', color: '#37df1f' },
+  { id: 'tremmicr', name: 'Florida trema', latin: 'Trema micrantha', color: '#4b2aed' },
+  { id: 'tsugcana', name: 'eastern hemlock', latin: 'Tsuga canadensis', color: '#db9356' },
+  { id: 'tsugcaro', name: 'Carolina hemlock', latin: 'Tsuga caroliniana', color: '#1cc89e' },
+  { id: 'tsughete', name: 'western hemlock', latin: 'Tsuga heterophylla', color: '#eb13e2' },
+  { id: 'tsugmert', name: 'mountain hemlock', latin: 'Tsuga mertensiana', color: '#a4d641' },
+  { id: 'ulmualat', name: 'winged elm', latin: 'Ulmus alata', color: '#4c85e5' },
+  { id: 'ulmuamer', name: 'American elm', latin: 'Ulmus americana', color: '#d41120' },
+  { id: 'ulmucras', name: 'cedar elm', latin: 'Ulmus crassifolia', color: '#2cd24f' },
+  { id: 'ulmurubr', name: 'slippery elm', latin: 'Ulmus rubra', color: '#8c36e2' },
+  { id: 'ulmusero', name: 'September elm', latin: 'Ulmus serotina', color: '#efcc42' },
+  { id: 'ulmuthom', name: 'rock elm', latin: 'Ulmus thomasii', color: '#28b0bd' },
+  { id: 'umbecali', name: 'California laurel', latin: 'Umbellularia californica', color: '#df1f96' },
+  { id: 'ungnspec', name: 'Mexican buckeye', latin: 'Ungnadia speciosa', color: '#6bed2a' },
+  { id: 'vaccarbo', name: 'tree sparkleberry', latin: 'Vaccinium arboreum', color: '#565bdb' },
+  { id: 'vauqcali', name: 'Torrey vauquelinia', latin: 'Vauquelinia californica', color: '#c8481c' },
+  { id: 'vauqpauc', name: 'fewflower vauquelinia', latin: 'Vauquelinia pauciflora', color: '#13eb89' },
+  { id: 'vibulent', name: 'nannyberry', latin: 'Viburnum lentago', color: '#be41d6' },
+  { id: 'vibunudu', name: 'possumhaw viburnum', latin: 'Viburnum nudum', color: '#d1e54c' },
+  { id: 'vibuobov', name: 'Walter viburnum', latin: 'Viburnum obovatum', color: '#1182d4' },
+  { id: 'vibuprun', name: 'blackhaw', latin: 'Viburnum prunifolium', color: '#d22c5c' },
+  { id: 'viburufi', name: 'rusty blackhaw', latin: 'Viburnum rufidulum', color: '#36e236' },
+  { id: 'vibutril', name: 'American cranberrybush', latin: 'Viburnum trilobum', color: '#7542ef' },
+  { id: 'washfili', name: 'California washingtonia', latin: 'Washingtonia filifera', color: '#bd7f28' },
+  { id: 'ximeamer', name: 'tallowwood', latin: 'Ximenia americana', color: '#1fdfc8' },
+  { id: 'yuccaloi', name: 'aloe yucca', latin: 'Yucca aloifolia', color: '#ed2acc' },
+  { id: 'yuccbrev', name: 'Joshua tree', latin: 'Yucca brevifolia', color: '#9ddb56' },
+  { id: 'yucccarn', name: 'Carneros yucca', latin: 'Yucca carnerosana', color: '#1c46c8' },
+  { id: 'yuccelat', name: 'soaptree yucca', latin: 'Yucca elata', color: '#eb1d13' },
+  { id: 'yuccfaxo', name: 'Faxon yucca', latin: 'Yucca faxoniana', color: '#41d674' },
+  { id: 'yuccglor', name: 'moundlily yucca', latin: 'Yucca gloriosa', color: '#ac4ce5' },
+  { id: 'yuccmoha', name: 'Mohave yucca', latin: 'Yucca mohavensis', color: '#d4c511' },
+  { id: 'yuccrost', name: 'beaked yucca', latin: 'Yucca rostrata', color: '#2caed2' },
+  { id: 'yuccscho', name: 'Schotts yucca', latin: 'Yucca schottii', color: '#e2368b' },
+  { id: 'yucctorr', name: 'Torrey yucca', latin: 'Yucca torreyi', color: '#65ef42' },
+  { id: 'yucctrec', name: 'Trecul yucca', latin: 'Yucca treculeana', color: '#3528bd' },
+  { id: 'zantamer', name: 'common prickly ash', latin: 'Zanthoxylum americanum', color: '#df681f' },
+  { id: 'zantclav', name: 'Hercules club', latin: 'Zanthoxylum clava-herculis', color: '#2aedae' },
+  { id: 'zantcori', name: 'Biscayne prickly ash', latin: 'Zanthoxylum coriaceum', color: '#d656db' },
+  { id: 'zantfaga', name: 'lime prickly ash', latin: 'Zanthoxylum fagara', color: '#9cc81c' },
+  { id: 'zantflav', name: 'West Indies satinwood', latin: 'Zanthoxylum flavum', color: '#1374eb' },
+  { id: 'zanthirs', name: 'Texas Hercules club', latin: 'Zanthoxylum hirsutum', color: '#d64159' },
 ];
+
+const colorMatch = ["match", ["get", "id"], "abieamab", "#bd2828", "abiebals", "#1fdf57", "abiebrac", "#9c2aed", "abieconc", "#dbca56", "abiefras", "#1cacc8", "abiegran", "#eb1388", "abielasi", "#66d641", "abiemagn", "#534ce5", "abieproc", "#d45211", "acacberl", "#2cd294", "acacchor", "#d436e2", "acacfarn", "#cbef42", "acacgreg", "#2872bd", "acacmacr", "#df1f47", "acacrigi", "#2aed3b", "acacroem", "#8856db", "acactort", "#c88f1c", "acacwrig", "#13ebe3", "acerbarb", "#d641b1", "acercirc", "#92e54c", "acerglab", "#1131d4", "acergran", "#d2412c", "acerleuc", "#36e27e", "acermacr", "#bd42ef", "acernegu", "#bcbd28", "acernigr", "#1fa6df", "acerpens", "#ed2a7b", "acerrubr", "#66db56", "acersacc", "#3a1cc8", "acersacr", "#eb7713", "acerspic", "#41d6b2", "acoewrig", "#e54cde", "aesccali", "#92d411", "aescglab", "#2c6ad2", "aescocta", "#e23643", "aescparv", "#42ef67", "aescpavi", "#7328bd", "aescsylv", "#dfb81f", "agavutah", "#2adced", "alnumari", "#db56a8", "alnuoblo", "#55c81c", "alnurhom", "#131aeb", "alnurubr", "#d66741", "alnurugo", "#4ce5a0", "alnuserr", "#b411d4", "alnusinu", "#bcd22c", "alnutenu", "#3699e2", "alvaamor", "#ef4273", "amelalni", "#28bd29", "amelarbo", "#581fdf", "amelinte", "#ed9d2a", "amelsang", "#56dbcb", "amelutah", "#c81caa", "amphlati", "#86eb13", "amyrbals", "#4165d6", "amyrelem", "#e5534c", "annoglab", "#11d453", "aralspin", "#952cd2", "arbuariz", "#e2d536", "arbumenz", "#42caef", "arbutexa", "#bd2871", "arctprin", "#46df1f", "ardiesca", "#3c2aed", "artetrid", "#db8956", "asimparv", "#1cc890", "asimtril", "#e413eb", "avicgerm", "#b0d641", "bacchali", "#4c91e5", "betualle", "#d4112f", "betulent", "#2cd242", "betunana", "#7f36e2", "betunigr", "#efbe42", "betuocci", "#28bbbd", "betupapy", "#df1fa5", "betupopu", "#7aed2a", "betuuber", "#5665db", "bourovat", "#c83b1c", "bourradu", "#13eb78", "bumecela", "#b341d6", "bumelanu", "#dde54c", "bumelyci", "#1191d4", "bumetena", "#d22c68", "bursfaga", "#42e236", "bursmicr", "#6842ef", "burssima", "#bd7428", "byrsluci", "#1fdfb9", "caesmexi", "#ed2adb", "calypall", "#a8db56", "calyzuzy", "#1c54c8", "canewint", "#eb1319", "canoholo", "#41d668", "cappcyno", "#a14ce5", "cappflex", "#d4b611", "carpcaro", "#2cbbd2", "caryaqua", "#e23698", "carycord", "#72ef42", "caryflor", "#2a28bd", "caryglab", "#df5a1f", "caryilli", "#2aed9f", "carylaci", "#cc56db", "carymyri", "#a9c81c", "caryovat", "#1385eb", "carypall", "#d64164", "carytexa", "#4ce554", "carytome", "#5411d4", "castalni", "#d2962c", "castchry", "#36e2d6", "castdent", "#ef42c9", "castozar", "#70bd28", "castpumi", "#1f44df", "catabign", "#ed3d2a", "cataspec", "#56db8a", "ceanarbo", "#921cc8", "ceanspin", "#ebe613", "ceanthyr", "#41afd6", "celtlaev", "#e54c90", "celtlind", "#2ed411", "celtocci", "#432cd2", "celtreti", "#e28036", "celttenu", "#42efbf", "cephocci", "#bd28ba", "cercbetu", "#a4df1f", "cercbrev", "#2a78ed", "cerccana", "#db5665", "cercflor", "#1cc83c", "cercledi", "#7a13eb", "cercmacr", "#d6b441", "cercmicr", "#4cdce5", "cercocci", "#d4118f", "cerctras", "#67d22c", "ceregiga", "#3641e2", "cererobi", "#ef6942", "chamlaws", "#28bd75", "chamnoot", "#ba1fdf", "chamthyo", "#daed2a", "chilline", "#56a7db", "chiovirg", "#c81c52", "chryicac", "#18eb13", "chryoliv", "#6941d6", "cithberl", "#e5a24c", "cithfrut", "#11d4b7", "cladkent", "#d22cba", "cletacum", "#97e236", "clifmono", "#4271ef", "clusrose", "#bd2b28", "coccarge", "#1fdf5b", "coccdive", "#a02aed", "coccuvif", "#dbcd56", "coluarbo", "#1ca8c8", "colucube", "#eb1384", "coluelli", "#63d641", "condglob", "#554ce5", "condhook", "#d45611", "conoerec", "#2cd297", "cordbois", "#d736e2", "cordsebe", "#c7ef42", "cornalte", "#286fbd", "corndrum", "#df1f43", "cornflor", "#2aed3f", "cornglab", "#8b56db", "cornnutt", "#c8931c", "cornocci", "#13ebe7", "cornrace", "#d641ae", "cornrugo", "#8fe54c", "cornsess", "#112dd4", "cornstol", "#d2442c", "cornstri", "#36e281", "corycorn", "#c042ef", "cotiobov", "#b9bd28", "cowamexi", "#1fa3df", "cratchry", "#ed2a77", "cratcolu", "#64db56", "cratdoug", "#3d1cc8", "crateryt", "#eb7b13", "cratsali", "#41d6b5", "cratsucc", "#e54cdb", "crattrac", "#8ed411", "crosrhac", "#2c66d2", "cupaglab", "#e23640", "cuprariz", "#42ef6a", "cuprbake", "#7628bd", "cuprgove", "#dfbb1f", "cuprguad", "#2ad8ed", "cuprmacn", "#db56a6", "cuprmacr", "#51c81c", "cuprsarg", "#1316eb", "cyrirace", "#d66a41", "dalespin", "#4ce5a3", "diostexa", "#b811d4", "diosvirg", "#b9d22c", "diphsali", "#3696e2", "dodovisc", "#ef4270", "drypdive", "#28bd2b", "dryplate", "#5c1fdf", "ehreanac", "#eda12a", "ellirace", "#56dbce", "erytflab", "#c81ca7", "erytherb", "#82eb13", "esenberl", "#4163d6", "eugeaxil", "#e5564c", "eugeconf", "#11d457", "eugefoet", "#982cd2", "eugerhom", "#e2d836", "euonatro", "#42c6ef", "euonocci", "#bd286e", "exoscari", "#42df1f", "exotpani", "#402aed", "eysepoly", "#db8c56", "eysetexa", "#1cc894", "fagugran", "#e813eb", "ficuaure", "#add641", "ficucitr", "#4c8ee5", "foreacum", "#d4112c", "foreangu", "#2cd246", "forephil", "#8236e2", "foresegr", "#efc242", "franalat", "#28b9bd", "fraxamer", "#df1fa1", "fraxanom", "#76ed2a", "fraxberl", "#5663db", "fraxcaro", "#c83e1c", "fraxcusp", "#13eb7c", "fraxdipe", "#b541d6", "fraxgood", "#dae54c", "fraxgreg", "#118dd4", "fraxlati", "#d22c65", "fraxnigr", "#3fe236", "fraxpapi", "#6b42ef", "fraxpenn", "#bd7728", "fraxprof", "#1fdfbd", "fraxquad", "#ed2ad7", "fraxtexe", "#a5db56", "fraxvelu", "#1c50c8", "fremcali", "#eb1315", "fremmexi", "#41d66b", "garrelli", "#a44ce5", "geniclus", "#d4b911", "gledaqua", "#2cb8d2", "gledtria", "#e23695", "gordlasi", "#6fef42", "guaiangu", "#2c28bd", "guaisanc", "#df5d1f", "guapdisc", "#2aeda2", "guetelli", "#cf56db", "guetscab", "#a6c81c", "gymilati", "#1381eb", "gymndioi", "#d64162", "gymnluci", "#4ce557", "halecaro", "#5811d4", "haledipt", "#d2992c", "haleparv", "#36e2d9", "hamavirg", "#ef42c5", "hamepate", "#6dbd28", "heliparv", "#1f41df", "hippmanc", "#ed412a", "holaemor", "#56db8c", "hypetrif", "#951cc8", "ilexambi", "#ebea13", "ilexamel", "#41acd6", "ilexcass", "#e54c8d", "ilexcori", "#2ad411", "ilexdeci", "#472cd2", "ilexkrug", "#e28336", "ilexlaev", "#42efc3", "ilexlong", "#bd28b8", "ilexmont", "#a0df1f", "ilexmyrt", "#2a75ed", "ilexopac", "#db5662", "ilexvert", "#1cc83f", "ilexvomi", "#7e13eb", "illiflor", "#d6b641", "illiparv", "#4cd9e5", "jacqkeye", "#d4118c", "juglcali", "#64d22c", "juglcine", "#363ee2", "juglhind", "#ef6c42", "juglmajo", "#28bd78", "juglmicr", "#be1fdf", "juglnigr", "#d6ed2a", "juniashe", "#56a4db", "junicali", "#c81c4f", "junicomm", "#14eb13", "junidepp", "#6c41d6", "junieryt", "#e5a54c", "juniflac", "#11d4bb", "junihori", "#d22cb7", "junimono", "#94e236", "juniocci", "#426eef", "junioste", "#bd2d28", "junipinc", "#1fdf5f", "juniscop", "#a42aed", "junisili", "#dbcf56", "junivirg", "#1ca5c8", "kalmlati", "#eb1380", "koebspin", "#61d641", "krugferr", "#584ce5", "lagurace", "#d45911", "larilari", "#2cd29a", "larilyal", "#da36e2", "lariocci", "#c4ef42", "larrdiva", "#286cbd", "leitflor", "#df1f40", "leucpulv", "#2aed42", "leucretu", "#8d56db", "libodecu", "#c8961c", "licatria", "#13ebeb", "liqustyr", "#d641ab", "lirituli", "#8ce54c", "lithdens", "#1129d4", "lyonferr", "#d2482c", "lyonflor", "#36e285", "lysilati", "#c442ef", "lysimicr", "#b7bd28", "maclpomi", "#1f9fdf", "magnacum", "#ed2a73", "magnashe", "#61db56", "magnfras", "#401cc8", "magngran", "#eb7f13", "magnmacr", "#41d6b7", "magnpyra", "#e54cd8", "magntrip", "#8ad411", "magnvirg", "#2c63d2", "maluangu", "#e2363d", "malucoro", "#42ef6d", "maludive", "#7928bd", "maluioen", "#dfbf1f", "manibaha", "#2ad5ed", "mastfoet", "#db56a3", "maytphyl", "#4ec81c", "metotoxi", "#1313eb", "morumicr", "#d66d41", "morurubr", "#4ce5a6", "myrcfrag", "#bc11d4", "myricali", "#b6d22c", "myriceri", "#3692e2", "myrihete", "#ef426d", "myriinod", "#28bd2e", "myripens", "#601fdf", "nectcori", "#eda52a", "nemocoll", "#56dbd0", "nolibige", "#c81ca4", "nyssaqua", "#7eeb13", "nyssogec", "#4160d6", "nysssylv", "#e5594c", "olneteso", "#11d45b", "opunfulg", "#9b2cd2", "osmaamer", "#e2db36", "ostrchis", "#42c3ef", "ostrknow", "#bd286b", "ostrvirg", "#3edf1f", "oxydarbo", "#442aed", "parkacul", "#db8e56", "persborb", "#1cc897", "photarbu", "#eb13ea", "picebrew", "#aad641", "picechih", "#4c8be5", "piceenge", "#d41128", "piceglau", "#2cd249", "picemari", "#8636e2", "picepung", "#efc542", "picerube", "#28b6bd", "picesitc", "#df1f9e", "picrpent", "#72ed2a", "pincpube", "#5660db", "pinualbi", "#c8411c", "pinuaris", "#13eb81", "pinuatte", "#b841d6", "pinuayac", "#d7e54c", "pinubalf", "#1189d4", "pinubank", "#d22c62", "pinucari", "#3ce236", "pinucemb", "#6f42ef", "pinuclau", "#bd7a28", "pinucont", "#1fdfc0", "pinucoop", "#ed2ad3", "pinucoul", "#a2db56", "pinucube", "#1c4dc8", "pinuculm", "#eb1413", "pinudoug", "#41d66e", "pinudura", "#a74ce5", "pinuechi", "#d4bd11", "pinuedul", "#2cb5d2", "pinuelli", "#e23691", "pinuenge", "#6cef42", "pinuflex", "#2f28bd", "pinuglab", "#df611f", "pinugreg", "#2aeda6", "pinuhart", "#d156db", "pinujeff", "#a3c81c", "pinulamb", "#137deb", "pinulaws", "#d6415f", "pinuleio", "#4ce55a", "pinulong", "#5c11d4", "pinulumh", "#d29c2c", "pinumaxi", "#36e2dd", "pinumich", "#ef42c2", "pinumono", "#6abd28", "pinumont", "#1f3ddf", "pinumtez", "#ed452a", "pinumuri", "#56db8f", "pinunels", "#981cc8", "pinuocci", "#e9eb13", "pinuooca", "#41a9d6", "pinupalu", "#e54c8a", "pinupatu", "#27d411", "pinupinc", "#4a2cd2", "pinupond", "#e28736", "pinuprin", "#42efc6", "pinupseu", "#bd28b5", "pinupung", "#9cdf1f", "pinuquad", "#2a71ed", "pinuradi", "#db5660", "pinuresi", "#1cc842", "pinurigi", "#8213eb", "pinusabi", "#d6b941", "pinusero", "#4cd6e5", "pinustrb", "#d41188", "pinustro", "#61d22c", "pinutaed", "#363ae2", "pinuteoc", "#ef7042", "pinutorr", "#28bd7b", "pinutrop", "#c21fdf", "pinuvirg", "#d2ed2a", "pinuwash", "#56a2db", "piscpisc", "#c81c4c", "pisorotu", "#13eb16", "pisttexa", "#6f41d6", "pithflex", "#e5a84c", "pithguad", "#11d4be", "pithpall", "#d22cb4", "pithungu", "#90e236", "planaqua", "#426aef", "platocci", "#bd3028", "platrace", "#1fdf62", "platwrig", "#a72aed", "popuangu", "#dbd256", "popuariz", "#1ca2c8", "popubals", "#eb137b", "popudelt", "#5ed641", "popufrem", "#5b4ce5", "popugran", "#d45d11", "popuhete", "#2cd29d", "popuhinc", "#de36e2", "poputrem", "#c1ef42", "poputric", "#2869bd", "prosjuli", "#df1f3c", "prospube", "#2aed46", "prunalle", "#9056db", "prunamer", "#c8991c", "prunangu", "#13e7eb", "pruncaro", "#d641a8", "prunemar", "#89e54c", "prunfrem", "#1125d4", "prunhort", "#d24b2c", "prunilic", "#36e288", "prunlyon", "#c742ef", "prunmexi", "#b4bd28", "prunmuns", "#1f9bdf", "prunmyrt", "#ed2a70", "prunnigr", "#5fdb56", "prunpens", "#431cc8", "prunsero", "#eb8313", "prunsubc", "#41d6ba", "prunumbe", "#e54cd5", "prunvirg", "#87d411", "pseumacr", "#2c60d2", "pseumenz", "#e23639", "pseusarg", "#42ef71", "psidlong", "#7c28bd", "ptelcren", "#dfc31f", "pteltrif", "#2ad1ed", "queragri", "#db56a1", "querajoe", "#4bc81c", "queralba", "#1713eb", "querariz", "#d67041", "querarka", "#4ce5a9", "querbico", "#c011d4", "querchap", "#b3d22c", "querchry", "#368fe2", "quercocc", "#ef4269", "querdoug", "#28bd31", "querdunn", "#631fdf", "querdura", "#eda92a", "querelli", "#56dbd3", "queremor", "#c81ca1", "querenge", "#7aeb13", "querfalc", "#415dd6", "quergamb", "#e55c4c", "quergarr", "#11d45e", "quergeor", "#9f2cd2", "querglau", "#e2df36", "quergrac", "#42c0ef", "quergrav", "#bd2868", "quergris", "#3bdf1f", "querhava", "#472aed", "querhypo", "#db9156", "querilic", "#1cc89a", "querimbr", "#eb13e6", "querinca", "#a7d641", "querkell", "#4c88e5", "querlaev", "#d41124", "querlaur", "#2cd24c", "querloba", "#8936e2", "querlyra", "#efc842", "quermacd", "#28b3bd", "quermacr", "#df1f9a", "quermari", "#6eed2a", "quermich", "#565edb", "quermohr", "#c8451c", "quermueh", "#13eb85", "quermyrt", "#bb41d6", "quernigr", "#d4e54c", "quernutt", "#1185d4", "queroblo", "#d22c5f", "querogle", "#38e236", "querpalu", "#7242ef", "querphel", "#bd7d28", "querprin", "#1fdfc4", "querpung", "#ed2ad0", "querrubr", "#a0db56", "querrugo", "#1c4ac8", "quershum", "#eb1913", "querstel", "#41d671", "quertome", "#aa4ce5", "quertoum", "#d4c111", "querturb", "#2cb2d2", "quervelu", "#e2368e", "quervirg", "#68ef42", "querwisl", "#3228bd", "rapapunc", "#df651f", "reynsept", "#2aedaa", "rhambetu", "#d456db", "rhamcali", "#9fc81c", "rhamcaro", "#1379eb", "rhamcroc", "#d6415c", "rhampurs", "#4ce55d", "rhizmang", "#6011d4", "rhodcata", "#d2a02c", "rhodmacr", "#36e2e0", "rhodmaxi", "#ef42bf", "rhuschor", "#68bd28", "rhuscopa", "#1f39df", "rhusglab", "#ed492a", "rhusinte", "#56db92", "rhuskear", "#9b1cc8", "rhuslanc", "#e5eb13", "rhuslaur", "#41a6d6", "rhusmicr", "#e54c87", "rhusovat", "#23d411", "rhustyph", "#4d2cd2", "robikels", "#e28a36", "robineom", "#42efc9", "robipseu", "#bd28b2", "robivisc", "#99df1f", "royselat", "#2a6ded", "sabamexi", "#db565d", "sabamino", "#1cc846", "sabapalm", "#8613eb", "salialax", "#d6bc41", "saliamyg", "#4cd3e5", "saliarbu", "#d41184", "salibebb", "#5ed22c", "salibonp", "#3637e2", "salicaro", "#ef7342", "salidisc", "#28bd7d", "saliexig", "#c51fdf", "saliflor", "#ceed2a", "salifluv", "#569fdb", "saligeye", "#c81c49", "salihind", "#13eb1a", "salihook", "#7241d6", "salilaev", "#e5ab4c", "salilasi", "#11d4c2", "salilaso", "#d22cb0", "saliluci", "#8de236", "salimack", "#4267ef", "salinigr", "#bd3328", "salipell", "#1fdf66", "salipeti", "#ab2aed", "salipyri", "#dbd456", "saliscou", "#1c9ec8", "saliseri", "#eb1377", "salisess", "#5bd641", "salisitc", "#5e4ce5", "salitaxi", "#d46111", "salitrac", "#2cd2a1", "sambcall", "#e136e2", "sambcana", "#beef42", "sambglau", "#2867bd", "sambmela", "#df1f38", "sambmexi", "#2aed4a", "sambvelu", "#9256db", "sapibilo", "#c89d1c", "sapidrum", "#13e3eb", "sapisapo", "#d641a5", "sassalbi", "#86e54c", "savibaha", "#1122d4", "schafrut", "#d24e2c", "schochry", "#36e28b", "sequgiga", "#ca42ef", "sequsemp", "#b1bd28", "sererepe", "#1f98df", "sheparge", "#ed2a6c", "simaglau", "#5cdb56", "solaeria", "#471cc8", "sophaffi", "#eb8713", "sophsecu", "#41d6bd", "sorbamer", "#e54cd2", "sorbdeco", "#83d411", "sorbscop", "#2c5dd2", "sorbsitc", "#e23636", "stapbola", "#42ef74", "staptrif", "#7e28bd", "stewmala", "#dfc61f", "stewovat", "#2acded", "styramer", "#db569e", "styrgran", "#47c81c", "styrplat", "#1b13eb", "surimari", "#d67341", "swiemaha", "#4ce5ac", "symptinc", "#c311d4", "taxodist", "#afd22c", "taxomucr", "#368ce2", "taxubrev", "#ef4266", "taxucana", "#28bd34", "taxuflor", "#671fdf", "tetrbico", "#edac2a", "thrimorr", "#56dbd5", "thriradi", "#c81c9d", "thujocci", "#76eb13", "thujplic", "#415ad6", "tiliamer", "#e55f4c", "tilicaro", "#11d462", "tilihete", "#a22cd2", "torrcali", "#e2e236", "torrtaxi", "#42bcef", "toxivern", "#bd2866", "tremlama", "#37df1f", "tremmicr", "#4b2aed", "tsugcana", "#db9356", "tsugcaro", "#1cc89e", "tsughete", "#eb13e2", "tsugmert", "#a4d641", "ulmualat", "#4c85e5", "ulmuamer", "#d41120", "ulmucras", "#2cd24f", "ulmurubr", "#8c36e2", "ulmusero", "#efcc42", "ulmuthom", "#28b0bd", "umbecali", "#df1f96", "ungnspec", "#6bed2a", "vaccarbo", "#565bdb", "vauqcali", "#c8481c", "vauqpauc", "#13eb89", "vibulent", "#be41d6", "vibunudu", "#d1e54c", "vibuobov", "#1182d4", "vibuprun", "#d22c5c", "viburufi", "#36e236", "vibutril", "#7542ef", "washfili", "#bd7f28", "ximeamer", "#1fdfc8", "yuccaloi", "#ed2acc", "yuccbrev", "#9ddb56", "yucccarn", "#1c46c8", "yuccelat", "#eb1d13", "yuccfaxo", "#41d674", "yuccglor", "#ac4ce5", "yuccmoha", "#d4c511", "yuccrost", "#2caed2", "yuccscho", "#e2368b", "yucctorr", "#65ef42", "yucctrec", "#3528bd", "zantamer", "#df681f", "zantclav", "#2aedae", "zantcori", "#d656db", "zantfaga", "#9cc81c", "zantflav", "#1374eb", "zanthirs", "#d64159", "#cccccc"];
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXVtYW4iLCJhIjoiY21zbDFpam9zMDRidjJ5cHZiazk2eHFtZSJ9.bML0bt0b6r2UXDdw7MxccA';
 
 const map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mapbox/outdoors-v12',
+  style: {
+    version: 8,
+    sources: {
+      'mapbox-terrain': {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-terrain-v2'
+      },
+      'mapbox-streets': {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v8'
+      }
+    },
+    glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
+    layers: [
+      // Background - warm off-white like nativelands.ca
+      {
+        id: 'background',
+        type: 'background',
+        paint: { 'background-color': '#f0ece3' }
+      },
+      // Water - muted blue-gray
+      {
+        id: 'water',
+        type: 'fill',
+        source: 'mapbox-streets',
+        'source-layer': 'water',
+        paint: { 'fill-color': '#c8d8e8' }
+      },
+      // Landcover - subtle natural tones
+      {
+        id: 'landcover-grass',
+        type: 'fill',
+        source: 'mapbox-terrain',
+        'source-layer': 'landcover',
+        filter: ['==', 'class', 'grass'],
+        paint: { 'fill-color': '#e8e4d8', 'fill-opacity': 0.5 }
+      },
+      {
+        id: 'landcover-wood',
+        type: 'fill',
+        source: 'mapbox-terrain',
+        'source-layer': 'landcover',
+        filter: ['==', 'class', 'wood'],
+        paint: { 'fill-color': '#ddd8c8', 'fill-opacity': 0.5 }
+      },
+      // National park areas - very subtle
+      {
+        id: 'landuse-park',
+        type: 'fill',
+        source: 'mapbox-streets',
+        'source-layer': 'landuse',
+        filter: ['==', 'class', 'park'],
+        paint: { 'fill-color': '#e2ddd0', 'fill-opacity': 0.6 }
+      },
+      // State/province boundaries
+      {
+        id: 'admin-state',
+        type: 'line',
+        source: 'mapbox-streets',
+        'source-layer': 'admin',
+        filter: ['==', 'admin_level', 4],
+        paint: {
+          'line-color': '#b0a898',
+          'line-width': 0.8,
+          'line-dasharray': [3, 2]
+        }
+      },
+      // National boundaries
+      {
+        id: 'admin-national',
+        type: 'line',
+        source: 'mapbox-streets',
+        'source-layer': 'admin',
+        filter: ['all', ['==', 'admin_level', 2], ['==', 'disputed', false]],
+        paint: {
+          'line-color': '#8a8078',
+          'line-width': 1.5
+        }
+      },
+      // Waterways
+      {
+        id: 'waterway',
+        type: 'line',
+        source: 'mapbox-streets',
+        'source-layer': 'waterway',
+        paint: {
+          'line-color': '#c8d8e8',
+          'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.5, 8, 2]
+        }
+      },
+      // City labels - muted
+      {
+        id: 'place-city',
+        type: 'symbol',
+        source: 'mapbox-streets',
+        'source-layer': 'place_label',
+        filter: ['==', 'type', 'city'],
+        layout: {
+          'text-field': ['get', 'name_en'],
+          'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 4, 10, 8, 14],
+          'text-anchor': 'center'
+        },
+        paint: {
+          'text-color': '#6b6358',
+          'text-halo-color': '#f0ece3',
+          'text-halo-width': 1.5
+        }
+      },
+      // Town labels
+      {
+        id: 'place-town',
+        type: 'symbol',
+        source: 'mapbox-streets',
+        'source-layer': 'place_label',
+        filter: ['==', 'type', 'town'],
+        minzoom: 6,
+        layout: {
+          'text-field': ['get', 'name_en'],
+          'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 6, 9, 10, 12],
+        },
+        paint: {
+          'text-color': '#8a8078',
+          'text-halo-color': '#f0ece3',
+          'text-halo-width': 1.2
+        }
+      },
+      // Country labels
+      {
+        id: 'place-country',
+        type: 'symbol',
+        source: 'mapbox-streets',
+        'source-layer': 'place_label',
+        filter: ['==', 'type', 'country'],
+        layout: {
+          'text-field': ['get', 'name_en'],
+          'text-font': ['DIN Pro Medium', 'Arial Unicode MS Regular'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 2, 10, 6, 16],
+          'text-transform': 'uppercase',
+          'text-letter-spacing': 0.1
+        },
+        paint: {
+          'text-color': '#5a5248',
+          'text-halo-color': '#f0ece3',
+          'text-halo-width': 2
+        }
+      },
+      // State labels
+      {
+        id: 'place-state',
+        type: 'symbol',
+        source: 'mapbox-streets',
+        'source-layer': 'place_label',
+        filter: ['==', 'type', 'state'],
+        minzoom: 4,
+        layout: {
+          'text-field': ['get', 'name_en'],
+          'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 4, 9, 7, 13],
+          'text-transform': 'uppercase',
+          'text-letter-spacing': 0.05
+        },
+        paint: {
+          'text-color': '#7a7268',
+          'text-halo-color': '#f0ece3',
+          'text-halo-width': 1.5
+        }
+      }
+    ]
+  },
   center: [-96, 50],
   zoom: 3
 });
 
-// Add navigation controls
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+// Hidden species set
+const hiddenSpecies = new Set();
+let mapLoaded = false;
+let listVisible = false;
 
 const legend = document.getElementById('legend');
 const countEl = document.getElementById('species-count');
 const searchBox = document.getElementById('search-box');
 const toggleListBtn = document.getElementById('toggle-list-btn');
-let listVisible = false;
-let mapLoaded = false;
-
-// Track highlighted species
-let highlightedId = null;
 
 function updateCount() {
   const total = document.querySelectorAll('.legend-item').length;
   const hidden = document.querySelectorAll('.legend-item.hidden-item').length;
-  const showing = total - hidden;
-  countEl.textContent = showing + ' of ' + species.length + ' species';
+  countEl.textContent = (total - hidden) + ' of ' + species.length + ' species';
 }
 
-// Toggle list visibility
+function updateFilters() {
+  if (!mapLoaded) return;
+  if (hiddenSpecies.size === 0) {
+    map.setFilter('trees-base', null);
+    map.setFilter('trees-hover', null);
+  } else {
+    const visibleIds = species.filter(s => !hiddenSpecies.has(s.id)).map(s => s.id);
+    const filter = ['in', ['get', 'id'], ['literal', visibleIds]];
+    map.setFilter('trees-base', filter);
+    map.setFilter('trees-hover', filter);
+  }
+}
+
 toggleListBtn.addEventListener('click', () => {
   listVisible = !listVisible;
   legend.classList.toggle('visible', listVisible);
   toggleListBtn.textContent = listVisible ? 'Hide List ▴' : 'Show List ▾';
 });
 
-// Show list automatically when searching
 searchBox.addEventListener('input', (e) => {
   const query = e.target.value.toLowerCase().trim();
   if (query && !listVisible) {
@@ -927,36 +976,30 @@ searchBox.addEventListener('input', (e) => {
   updateCount();
 });
 
-// Select all / deselect all
 document.getElementById('select-all-btn').addEventListener('click', () => {
+  hiddenSpecies.clear();
   document.querySelectorAll('.legend-item input').forEach(cb => {
     cb.checked = true;
-    const id = cb.id.replace('toggle-', '');
-    if (mapLoaded && map.getLayer(id)) {
-      map.setLayoutProperty(id, 'visibility', 'visible');
-    }
     cb.closest('.legend-item').querySelector('.legend-label').classList.remove('disabled');
   });
+  updateFilters();
 });
 
 document.getElementById('deselect-all-btn').addEventListener('click', () => {
+  species.forEach(s => hiddenSpecies.add(s.id));
   document.querySelectorAll('.legend-item input').forEach(cb => {
     cb.checked = false;
-    const id = cb.id.replace('toggle-', '');
-    if (mapLoaded && map.getLayer(id)) {
-      map.setLayoutProperty(id, 'visibility', 'none');
-    }
     cb.closest('.legend-item').querySelector('.legend-label').classList.add('disabled');
   });
+  updateFilters();
 });
 
-// Build legend items
+// Build legend
 species.forEach(s => {
   const item = document.createElement('div');
   item.className = 'legend-item';
   item.dataset.name = s.name.toLowerCase();
   item.dataset.latin = s.latin.toLowerCase();
-  item.dataset.id = s.id;
   item.innerHTML = `
     <input type="checkbox" id="toggle-${s.id}" checked>
     <div class="legend-swatch" style="background:${s.color}"></div>
@@ -965,35 +1008,35 @@ species.forEach(s => {
   `;
   legend.appendChild(item);
 
-  // Toggle visibility
   item.querySelector('input').addEventListener('change', (e) => {
-    if (mapLoaded && map.getLayer(s.id)) {
-      map.setLayoutProperty(s.id, 'visibility', e.target.checked ? 'visible' : 'none');
-    }
+    if (e.target.checked) hiddenSpecies.delete(s.id);
+    else hiddenSpecies.add(s.id);
     item.querySelector('.legend-label').classList.toggle('disabled', !e.target.checked);
+    updateFilters();
   });
 
-  // Zoom to species range
   item.querySelector('.zoom-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    zoomToSpecies(s.id);
+    zoomToSpecies(s.id, s.name);
   });
 });
 
 updateCount();
 
-// Zoom to species and highlight it
-function zoomToSpecies(id) {
-  const source = map.getSource(id);
-  if (!source) return;
+// Zoom to species bounding box
+function zoomToSpecies(id, name) {
+  const features = map.querySourceFeatures('trees', {
+    sourceLayer: '',
+    filter: ['==', ['get', 'id'], id]
+  });
 
-  const data = source._data;
-  if (!data || !data.features || data.features.length === 0) return;
+  if (features.length === 0) {
+    alert('Zoom in closer and try again — species tiles may not be loaded yet.');
+    return;
+  }
 
-  // Calculate bounding box
   let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity;
-
-  data.features.forEach(f => {
+  features.forEach(f => {
     const coords = f.geometry.type === 'Polygon'
       ? f.geometry.coordinates[0]
       : f.geometry.coordinates.flat(2);
@@ -1007,117 +1050,76 @@ function zoomToSpecies(id) {
 
   map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 60, duration: 1000 });
 
-  // Highlight this species
-  highlightSpecies(id);
+  // Briefly highlight
+  map.setFilter('trees-highlight', ['==', ['get', 'id'], id]);
+  map.setLayoutProperty('trees-highlight', 'visibility', 'visible');
+  setTimeout(() => map.setLayoutProperty('trees-highlight', 'visibility', 'none'), 3000);
 }
 
-function highlightSpecies(id) {
-  // Reset previous highlight
-  if (highlightedId && map.getLayer(highlightedId + '-highlight')) {
-    map.removeLayer(highlightedId + '-highlight');
-  }
-
-  highlightedId = id;
-
-  // Add highlight layer on top
-  if (!map.getLayer(id + '-highlight')) {
-    map.addLayer({
-      id: id + '-highlight',
-      type: 'fill',
-      source: id,
-      paint: {
-        'fill-color': '#ffffff',
-        'fill-opacity': 0.35
-      }
-    });
-  }
-
-  // Remove highlight after 3 seconds
-  setTimeout(() => {
-    if (map.getLayer(id + '-highlight')) {
-      map.removeLayer(id + '-highlight');
-    }
-    highlightedId = null;
-  }, 3000);
-}
-
-// Shared hover popup
-const popup = new mapboxgl.Popup({
-  closeButton: false,
-  closeOnClick: false,
-  offset: 12
-});
+const popup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 12 });
+let hoveredId = null;
 
 map.on('load', () => {
   mapLoaded = true;
 
-  species.forEach(s => {
-    map.addSource(s.id, {
-      type: 'geojson',
-      data: s.file
-    });
-
-    // Base layer - low opacity
-    map.addLayer({
-      id: s.id,
-      type: 'fill',
-      source: s.id,
-      paint: {
-        'fill-color': s.color,
-        'fill-opacity': 0.2
-      }
-    });
-
-    // Hover layer - higher opacity, initially hidden
-    map.addLayer({
-      id: s.id + '-hover',
-      type: 'fill',
-      source: s.id,
-      paint: {
-        'fill-color': s.color,
-        'fill-opacity': 0.65
-      },
-      filter: ['==', '$type', 'Polygon'],
-      layout: { visibility: 'none' }
-    });
+  map.addSource('trees', {
+    type: 'geojson',
+    data: 'trees_combined.geojson'
   });
 
-  const layerIDs = species.map(s => s.id);
-  let currentHoveredLayers = [];
+  // Base layer - low opacity
+  map.addLayer({
+    id: 'trees-base',
+    type: 'fill',
+    source: 'trees',
+    paint: {
+      'fill-color': colorMatch,
+      'fill-opacity': 0.2
+    }
+  });
+
+  // Hover highlight layer
+  map.addLayer({
+    id: 'trees-hover',
+    type: 'fill',
+    source: 'trees',
+    paint: {
+      'fill-color': colorMatch,
+      'fill-opacity': 0.65
+    },
+    filter: ['==', ['get', 'id'], '']
+  });
+
+  // Zoom-to highlight layer
+  map.addLayer({
+    id: 'trees-highlight',
+    type: 'fill',
+    source: 'trees',
+    paint: {
+      'fill-color': '#ffffff',
+      'fill-opacity': 0.4
+    },
+    filter: ['==', ['get', 'id'], ''],
+    layout: { visibility: 'none' }
+  });
 
   map.on('mousemove', (e) => {
-    const visibleLayers = layerIDs.filter(id =>
-      map.getLayoutProperty(id, 'visibility') !== 'none'
-    );
-
-    const features = map.queryRenderedFeatures(e.point, { layers: visibleLayers });
-
-    // Reset previously hovered layers
-    currentHoveredLayers.forEach(id => {
-      if (map.getLayer(id + '-hover')) {
-        map.setLayoutProperty(id + '-hover', 'visibility', 'none');
-      }
-    });
-    currentHoveredLayers = [];
+    const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
 
     if (features.length === 0) {
+      map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
       popup.remove();
       map.getCanvas().style.cursor = '';
       return;
     }
 
-    const presentIDs = [...new Set(features.map(f => f.layer.id))];
-    const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
+    const presentIDs = [...new Set(features.map(f => f.properties.id))];
+    map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
 
-    // Show hover layers
-    presentIDs.forEach(id => {
-      if (map.getLayer(id + '-hover')) {
-        map.setLayoutProperty(id + '-hover', 'visibility', 'visible');
-        currentHoveredLayers.push(id);
-      }
-    });
+    const presentSpecies = presentIDs
+      .map(id => species.find(s => s.id === id))
+      .filter(Boolean);
 
-    // Build popup
     const rows = presentSpecies.map(s => `
       <div class="popup-species">
         <div class="popup-swatch" style="background:${s.color}"></div>
@@ -1135,12 +1137,7 @@ map.on('load', () => {
   });
 
   map.on('mouseleave', () => {
-    currentHoveredLayers.forEach(id => {
-      if (map.getLayer(id + '-hover')) {
-        map.setLayoutProperty(id + '-hover', 'visibility', 'none');
-      }
-    });
-    currentHoveredLayers = [];
+    map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
     popup.remove();
     map.getCanvas().style.cursor = '';
   });
