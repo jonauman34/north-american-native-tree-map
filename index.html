@@ -786,7 +786,7 @@ const map = new mapboxgl.Map({
         type: 'fill',
         source: 'mapbox-streets',
         'source-layer': 'water',
-        paint: { 'fill-color': '#a8c8e0' }
+        paint: { 'fill-color': '#6aafd4' }
       },
       // Woodland - soft green
       {
@@ -795,7 +795,7 @@ const map = new mapboxgl.Map({
         source: 'mapbox-terrain',
         'source-layer': 'landcover',
         filter: ['==', 'class', 'wood'],
-        paint: { 'fill-color': '#c8d8b0', 'fill-opacity': 0.6 }
+        paint: { 'fill-color': '#a8c878', 'fill-opacity': 0.7 }
       },
       // Grass - light green
       {
@@ -854,9 +854,9 @@ const map = new mapboxgl.Map({
         'source-layer': 'contour',
         minzoom: 6,
         paint: {
-          'line-color': '#b0a880',
-          'line-width': 0.4,
-          'line-opacity': 0.4
+          'line-color': '#8a7a50',
+          'line-width': 0.7,
+          'line-opacity': 0.7
         }
       },
       // Index contours (every 5th) - slightly more visible
@@ -868,9 +868,9 @@ const map = new mapboxgl.Map({
         filter: ['==', ['%', ['get', 'index'], 5], 0],
         minzoom: 6,
         paint: {
-          'line-color': '#9a9870',
-          'line-width': 0.7,
-          'line-opacity': 0.5
+          'line-color': '#6a6040',
+          'line-width': 1.2,
+          'line-opacity': 0.8
         }
       },
       // Parks - soft natural green
@@ -889,11 +889,23 @@ const map = new mapboxgl.Map({
         source: 'mapbox-streets',
         'source-layer': 'waterway',
         paint: {
-          'line-color': '#a8c8e0',
+          'line-color': '#6aafd4',
           'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.5, 8, 2]
         }
       },
       // State/province boundaries - dashed
+      {
+        id: 'admin-state-casing',
+        type: 'line',
+        source: 'mapbox-streets',
+        'source-layer': 'admin',
+        filter: ['==', 'admin_level', 4],
+        paint: {
+          'line-color': '#ffffff',
+          'line-width': 2.5,
+          'line-opacity': 0.6
+        }
+      },
       {
         id: 'admin-state',
         type: 'line',
@@ -901,9 +913,9 @@ const map = new mapboxgl.Map({
         'source-layer': 'admin',
         filter: ['==', 'admin_level', 4],
         paint: {
-          'line-color': '#8a9878',
-          'line-width': 1.0,
-          'line-dasharray': [3, 2]
+          'line-color': '#5a6e50',
+          'line-width': 1.2,
+          'line-dasharray': [4, 3]
         }
       },
       // National boundaries - solid
@@ -1000,10 +1012,21 @@ const map = new mapboxgl.Map({
     ]
   },
   center: [-96, 50],
-  zoom: 3
+  zoom: 3,
+  projection: 'globe'
 });
 
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+map.on('style.load', () => {
+  map.setFog({
+    color: 'rgb(180, 210, 240)',
+    'high-color': 'rgb(100, 160, 220)',
+    'horizon-blend': 0.08,
+    'space-color': 'rgb(15, 25, 60)',
+    'star-intensity': 0.15
+  });
+});
 
 // Hidden species set
 const hiddenSpecies = new Set();
