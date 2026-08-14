@@ -760,74 +760,127 @@ const map = new mapboxgl.Map({
       'mapbox-streets': {
         type: 'vector',
         url: 'mapbox://mapbox.mapbox-streets-v8'
+      },
+      'mapbox-dem': {
+        type: 'raster-dem',
+        url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+        tileSize: 512,
+        maxzoom: 14
       }
+    },
+    terrain: {
+      source: 'mapbox-dem',
+      exaggeration: 1.2
     },
     glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
     layers: [
-      // Background - warm off-white like nativelands.ca
+      // Background - natural light gray-green
       {
         id: 'background',
         type: 'background',
-        paint: { 'background-color': '#f0ece3' }
+        paint: { 'background-color': '#e8ede0' }
       },
-      // Water - muted blue-gray
+      // Water - natural blue
       {
         id: 'water',
         type: 'fill',
         source: 'mapbox-streets',
         'source-layer': 'water',
-        paint: { 'fill-color': '#c8d8e8' }
+        paint: { 'fill-color': '#a8c8e0' }
       },
-      // Landcover - subtle natural tones
-      {
-        id: 'landcover-grass',
-        type: 'fill',
-        source: 'mapbox-terrain',
-        'source-layer': 'landcover',
-        filter: ['==', 'class', 'grass'],
-        paint: { 'fill-color': '#e8e4d8', 'fill-opacity': 0.5 }
-      },
+      // Woodland - soft green
       {
         id: 'landcover-wood',
         type: 'fill',
         source: 'mapbox-terrain',
         'source-layer': 'landcover',
         filter: ['==', 'class', 'wood'],
-        paint: { 'fill-color': '#ddd8c8', 'fill-opacity': 0.5 }
+        paint: { 'fill-color': '#c8d8b0', 'fill-opacity': 0.6 }
       },
-      // National park areas - very subtle
+      // Grass - light green
+      {
+        id: 'landcover-grass',
+        type: 'fill',
+        source: 'mapbox-terrain',
+        'source-layer': 'landcover',
+        filter: ['==', 'class', 'grass'],
+        paint: { 'fill-color': '#d8e4c0', 'fill-opacity': 0.5 }
+      },
+      // Scrub - muted olive
+      {
+        id: 'landcover-scrub',
+        type: 'fill',
+        source: 'mapbox-terrain',
+        'source-layer': 'landcover',
+        filter: ['==', 'class', 'scrub'],
+        paint: { 'fill-color': '#d0d8a8', 'fill-opacity': 0.5 }
+      },
+      // Cropland - warm tan
+      {
+        id: 'landcover-crop',
+        type: 'fill',
+        source: 'mapbox-terrain',
+        'source-layer': 'landcover',
+        filter: ['==', 'class', 'crop'],
+        paint: { 'fill-color': '#e0d8b0', 'fill-opacity': 0.5 }
+      },
+      // Snow/ice - white
+      {
+        id: 'landcover-snow',
+        type: 'fill',
+        source: 'mapbox-terrain',
+        'source-layer': 'landcover',
+        filter: ['==', 'class', 'snow'],
+        paint: { 'fill-color': '#f0f4f8', 'fill-opacity': 0.8 }
+      },
+      // Hillshade - topographic shading
+      {
+        id: 'hillshade',
+        type: 'hillshade',
+        source: 'mapbox-dem',
+        paint: {
+          'hillshade-illumination-direction': 315,
+          'hillshade-exaggeration': 0.4,
+          'hillshade-shadow-color': '#4a4a3a',
+          'hillshade-highlight-color': '#ffffff',
+          'hillshade-accent-color': '#8a7a60'
+        }
+      },
+      // Contour lines - subtle
+      {
+        id: 'contour',
+        type: 'line',
+        source: 'mapbox-terrain',
+        'source-layer': 'contour',
+        minzoom: 6,
+        paint: {
+          'line-color': '#b0a880',
+          'line-width': 0.4,
+          'line-opacity': 0.4
+        }
+      },
+      // Index contours (every 5th) - slightly more visible
+      {
+        id: 'contour-index',
+        type: 'line',
+        source: 'mapbox-terrain',
+        'source-layer': 'contour',
+        filter: ['==', ['%', ['get', 'index'], 5], 0],
+        minzoom: 6,
+        paint: {
+          'line-color': '#9a9870',
+          'line-width': 0.7,
+          'line-opacity': 0.5
+        }
+      },
+      // Parks - soft natural green
       {
         id: 'landuse-park',
         type: 'fill',
         source: 'mapbox-streets',
         'source-layer': 'landuse',
         filter: ['==', 'class', 'park'],
-        paint: { 'fill-color': '#e2ddd0', 'fill-opacity': 0.6 }
-      },
-      // State/province boundaries
-      {
-        id: 'admin-state',
-        type: 'line',
-        source: 'mapbox-streets',
-        'source-layer': 'admin',
-        filter: ['==', 'admin_level', 4],
-        paint: {
-          'line-color': '#b0a898',
-          'line-width': 0.8,
-          'line-dasharray': [3, 2]
-        }
-      },
-      // National boundaries
-      {
-        id: 'admin-national',
-        type: 'line',
-        source: 'mapbox-streets',
-        'source-layer': 'admin',
-        filter: ['all', ['==', 'admin_level', 2], ['==', 'disputed', false]],
-        paint: {
-          'line-color': '#8a8078',
-          'line-width': 1.5
-        }
+        paint: { 'fill-color': '#c0d8a0', 'fill-opacity': 0.4 }
       },
       // Waterways
       {
@@ -836,11 +889,36 @@ const map = new mapboxgl.Map({
         source: 'mapbox-streets',
         'source-layer': 'waterway',
         paint: {
-          'line-color': '#c8d8e8',
+          'line-color': '#a8c8e0',
           'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.5, 8, 2]
         }
       },
-      // City labels - muted
+      // State/province boundaries - dashed
+      {
+        id: 'admin-state',
+        type: 'line',
+        source: 'mapbox-streets',
+        'source-layer': 'admin',
+        filter: ['==', 'admin_level', 4],
+        paint: {
+          'line-color': '#8a9878',
+          'line-width': 1.0,
+          'line-dasharray': [3, 2]
+        }
+      },
+      // National boundaries - solid
+      {
+        id: 'admin-national',
+        type: 'line',
+        source: 'mapbox-streets',
+        'source-layer': 'admin',
+        filter: ['all', ['==', 'admin_level', 2], ['==', 'disputed', false]],
+        paint: {
+          'line-color': '#6a7860',
+          'line-width': 1.8
+        }
+      },
+      // City labels
       {
         id: 'place-city',
         type: 'symbol',
@@ -854,8 +932,8 @@ const map = new mapboxgl.Map({
           'text-anchor': 'center'
         },
         paint: {
-          'text-color': '#6b6358',
-          'text-halo-color': '#f0ece3',
+          'text-color': '#3a4830',
+          'text-halo-color': '#e8ede0',
           'text-halo-width': 1.5
         }
       },
@@ -870,11 +948,11 @@ const map = new mapboxgl.Map({
         layout: {
           'text-field': ['get', 'name_en'],
           'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 6, 9, 10, 12],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 6, 9, 10, 12]
         },
         paint: {
-          'text-color': '#8a8078',
-          'text-halo-color': '#f0ece3',
+          'text-color': '#4a5840',
+          'text-halo-color': '#e8ede0',
           'text-halo-width': 1.2
         }
       },
@@ -893,8 +971,8 @@ const map = new mapboxgl.Map({
           'text-letter-spacing': 0.1
         },
         paint: {
-          'text-color': '#5a5248',
-          'text-halo-color': '#f0ece3',
+          'text-color': '#2a3820',
+          'text-halo-color': '#e8ede0',
           'text-halo-width': 2
         }
       },
@@ -914,8 +992,8 @@ const map = new mapboxgl.Map({
           'text-letter-spacing': 0.05
         },
         paint: {
-          'text-color': '#7a7268',
-          'text-halo-color': '#f0ece3',
+          'text-color': '#4a5840',
+          'text-halo-color': '#e8ede0',
           'text-halo-width': 1.5
         }
       }
