@@ -14,14 +14,14 @@
     /* Reset button */
     #reset-btn {
       position: absolute;
-      bottom: 120px;
-      right: 10px;
+      bottom: 10px;
+      left: 10px;
       background: rgba(20,20,20,0.75);
       backdrop-filter: blur(6px);
       border: none;
       border-radius: 6px;
       color: rgba(255,255,255,0.8);
-      padding: 8px 10px;
+      padding: 8px 12px;
       font-size: 12px;
       cursor: pointer;
       z-index: 1;
@@ -1272,7 +1272,7 @@ map.on('load', () => {
   });
 
   // ── BOUNDARY LAYERS on top of tree ranges ──────────────────
-  // National boundary casing (white outline for contrast)
+  // National boundary — white casing
   map.addLayer({
     id: 'admin-national-casing',
     type: 'line',
@@ -1281,11 +1281,11 @@ map.on('load', () => {
     filter: ['all', ['==', 'admin_level', 2], ['!=', 'disputed', true]],
     paint: {
       'line-color': '#ffffff',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 3, 6, 5],
-      'line-opacity': 0.5
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 4, 5, 6],
+      'line-opacity': 0.7
     }
   });
-  // National boundary
+  // National boundary — dark line
   map.addLayer({
     id: 'admin-national',
     type: 'line',
@@ -1294,33 +1294,35 @@ map.on('load', () => {
     filter: ['all', ['==', 'admin_level', 2], ['!=', 'disputed', true]],
     paint: {
       'line-color': '#1a2810',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 1.5, 6, 3]
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 2, 5, 3.5]
     }
   });
-  // State boundary casing (white outline for contrast)
+  // State boundary — white casing, visible from zoom 3
   map.addLayer({
     id: 'admin-state-casing',
     type: 'line',
     source: 'mapbox-streets',
     'source-layer': 'admin',
-    filter: ['==', 'admin_level', 4],
+    filter: ['all', ['==', 'admin_level', 4], ['!=', 'maritime', true]],
+    minzoom: 3,
     paint: {
       'line-color': '#ffffff',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 2, 6, 4],
-      'line-opacity': 0.5
+      'line-width': ['interpolate', ['linear'], ['zoom'], 3, 2, 7, 4],
+      'line-opacity': 0.6
     }
   });
-  // State boundary
+  // State boundary — dark dashed line, visible from zoom 3
   map.addLayer({
     id: 'admin-state',
     type: 'line',
     source: 'mapbox-streets',
     'source-layer': 'admin',
-    filter: ['==', 'admin_level', 4],
+    filter: ['all', ['==', 'admin_level', 4], ['!=', 'maritime', true]],
+    minzoom: 3,
     paint: {
-      'line-color': '#2a3820',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 0.8, 6, 2],
-      'line-dasharray': [4, 3]
+      'line-color': '#1a2810',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1, 7, 2.5],
+      'line-dasharray': [4, 2]
     }
   });
 
@@ -1431,8 +1433,8 @@ map.on('load', () => {
 
             map.flyTo({ center: [lng, lat], zoom: 7, duration: 1500 });
 
-            // After flying, drop pin and filter species
-            map.once('moveend', () => {
+            // After flying, wait for tiles to load then query
+            map.once('idle', () => {
               const point = map.project([lng, lat]);
               const features = map.queryRenderedFeatures(point, { layers: ['trees-base'] });
 
