@@ -15,16 +15,17 @@
     #reset-btn {
       position: absolute;
       bottom: 10px;
-      left: 10px;
+      right: 54px;
       background: rgba(20,20,20,0.75);
       backdrop-filter: blur(6px);
       border: none;
       border-radius: 6px;
       color: rgba(255,255,255,0.8);
-      padding: 8px 12px;
+      padding: 8px 10px;
       font-size: 12px;
       cursor: pointer;
       z-index: 1;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
     }
     #reset-btn:hover { background: rgba(40,40,40,0.85); }
 
@@ -1271,57 +1272,63 @@ map.on('load', () => {
     layout: { visibility: 'none' }
   });
 
-  // ── BOUNDARY LAYERS on top of tree ranges ──────────────────
+  // ── BOUNDARY LAYERS using dedicated source ─────────────────
+  // Add a separate dedicated source for boundaries using the boundaries tileset
+  map.addSource('boundaries', {
+    type: 'vector',
+    url: 'mapbox://mapbox.mapbox-streets-v8'
+  });
+
   // National boundary — white casing
   map.addLayer({
     id: 'admin-national-casing',
     type: 'line',
-    source: 'mapbox-streets',
+    source: 'boundaries',
     'source-layer': 'admin',
-    filter: ['all', ['==', 'admin_level', 2], ['!=', 'disputed', true]],
+    filter: ['==', 'admin_level', 2],
     paint: {
       'line-color': '#ffffff',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 4, 5, 6],
-      'line-opacity': 0.7
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 4, 6, 7],
+      'line-opacity': 0.8
     }
   });
   // National boundary — dark line
   map.addLayer({
     id: 'admin-national',
     type: 'line',
-    source: 'mapbox-streets',
+    source: 'boundaries',
     'source-layer': 'admin',
-    filter: ['all', ['==', 'admin_level', 2], ['!=', 'disputed', true]],
+    filter: ['==', 'admin_level', 2],
     paint: {
       'line-color': '#1a2810',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 2, 5, 3.5]
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 2, 6, 4]
     }
   });
   // State boundary — white casing, visible from zoom 3
   map.addLayer({
     id: 'admin-state-casing',
     type: 'line',
-    source: 'mapbox-streets',
+    source: 'boundaries',
     'source-layer': 'admin',
-    filter: ['all', ['==', 'admin_level', 4], ['!=', 'maritime', true]],
+    filter: ['==', 'admin_level', 4],
     minzoom: 3,
     paint: {
       'line-color': '#ffffff',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 3, 2, 7, 4],
-      'line-opacity': 0.6
+      'line-width': ['interpolate', ['linear'], ['zoom'], 3, 2.5, 7, 5],
+      'line-opacity': 0.7
     }
   });
   // State boundary — dark dashed line, visible from zoom 3
   map.addLayer({
     id: 'admin-state',
     type: 'line',
-    source: 'mapbox-streets',
+    source: 'boundaries',
     'source-layer': 'admin',
-    filter: ['all', ['==', 'admin_level', 4], ['!=', 'maritime', true]],
+    filter: ['==', 'admin_level', 4],
     minzoom: 3,
     paint: {
       'line-color': '#1a2810',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1, 7, 2.5],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1.2, 7, 3],
       'line-dasharray': [4, 2]
     }
   });
@@ -1433,10 +1440,11 @@ map.on('load', () => {
 
             map.flyTo({ center: [lng, lat], zoom: 7, duration: 1500 });
 
-            // After flying, wait for tiles to load then query
+            // After flying, wait for tiles to fully render then query
             map.once('idle', () => {
-              const point = map.project([lng, lat]);
-              const features = map.queryRenderedFeatures(point, { layers: ['trees-base'] });
+              setTimeout(() => {
+                const point = map.project([lng, lat]);
+                const features = map.queryRenderedFeatures(point, { layers: ['trees-base'] });
 
               // Drop pin
               if (clickMarker) clickMarker.remove();
@@ -1449,23 +1457,24 @@ map.on('load', () => {
                 .addTo(map);
 
               if (features.length > 0) {
-                const presentIDs = [...new Set(features.map(f => f.properties.id))];
-                map.setFilter('trees-base', ['in', ['get', 'id'], ['literal', presentIDs]]);
-                map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
+                  const presentIDs = [...new Set(features.map(f => f.properties.id))];
+                  map.setFilter('trees-base', ['in', ['get', 'id'], ['literal', presentIDs]]);
+                  map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
 
-                const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
-                const panel = document.getElementById('click-panel');
-                const list = document.getElementById('click-species-list');
-                list.innerHTML = presentSpecies.map(s => `
-                  <div class="popup-species" style="margin:4px 0;display:flex;align-items:flex-start;gap:8px;">
-                    <div style="background:${s.color};width:10px;height:10px;border-radius:2px;flex-shrink:0;margin-top:3px;"></div>
-                    <div>
-                      <div style="font-weight:bold;font-size:12px;color:white;">${s.name}</div>
-                      <div style="font-style:italic;font-size:10px;color:rgba(255,255,255,0.6);">${s.latin}</div>
-                    </div>
-                  </div>`).join('');
-                panel.style.display = 'block';
-              }
+                  const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
+                  const panel = document.getElementById('click-panel');
+                  const list = document.getElementById('click-species-list');
+                  list.innerHTML = presentSpecies.map(s => `
+                    <div class="popup-species" style="margin:4px 0;display:flex;align-items:flex-start;gap:8px;">
+                      <div style="background:${s.color};width:10px;height:10px;border-radius:2px;flex-shrink:0;margin-top:3px;"></div>
+                      <div>
+                        <div style="font-weight:bold;font-size:12px;color:white;">${s.name}</div>
+                        <div style="font-style:italic;font-size:10px;color:rgba(255,255,255,0.6);">${s.latin}</div>
+                      </div>
+                    </div>`).join('');
+                  panel.style.display = 'block';
+                }
+              }, 500);
             });
           });
         });
