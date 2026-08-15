@@ -11,6 +11,69 @@
     html, body { width: 100%; height: 100%; font-family: Arial, sans-serif; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 
+    /* Reset button */
+    #reset-btn {
+      position: absolute;
+      bottom: 120px;
+      right: 10px;
+      background: rgba(20,20,20,0.75);
+      backdrop-filter: blur(6px);
+      border: none;
+      border-radius: 6px;
+      color: rgba(255,255,255,0.8);
+      padding: 8px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      z-index: 1;
+    }
+    #reset-btn:hover { background: rgba(40,40,40,0.85); }
+
+    /* Address search */
+    #address-search-container {
+      margin-bottom: 8px;
+      position: relative;
+    }
+    #address-search {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 5px;
+      font-size: 13px;
+      outline: none;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    #address-search::placeholder { color: rgba(255,255,255,0.4); }
+    #address-search:focus { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.15); }
+    #address-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(20,20,20,0.92);
+      border-radius: 5px;
+      margin-top: 2px;
+      z-index: 10;
+      max-height: 180px;
+      overflow-y: auto;
+      display: none;
+    }
+    .address-result {
+      padding: 8px 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .address-result:hover { background: rgba(255,255,255,0.12); }
+    .address-divider {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      padding: 5px 12px 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     #sidebar {
       position: absolute; top: 10px; left: 10px;
       background: rgba(20,20,20,0.75);
@@ -53,6 +116,10 @@
 <div id="sidebar">
   <div id="sidebar-header">
     <h3>Native Tree Ranges</h3>
+    <div id="address-search-container">
+      <input type="text" id="address-search" placeholder="Search address or place..." autocomplete="off">
+      <div id="address-results"></div>
+    </div>
     <input type="text" id="search-box" placeholder="Search species..." autocomplete="off">
     <div id="sidebar-controls">
       <div class="control-btn" id="select-all-btn">Select All</div>
@@ -63,6 +130,7 @@
   </div>
   <div id="legend"></div>
 </div>
+<button id="reset-btn" title="Reset view">⌂ Reset View</button>
 <script>
 const species = [
   { id: 'abieamab', name: 'Pacific silver fir', latin: 'Abies amabilis', color: '#bd2828' },
@@ -895,17 +963,18 @@ const map = new mapboxgl.Map({
           'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.5, 8, 2]
         }
       },
-      // State/province boundaries - dashed
+      // State/province boundaries
       {
         id: 'admin-state-casing',
         type: 'line',
         source: 'mapbox-streets',
         'source-layer': 'admin',
         filter: ['==', 'admin_level', 4],
+        minzoom: 1,
         paint: {
           'line-color': '#ffffff',
-          'line-width': 2.5,
-          'line-opacity': 0.6
+          'line-width': ['interpolate', ['linear'], ['zoom'], 2, 1.5, 6, 3],
+          'line-opacity': 0.5
         }
       },
       {
@@ -914,9 +983,10 @@ const map = new mapboxgl.Map({
         source: 'mapbox-streets',
         'source-layer': 'admin',
         filter: ['==', 'admin_level', 4],
+        minzoom: 1,
         paint: {
-          'line-color': '#5a6e50',
-          'line-width': 1.2,
+          'line-color': '#3a5030',
+          'line-width': ['interpolate', ['linear'], ['zoom'], 2, 0.8, 6, 1.8],
           'line-dasharray': [4, 3]
         }
       },
@@ -932,23 +1002,27 @@ const map = new mapboxgl.Map({
           'line-width': 1.8
         }
       },
-      // City labels
+      // City labels - only major cities at low zoom
       {
         id: 'place-city',
         type: 'symbol',
         source: 'mapbox-streets',
         'source-layer': 'place_label',
-        filter: ['==', 'type', 'city'],
+        filter: ['all', ['==', 'type', 'city'], ['>=', 'symbolrank', 1]],
+        minzoom: 4,
         layout: {
           'text-field': ['get', 'name_en'],
           'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 4, 10, 8, 14],
-          'text-anchor': 'center'
+          'text-size': ['interpolate', ['linear'], ['zoom'], 4, 9, 8, 13],
+          'text-anchor': 'center',
+          'symbol-sort-key': ['get', 'symbolrank'],
+          'text-max-angle': 38
         },
         paint: {
           'text-color': '#3a4830',
           'text-halo-color': '#e8ede0',
-          'text-halo-width': 1.5
+          'text-halo-width': 1.5,
+          'text-opacity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 6, 1]
         }
       },
       // Town labels
@@ -1015,7 +1089,9 @@ const map = new mapboxgl.Map({
   },
   center: [-96, 50],
   zoom: 3,
-  projection: 'globe'
+  projection: 'globe',
+  maxZoom: 12,
+  minZoom: 1
 });
 
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -1177,7 +1253,7 @@ map.on('load', () => {
     source: 'trees',
     paint: {
       'fill-color': colorMatch,
-      'fill-opacity': 0.2
+      'fill-opacity': 0.18
     }
   });
 
@@ -1206,18 +1282,33 @@ map.on('load', () => {
     layout: { visibility: 'none' }
   });
 
+  // Change cursor on hover over ranges
   map.on('mousemove', (e) => {
+    const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
+    map.getCanvas().style.cursor = features.length > 0 ? 'pointer' : '';
+  });
+
+  // Click to show popup and highlight
+  map.on('click', (e) => {
     const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
 
     if (features.length === 0) {
       map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
       popup.remove();
-      map.getCanvas().style.cursor = '';
       return;
     }
 
     const presentIDs = [...new Set(features.map(f => f.properties.id))];
     map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
+
+    // Dynamic opacity based on number of overlapping species
+    const count = presentIDs.length;
+    const opacity = count <= 2 ? 0.75
+                  : count <= 5 ? 0.60
+                  : count <= 10 ? 0.45
+                  : count <= 20 ? 0.35
+                  : 0.25;
+    map.setPaintProperty('trees-hover', 'fill-opacity', opacity);
 
     const presentSpecies = presentIDs
       .map(id => species.find(s => s.id === id))
@@ -1235,16 +1326,72 @@ map.on('load', () => {
     popup.setLngLat(e.lngLat)
       .setHTML(`<div class="popup-content"><h4>Species at this location</h4>${rows}</div>`)
       .addTo(map);
-
-    map.getCanvas().style.cursor = 'pointer';
   });
 
-  map.on('mouseleave', () => {
-    map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
-    popup.remove();
-    map.getCanvas().style.cursor = '';
+  // Click on empty space to clear
+  map.on('click', (e) => {
+    const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
+    if (features.length === 0) {
+      map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
+      popup.remove();
+    }
   });
 });
+
+  // Reset view button
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    map.flyTo({ center: [-96, 50], zoom: 3, duration: 1500 });
+  });
+
+  // Address search using Mapbox Geocoding API
+  const addressInput = document.getElementById('address-search');
+  const addressResults = document.getElementById('address-results');
+  let geocodeTimer;
+
+  addressInput.addEventListener('input', (e) => {
+    clearTimeout(geocodeTimer);
+    const query = e.target.value.trim();
+    if (query.length < 3) {
+      addressResults.style.display = 'none';
+      return;
+    }
+    geocodeTimer = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&types=place,address,region,country&limit=5`
+        );
+        const data = await res.json();
+        if (!data.features || data.features.length === 0) {
+          addressResults.style.display = 'none';
+          return;
+        }
+        addressResults.innerHTML = '<div class="address-divider">Locations</div>' +
+          data.features.map(f => `
+            <div class="address-result" data-lng="${f.center[0]}" data-lat="${f.center[1]}">
+              ${f.place_name}
+            </div>`).join('');
+        addressResults.style.display = 'block';
+
+        addressResults.querySelectorAll('.address-result').forEach(el => {
+          el.addEventListener('click', () => {
+            const lng = parseFloat(el.dataset.lng);
+            const lat = parseFloat(el.dataset.lat);
+            map.flyTo({ center: [lng, lat], zoom: 7, duration: 1500 });
+            addressResults.style.display = 'none';
+            addressInput.value = el.textContent.trim();
+          });
+        });
+      } catch(err) {
+        console.error('Geocoding error:', err);
+      }
+    }, 300);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!addressInput.contains(e.target) && !addressResults.contains(e.target)) {
+      addressResults.style.display = 'none';
+    }
+  });
 </script>
 </body>
 </html>
