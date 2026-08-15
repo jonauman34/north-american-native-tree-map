@@ -990,18 +990,7 @@ const map = new mapboxgl.Map({
         }
       },
       // State/province boundaries - rendered AFTER tree ranges via JS addLayer
-      // National boundaries
-      {
-        id: 'admin-national',
-        type: 'line',
-        source: 'mapbox-streets',
-        'source-layer': 'admin',
-        filter: ['all', ['==', 'admin_level', 2], ['==', 'disputed', false]],
-        paint: {
-          'line-color': '#2a3820',
-          'line-width': 2.5
-        }
-      },
+      // Boundaries added via JS after load
       // City labels - only major cities at low zoom
       {
         id: 'place-city',
@@ -1009,11 +998,11 @@ const map = new mapboxgl.Map({
         source: 'mapbox-streets',
         'source-layer': 'place_label',
         filter: ['all', ['==', 'type', 'city'], ['>=', 'symbolrank', 1]],
-        minzoom: 2,
+        minzoom: 5,
         layout: {
           'text-field': ['get', 'name_en'],
           'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 2, 8, 5, 11, 8, 14],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 5, 9, 8, 13, 10, 15],
           'text-anchor': 'center',
           'symbol-sort-key': ['get', 'symbolrank'],
           'text-max-angle': 38
@@ -1022,7 +1011,7 @@ const map = new mapboxgl.Map({
           'text-color': '#3a4830',
           'text-halo-color': '#e8ede0',
           'text-halo-width': 1.5,
-          'text-opacity': ['interpolate', ['linear'], ['zoom'], 2, 0.7, 4, 1]
+          'text-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.7, 7, 1]
         }
       },
       // Town labels
@@ -1032,7 +1021,7 @@ const map = new mapboxgl.Map({
         source: 'mapbox-streets',
         'source-layer': 'place_label',
         filter: ['==', 'type', 'town'],
-        minzoom: 6,
+        minzoom: 8,
         layout: {
           'text-field': ['get', 'name_en'],
           'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
@@ -1071,7 +1060,7 @@ const map = new mapboxgl.Map({
         source: 'mapbox-streets',
         'source-layer': 'place_label',
         filter: ['==', 'type', 'state'],
-        minzoom: 4,
+        minzoom: 5,
         layout: {
           'text-field': ['get', 'name_en'],
           'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
@@ -1282,6 +1271,59 @@ map.on('load', () => {
     layout: { visibility: 'none' }
   });
 
+  // ── BOUNDARY LAYERS on top of tree ranges ──────────────────
+  // National boundary casing (white outline for contrast)
+  map.addLayer({
+    id: 'admin-national-casing',
+    type: 'line',
+    source: 'mapbox-streets',
+    'source-layer': 'admin',
+    filter: ['all', ['==', 'admin_level', 2], ['!=', 'disputed', true]],
+    paint: {
+      'line-color': '#ffffff',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 3, 6, 5],
+      'line-opacity': 0.5
+    }
+  });
+  // National boundary
+  map.addLayer({
+    id: 'admin-national',
+    type: 'line',
+    source: 'mapbox-streets',
+    'source-layer': 'admin',
+    filter: ['all', ['==', 'admin_level', 2], ['!=', 'disputed', true]],
+    paint: {
+      'line-color': '#1a2810',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 1.5, 6, 3]
+    }
+  });
+  // State boundary casing (white outline for contrast)
+  map.addLayer({
+    id: 'admin-state-casing',
+    type: 'line',
+    source: 'mapbox-streets',
+    'source-layer': 'admin',
+    filter: ['==', 'admin_level', 4],
+    paint: {
+      'line-color': '#ffffff',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 2, 6, 4],
+      'line-opacity': 0.5
+    }
+  });
+  // State boundary
+  map.addLayer({
+    id: 'admin-state',
+    type: 'line',
+    source: 'mapbox-streets',
+    'source-layer': 'admin',
+    filter: ['==', 'admin_level', 4],
+    paint: {
+      'line-color': '#2a3820',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 0.8, 6, 2],
+      'line-dasharray': [4, 3]
+    }
+  });
+
   // Cursor change on hover
   map.on('mousemove', (e) => {
     const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
@@ -1343,31 +1385,7 @@ map.on('load', () => {
     panel.style.display = 'block';
   });
 
-  // Add state boundaries ON TOP of tree ranges after map loads
-  map.addLayer({
-    id: 'admin-state-casing',
-    type: 'line',
-    source: 'mapbox-streets',
-    'source-layer': 'admin',
-    filter: ['==', 'admin_level', 4],
-    paint: {
-      'line-color': '#ffffff',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 1.5, 6, 3.5],
-      'line-opacity': 0.6
-    }
-  });
-  map.addLayer({
-    id: 'admin-state',
-    type: 'line',
-    source: 'mapbox-streets',
-    'source-layer': 'admin',
-    filter: ['==', 'admin_level', 4],
-    paint: {
-      'line-color': '#2a3820',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 1, 0.8, 6, 2],
-      'line-dasharray': [4, 3]
-    }
-  });
+
 });
 
   // Reset view button
@@ -1408,9 +1426,45 @@ map.on('load', () => {
           el.addEventListener('click', () => {
             const lng = parseFloat(el.dataset.lng);
             const lat = parseFloat(el.dataset.lat);
-            map.flyTo({ center: [lng, lat], zoom: 7, duration: 1500 });
             addressResults.style.display = 'none';
             addressInput.value = el.textContent.trim();
+
+            map.flyTo({ center: [lng, lat], zoom: 7, duration: 1500 });
+
+            // After flying, drop pin and filter species
+            map.once('moveend', () => {
+              const point = map.project([lng, lat]);
+              const features = map.queryRenderedFeatures(point, { layers: ['trees-base'] });
+
+              // Drop pin
+              if (clickMarker) clickMarker.remove();
+              const markerEl = document.createElement('div');
+              markerEl.style.cssText = 'width:12px;height:12px;background:#ff4444;border:2px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.4);cursor:pointer;';
+              markerEl.title = 'Click to clear';
+              markerEl.addEventListener('click', (ev) => { ev.stopPropagation(); clearClick(); });
+              clickMarker = new mapboxgl.Marker({ element: markerEl, anchor: 'center' })
+                .setLngLat([lng, lat])
+                .addTo(map);
+
+              if (features.length > 0) {
+                const presentIDs = [...new Set(features.map(f => f.properties.id))];
+                map.setFilter('trees-base', ['in', ['get', 'id'], ['literal', presentIDs]]);
+                map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
+
+                const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
+                const panel = document.getElementById('click-panel');
+                const list = document.getElementById('click-species-list');
+                list.innerHTML = presentSpecies.map(s => `
+                  <div class="popup-species" style="margin:4px 0;display:flex;align-items:flex-start;gap:8px;">
+                    <div style="background:${s.color};width:10px;height:10px;border-radius:2px;flex-shrink:0;margin-top:3px;"></div>
+                    <div>
+                      <div style="font-weight:bold;font-size:12px;color:white;">${s.name}</div>
+                      <div style="font-style:italic;font-size:10px;color:rgba(255,255,255,0.6);">${s.latin}</div>
+                    </div>
+                  </div>`).join('');
+                panel.style.display = 'block';
+              }
+            });
           });
         });
       } catch(err) {
