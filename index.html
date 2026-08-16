@@ -131,7 +131,11 @@
   </div>
   <div id="legend"></div>
   <div id="click-panel" style="display:none; border-top:1px solid rgba(255,255,255,0.15); padding:10px 14px; flex-shrink:0; max-height:220px; overflow-y:auto;">
+<<<<<<< HEAD
+    <div id="click-count" style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:6px;">Species at location</div>
+=======
     <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:6px;">Species at clicked location</div>
+>>>>>>> 2b1e4515dfeb81bd34950cccdba542b30bd7dc0b
     <div id="click-species-list"></div>
   </div>
 </div>
@@ -988,6 +992,10 @@ function clearClick() {
   }
   document.getElementById('click-panel').style.display = 'none';
   document.getElementById('click-species-list').innerHTML = '';
+<<<<<<< HEAD
+  document.getElementById('click-count').textContent = '';
+=======
+>>>>>>> 2b1e4515dfeb81bd34950cccdba542b30bd7dc0b
 }
 
 map.on('load', () => {
@@ -1161,6 +1169,10 @@ map.on('load', () => {
                   const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
                   const panel = document.getElementById('click-panel');
                   const list = document.getElementById('click-species-list');
+<<<<<<< HEAD
+                  document.getElementById('click-count').textContent = presentIDs.length + ' SPECIES AT LOCATION';
+=======
+>>>>>>> 2b1e4515dfeb81bd34950cccdba542b30bd7dc0b
                   list.innerHTML = presentSpecies.map(s => `
                     <div style="display:flex;align-items:flex-start;gap:8px;margin:4px 0;">
                       <div style="background:${s.color};width:10px;height:10px;border-radius:2px;flex-shrink:0;margin-top:3px;"></div>
