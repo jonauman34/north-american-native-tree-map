@@ -977,6 +977,19 @@ function zoomToSpecies(id, name) {
 const popup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 12 });
 let hoveredId = null;
 
+// Pin marker - global scope so address search can access it
+let clickMarker = null;
+
+function clearClick() {
+  if (clickMarker) { clickMarker.remove(); clickMarker = null; }
+  if (map.getLayer('trees-base')) {
+    map.setFilter('trees-base', hiddenSpecies.size === 0 ? null : ['in', ['get', 'id'], ['literal', species.filter(s => !hiddenSpecies.has(s.id)).map(s => s.id)]]);
+    map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
+  }
+  document.getElementById('click-panel').style.display = 'none';
+  document.getElementById('click-species-list').innerHTML = '';
+}
+
 map.on('load', () => {
   mapLoaded = true;
 
@@ -1029,16 +1042,7 @@ map.on('load', () => {
     map.getCanvas().style.cursor = features.length > 0 ? 'crosshair' : '';
   });
 
-  // Pin marker
-  let clickMarker = null;
-
-  function clearClick() {
-    if (clickMarker) { clickMarker.remove(); clickMarker = null; }
-    map.setFilter('trees-base', hiddenSpecies.size === 0 ? null : ['in', ['get', 'id'], ['literal', species.filter(s => !hiddenSpecies.has(s.id)).map(s => s.id)]]);
-    map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
-    document.getElementById('click-panel').style.display = 'none';
-    document.getElementById('click-species-list').innerHTML = '';
-  }
+  // Pin marker and clearClick defined globally above
 
   map.on('click', (e) => {
     const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
