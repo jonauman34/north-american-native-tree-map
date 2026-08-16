@@ -14,7 +14,7 @@
     /* Reset button */
     #reset-btn {
       position: absolute;
-      bottom: 40px;
+      bottom: 30px;
       right: 54px;
       background: rgba(20,20,20,0.75);
       backdrop-filter: blur(6px);
@@ -1128,25 +1128,28 @@ map.on('load', () => {
             addressResults.style.display = 'none';
             addressInput.value = el.textContent.trim();
 
+            // Clear any existing pin/filter first
+            clearClick();
+
+            // Fly to location
             map.flyTo({ center: [lng, lat], zoom: 7, duration: 1500 });
 
-            // After flying, wait for tiles to fully render then query
+            // Drop pin immediately at the location
+            const markerEl = document.createElement('div');
+            markerEl.style.cssText = 'width:12px;height:12px;background:#ff4444;border:2px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.4);cursor:pointer;';
+            markerEl.title = 'Click to clear';
+            markerEl.addEventListener('click', (ev) => { ev.stopPropagation(); clearClick(); });
+            clickMarker = new mapboxgl.Marker({ element: markerEl, anchor: 'center' })
+              .setLngLat([lng, lat])
+              .addTo(map);
+
+            // After map finishes flying and tiles load, query and filter species
             map.once('idle', () => {
               setTimeout(() => {
                 const point = map.project([lng, lat]);
                 const features = map.queryRenderedFeatures(point, { layers: ['trees-base'] });
 
-              // Drop pin
-              if (clickMarker) clickMarker.remove();
-              const markerEl = document.createElement('div');
-              markerEl.style.cssText = 'width:12px;height:12px;background:#ff4444;border:2px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.4);cursor:pointer;';
-              markerEl.title = 'Click to clear';
-              markerEl.addEventListener('click', (ev) => { ev.stopPropagation(); clearClick(); });
-              clickMarker = new mapboxgl.Marker({ element: markerEl, anchor: 'center' })
-                .setLngLat([lng, lat])
-                .addTo(map);
-
-              if (features.length > 0) {
+                if (features.length > 0) {
                   const presentIDs = [...new Set(features.map(f => f.properties.id))];
                   map.setFilter('trees-base', ['in', ['get', 'id'], ['literal', presentIDs]]);
                   map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
@@ -1155,7 +1158,7 @@ map.on('load', () => {
                   const panel = document.getElementById('click-panel');
                   const list = document.getElementById('click-species-list');
                   list.innerHTML = presentSpecies.map(s => `
-                    <div class="popup-species" style="margin:4px 0;display:flex;align-items:flex-start;gap:8px;">
+                    <div style="display:flex;align-items:flex-start;gap:8px;margin:4px 0;">
                       <div style="background:${s.color};width:10px;height:10px;border-radius:2px;flex-shrink:0;margin-top:3px;"></div>
                       <div>
                         <div style="font-weight:bold;font-size:12px;color:white;">${s.name}</div>
@@ -1163,8 +1166,14 @@ map.on('load', () => {
                       </div>
                     </div>`).join('');
                   panel.style.display = 'block';
+                } else {
+                  // No species at this location — show message
+                  const panel = document.getElementById('click-panel');
+                  const list = document.getElementById('click-species-list');
+                  list.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.5);font-style:italic;">No tree ranges at this location</div>';
+                  panel.style.display = 'block';
                 }
-              }, 500);
+              }, 800);
             });
           });
         });
@@ -1178,7 +1187,5 @@ map.on('load', () => {
     if (!addressInput.contains(e.target) && !addressResults.contains(e.target)) {
       addressResults.style.display = 'none';
     }
-  });
-</script>
-</body>
+  });y>
 </html>
