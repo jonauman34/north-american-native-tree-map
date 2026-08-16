@@ -11,32 +11,98 @@
     html, body { width: 100%; height: 100%; font-family: Arial, sans-serif; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 
+    /* Reset button */
+    #reset-btn {
+      position: absolute;
+      bottom: 30px;
+      right: 54px;
+      background: rgba(20,20,20,0.75);
+      backdrop-filter: blur(6px);
+      border: none;
+      border-radius: 6px;
+      color: rgba(255,255,255,0.8);
+      padding: 8px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      z-index: 1;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    #reset-btn:hover { background: rgba(40,40,40,0.85); }
+
+    /* Address search */
+    #address-search-container {
+      margin-bottom: 8px;
+      position: relative;
+    }
+    #address-search {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 5px;
+      font-size: 13px;
+      outline: none;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    #address-search::placeholder { color: rgba(255,255,255,0.4); }
+    #address-search:focus { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.15); }
+    #address-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(20,20,20,0.92);
+      border-radius: 5px;
+      margin-top: 2px;
+      z-index: 10;
+      max-height: 180px;
+      overflow-y: auto;
+      display: none;
+    }
+    .address-result {
+      padding: 8px 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .address-result:hover { background: rgba(255,255,255,0.12); }
+    .address-divider {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      padding: 5px 12px 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     #sidebar {
       position: absolute; top: 10px; left: 10px;
-      background: rgba(255,255,255,0.95);
-      border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      background: rgba(20,20,20,0.75);
+      backdrop-filter: blur(6px);
+      border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
       z-index: 1; width: 280px; max-height: calc(100vh - 20px);
       display: flex; flex-direction: column;
     }
-    #sidebar-header { padding: 12px 14px 8px; border-bottom: 1px solid #eee; flex-shrink: 0; }
-    #sidebar-header h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #555; margin-bottom: 8px; }
-    #search-box { width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 13px; outline: none; background: #f9f9f9; }
-    #search-box:focus { border-color: #aaa; background: white; }
+    #sidebar-header { padding: 12px 14px 8px; border-bottom: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
+    #sidebar-header h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+    #search-box { width: 100%; padding: 7px 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; font-size: 13px; outline: none; background: rgba(255,255,255,0.1); color: white; }
+    #search-box:focus { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.15); }
+    #search-box::placeholder { color: rgba(255,255,255,0.4); }
     #sidebar-controls { display: flex; gap: 6px; margin-top: 7px; }
-    .control-btn { flex: 1; padding: 5px 8px; font-size: 11px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer; color: #555; text-align: center; }
-    .control-btn:hover { background: #e8e8e8; }
-    #species-count { font-size: 11px; color: #999; margin-top: 5px; }
+    .control-btn { flex: 1; padding: 5px 8px; font-size: 11px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; background: rgba(255,255,255,0.1); cursor: pointer; color: rgba(255,255,255,0.8); text-align: center; }
+    .control-btn:hover { background: rgba(255,255,255,0.2); }
+    #species-count { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 5px; }
     #legend { overflow-y: auto; flex: 1; padding: 4px 0; display: none; }
     #legend.visible { display: block; }
     .legend-item { display: flex; align-items: center; gap: 8px; padding: 5px 14px; cursor: pointer; transition: background 0.1s; }
-    .legend-item:hover { background: #f0f0f0; }
+    .legend-item:hover { background: rgba(255,255,255,0.1); }
     .legend-item.hidden-item { display: none; }
     .legend-item input[type="checkbox"] { cursor: pointer; width: 13px; height: 13px; flex-shrink: 0; }
     .legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
-    .legend-label { font-size: 12px; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
-    .legend-label.disabled { color: #bbb; text-decoration: line-through; }
-    .zoom-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 0 2px; color: #aaa; flex-shrink: 0; }
-    .zoom-btn:hover { color: #333; }
+    .legend-label { font-size: 12px; color: rgba(255,255,255,0.9); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+    .legend-label.disabled { color: rgba(255,255,255,0.3); text-decoration: line-through; }
+    .zoom-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 0 2px; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+    .zoom-btn:hover { color: rgba(255,255,255,0.9); }
     .mapboxgl-popup-content { background: rgba(20,20,20,0.75) !important; backdrop-filter: blur(6px); border-radius: 8px !important; padding: 10px 12px !important; box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important; color: white; }
     .mapboxgl-popup-tip { display: none !important; }
     .popup-content h4 { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
@@ -50,7 +116,11 @@
 <div id="map"></div>
 <div id="sidebar">
   <div id="sidebar-header">
-    <h3>Native Tree Species</h3>
+    <h3>Native Tree Ranges</h3>
+    <div id="address-search-container">
+      <input type="text" id="address-search" placeholder="Search address or place..." autocomplete="off">
+      <div id="address-results"></div>
+    </div>
     <input type="text" id="search-box" placeholder="Search species..." autocomplete="off">
     <div id="sidebar-controls">
       <div class="control-btn" id="select-all-btn">Select All</div>
@@ -60,7 +130,12 @@
     <div id="species-count"></div>
   </div>
   <div id="legend"></div>
+  <div id="click-panel" style="display:none; border-top:1px solid rgba(255,255,255,0.15); padding:10px 14px; flex-shrink:0; max-height:220px; overflow-y:auto;">
+    <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:6px;">Species at clicked location</div>
+    <div id="click-species-list"></div>
+  </div>
 </div>
+<button id="reset-btn" title="Reset view">⌂ Reset View</button>
 <script>
 const species = [
   { id: 'abieamab', name: 'Pacific silver fir', latin: 'Abies amabilis', color: '#bd2828' },
@@ -750,182 +825,25 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXVtYW4iLCJhIjoiY21zbDFpam9zMDRidjJ5cHZia
 
 const map = new mapboxgl.Map({
   container: 'map',
-  style: {
-    version: 8,
-    sources: {
-      'mapbox-terrain': {
-        type: 'vector',
-        url: 'mapbox://mapbox.mapbox-terrain-v2'
-      },
-      'mapbox-streets': {
-        type: 'vector',
-        url: 'mapbox://mapbox.mapbox-streets-v8'
-      }
-    },
-    glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
-    layers: [
-      // Background - warm off-white like nativelands.ca
-      {
-        id: 'background',
-        type: 'background',
-        paint: { 'background-color': '#f0ece3' }
-      },
-      // Water - muted blue-gray
-      {
-        id: 'water',
-        type: 'fill',
-        source: 'mapbox-streets',
-        'source-layer': 'water',
-        paint: { 'fill-color': '#c8d8e8' }
-      },
-      // Landcover - subtle natural tones
-      {
-        id: 'landcover-grass',
-        type: 'fill',
-        source: 'mapbox-terrain',
-        'source-layer': 'landcover',
-        filter: ['==', 'class', 'grass'],
-        paint: { 'fill-color': '#e8e4d8', 'fill-opacity': 0.5 }
-      },
-      {
-        id: 'landcover-wood',
-        type: 'fill',
-        source: 'mapbox-terrain',
-        'source-layer': 'landcover',
-        filter: ['==', 'class', 'wood'],
-        paint: { 'fill-color': '#ddd8c8', 'fill-opacity': 0.5 }
-      },
-      // National park areas - very subtle
-      {
-        id: 'landuse-park',
-        type: 'fill',
-        source: 'mapbox-streets',
-        'source-layer': 'landuse',
-        filter: ['==', 'class', 'park'],
-        paint: { 'fill-color': '#e2ddd0', 'fill-opacity': 0.6 }
-      },
-      // State/province boundaries
-      {
-        id: 'admin-state',
-        type: 'line',
-        source: 'mapbox-streets',
-        'source-layer': 'admin',
-        filter: ['==', 'admin_level', 4],
-        paint: {
-          'line-color': '#b0a898',
-          'line-width': 0.8,
-          'line-dasharray': [3, 2]
-        }
-      },
-      // National boundaries
-      {
-        id: 'admin-national',
-        type: 'line',
-        source: 'mapbox-streets',
-        'source-layer': 'admin',
-        filter: ['all', ['==', 'admin_level', 2], ['==', 'disputed', false]],
-        paint: {
-          'line-color': '#8a8078',
-          'line-width': 1.5
-        }
-      },
-      // Waterways
-      {
-        id: 'waterway',
-        type: 'line',
-        source: 'mapbox-streets',
-        'source-layer': 'waterway',
-        paint: {
-          'line-color': '#c8d8e8',
-          'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.5, 8, 2]
-        }
-      },
-      // City labels - muted
-      {
-        id: 'place-city',
-        type: 'symbol',
-        source: 'mapbox-streets',
-        'source-layer': 'place_label',
-        filter: ['==', 'type', 'city'],
-        layout: {
-          'text-field': ['get', 'name_en'],
-          'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 4, 10, 8, 14],
-          'text-anchor': 'center'
-        },
-        paint: {
-          'text-color': '#6b6358',
-          'text-halo-color': '#f0ece3',
-          'text-halo-width': 1.5
-        }
-      },
-      // Town labels
-      {
-        id: 'place-town',
-        type: 'symbol',
-        source: 'mapbox-streets',
-        'source-layer': 'place_label',
-        filter: ['==', 'type', 'town'],
-        minzoom: 6,
-        layout: {
-          'text-field': ['get', 'name_en'],
-          'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 6, 9, 10, 12],
-        },
-        paint: {
-          'text-color': '#8a8078',
-          'text-halo-color': '#f0ece3',
-          'text-halo-width': 1.2
-        }
-      },
-      // Country labels
-      {
-        id: 'place-country',
-        type: 'symbol',
-        source: 'mapbox-streets',
-        'source-layer': 'place_label',
-        filter: ['==', 'type', 'country'],
-        layout: {
-          'text-field': ['get', 'name_en'],
-          'text-font': ['DIN Pro Medium', 'Arial Unicode MS Regular'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 2, 10, 6, 16],
-          'text-transform': 'uppercase',
-          'text-letter-spacing': 0.1
-        },
-        paint: {
-          'text-color': '#5a5248',
-          'text-halo-color': '#f0ece3',
-          'text-halo-width': 2
-        }
-      },
-      // State labels
-      {
-        id: 'place-state',
-        type: 'symbol',
-        source: 'mapbox-streets',
-        'source-layer': 'place_label',
-        filter: ['==', 'type', 'state'],
-        minzoom: 4,
-        layout: {
-          'text-field': ['get', 'name_en'],
-          'text-font': ['DIN Pro Regular', 'Arial Unicode MS Regular'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 4, 9, 7, 13],
-          'text-transform': 'uppercase',
-          'text-letter-spacing': 0.05
-        },
-        paint: {
-          'text-color': '#7a7268',
-          'text-halo-color': '#f0ece3',
-          'text-halo-width': 1.5
-        }
-      }
-    ]
-  },
+  style: 'mapbox://styles/jonauman/cmspe0um000vw01s90ed70gzq',
   center: [-96, 50],
-  zoom: 3
+  zoom: 3,
+  projection: 'globe',
+  maxZoom: 12,
+  minZoom: 1
 });
 
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+map.on('style.load', () => {
+  map.setFog({
+    color: 'rgb(200, 225, 245)',
+    'high-color': 'rgb(120, 175, 220)',
+    'horizon-blend': 0.008,
+    'space-color': 'rgb(5, 8, 30)',
+    'star-intensity': 0.45
+  });
+});
 
 // Hidden species set
 const hiddenSpecies = new Set();
@@ -1074,7 +992,7 @@ map.on('load', () => {
     source: 'trees',
     paint: {
       'fill-color': colorMatch,
-      'fill-opacity': 0.2
+      'fill-opacity': 0.18
     }
   });
 
@@ -1103,45 +1021,171 @@ map.on('load', () => {
     layout: { visibility: 'none' }
   });
 
+  // Boundaries handled by Mapbox Studio style
+
+  // Cursor change on hover
   map.on('mousemove', (e) => {
+    const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
+    map.getCanvas().style.cursor = features.length > 0 ? 'crosshair' : '';
+  });
+
+  // Pin marker
+  let clickMarker = null;
+
+  function clearClick() {
+    if (clickMarker) { clickMarker.remove(); clickMarker = null; }
+    map.setFilter('trees-base', hiddenSpecies.size === 0 ? null : ['in', ['get', 'id'], ['literal', species.filter(s => !hiddenSpecies.has(s.id)).map(s => s.id)]]);
+    map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
+    document.getElementById('click-panel').style.display = 'none';
+    document.getElementById('click-species-list').innerHTML = '';
+  }
+
+  map.on('click', (e) => {
     const features = map.queryRenderedFeatures(e.point, { layers: ['trees-base'] });
 
     if (features.length === 0) {
-      map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
-      popup.remove();
-      map.getCanvas().style.cursor = '';
+      clearClick();
       return;
     }
 
-    const presentIDs = [...new Set(features.map(f => f.properties.id))];
-    map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
-
-    const presentSpecies = presentIDs
-      .map(id => species.find(s => s.id === id))
-      .filter(Boolean);
-
-    const rows = presentSpecies.map(s => `
-      <div class="popup-species">
-        <div class="popup-swatch" style="background:${s.color}"></div>
-        <div>
-          <div class="popup-name">${s.name}</div>
-          <div class="popup-latin">${s.latin}</div>
-        </div>
-      </div>`).join('');
-
-    popup.setLngLat(e.lngLat)
-      .setHTML(`<div class="popup-content"><h4>Species at this location</h4>${rows}</div>`)
+    // Drop pin
+    if (clickMarker) clickMarker.remove();
+    const markerEl = document.createElement('div');
+    markerEl.style.cssText = 'width:12px;height:12px;background:#ff4444;border:2px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.4);cursor:pointer;';
+    markerEl.title = 'Click to clear';
+    markerEl.addEventListener('click', (ev) => { ev.stopPropagation(); clearClick(); });
+    clickMarker = new mapboxgl.Marker({ element: markerEl, anchor: 'center' })
+      .setLngLat(e.lngLat)
       .addTo(map);
 
-    map.getCanvas().style.cursor = 'pointer';
+    const presentIDs = [...new Set(features.map(f => f.properties.id))];
+
+    // Filter map to only show species at this location
+    map.setFilter('trees-base', ['in', ['get', 'id'], ['literal', presentIDs]]);
+    map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
+
+    // Dynamic opacity
+    const count = presentIDs.length;
+    const opacity = count <= 2 ? 0.75 : count <= 5 ? 0.60 : count <= 10 ? 0.45 : count <= 20 ? 0.35 : 0.25;
+    map.setPaintProperty('trees-hover', 'fill-opacity', opacity);
+
+    // Show species in sidebar panel
+    const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
+    const panel = document.getElementById('click-panel');
+    const list = document.getElementById('click-species-list');
+    list.innerHTML = presentSpecies.map(s => `
+      <div class="popup-species" style="margin:4px 0;">
+        <div class="popup-swatch" style="background:${s.color};width:10px;height:10px;border-radius:2px;flex-shrink:0;margin-top:3px;"></div>
+        <div>
+          <div class="popup-name" style="font-weight:bold;font-size:12px;color:white;">${s.name}</div>
+          <div class="popup-latin" style="font-style:italic;font-size:10px;color:rgba(255,255,255,0.6);">${s.latin}</div>
+        </div>
+      </div>`).join('');
+    panel.style.display = 'block';
   });
 
-  map.on('mouseleave', () => {
-    map.setFilter('trees-hover', ['==', ['get', 'id'], '']);
-    popup.remove();
-    map.getCanvas().style.cursor = '';
-  });
+
 });
-</script>
-</body>
+
+  // Reset view button
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    map.flyTo({ center: [-96, 50], zoom: 3, duration: 1500 });
+  });
+
+  // Address search using Mapbox Geocoding API
+  const addressInput = document.getElementById('address-search');
+  const addressResults = document.getElementById('address-results');
+  let geocodeTimer;
+
+  addressInput.addEventListener('input', (e) => {
+    clearTimeout(geocodeTimer);
+    const query = e.target.value.trim();
+    if (query.length < 3) {
+      addressResults.style.display = 'none';
+      return;
+    }
+    geocodeTimer = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&types=place,address,region,country&limit=5`
+        );
+        const data = await res.json();
+        if (!data.features || data.features.length === 0) {
+          addressResults.style.display = 'none';
+          return;
+        }
+        addressResults.innerHTML = '<div class="address-divider">Locations</div>' +
+          data.features.map(f => `
+            <div class="address-result" data-lng="${f.center[0]}" data-lat="${f.center[1]}">
+              ${f.place_name}
+            </div>`).join('');
+        addressResults.style.display = 'block';
+
+        addressResults.querySelectorAll('.address-result').forEach(el => {
+          el.addEventListener('click', () => {
+            const lng = parseFloat(el.dataset.lng);
+            const lat = parseFloat(el.dataset.lat);
+            addressResults.style.display = 'none';
+            addressInput.value = el.textContent.trim();
+
+            // Clear any existing pin/filter first
+            clearClick();
+
+            // Fly to location
+            map.flyTo({ center: [lng, lat], zoom: 7, duration: 1500 });
+
+            // Drop pin immediately at the location
+            const markerEl = document.createElement('div');
+            markerEl.style.cssText = 'width:12px;height:12px;background:#ff4444;border:2px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.4);cursor:pointer;';
+            markerEl.title = 'Click to clear';
+            markerEl.addEventListener('click', (ev) => { ev.stopPropagation(); clearClick(); });
+            clickMarker = new mapboxgl.Marker({ element: markerEl, anchor: 'center' })
+              .setLngLat([lng, lat])
+              .addTo(map);
+
+            // After map finishes flying and tiles load, query and filter species
+            map.once('idle', () => {
+              setTimeout(() => {
+                const point = map.project([lng, lat]);
+                const features = map.queryRenderedFeatures(point, { layers: ['trees-base'] });
+
+                if (features.length > 0) {
+                  const presentIDs = [...new Set(features.map(f => f.properties.id))];
+                  map.setFilter('trees-base', ['in', ['get', 'id'], ['literal', presentIDs]]);
+                  map.setFilter('trees-hover', ['in', ['get', 'id'], ['literal', presentIDs]]);
+
+                  const presentSpecies = presentIDs.map(id => species.find(s => s.id === id)).filter(Boolean);
+                  const panel = document.getElementById('click-panel');
+                  const list = document.getElementById('click-species-list');
+                  list.innerHTML = presentSpecies.map(s => `
+                    <div style="display:flex;align-items:flex-start;gap:8px;margin:4px 0;">
+                      <div style="background:${s.color};width:10px;height:10px;border-radius:2px;flex-shrink:0;margin-top:3px;"></div>
+                      <div>
+                        <div style="font-weight:bold;font-size:12px;color:white;">${s.name}</div>
+                        <div style="font-style:italic;font-size:10px;color:rgba(255,255,255,0.6);">${s.latin}</div>
+                      </div>
+                    </div>`).join('');
+                  panel.style.display = 'block';
+                } else {
+                  // No species at this location — show message
+                  const panel = document.getElementById('click-panel');
+                  const list = document.getElementById('click-species-list');
+                  list.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.5);font-style:italic;">No tree ranges at this location</div>';
+                  panel.style.display = 'block';
+                }
+              }, 800);
+            });
+          });
+        });
+      } catch(err) {
+        console.error('Geocoding error:', err);
+      }
+    }, 300);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!addressInput.contains(e.target) && !addressResults.contains(e.target)) {
+      addressResults.style.display = 'none';
+    }
+  });y>
 </html>
