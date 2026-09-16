@@ -94,14 +94,31 @@
     #species-count { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 5px; }
     #legend { overflow-y: auto; flex: 1; padding: 4px 0; display: none; }
     #legend.visible { display: block; }
-    .legend-item { display: flex; align-items: center; gap: 8px; padding: 5px 14px; cursor: pointer; transition: background 0.1s; }
-    .legend-item:hover { background: rgba(255,255,255,0.1); }
+    /* Family group */
+    .family-group { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .family-header {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 14px; cursor: pointer;
+      background: rgba(255,255,255,0.05);
+      transition: background 0.1s;
+    }
+    .family-checkbox { cursor: pointer; width: 13px; height: 13px; flex-shrink: 0; }
+    .family-header:hover { background: rgba(255,255,255,0.12); }
+    .family-name { font-size: 11px; font-weight: bold; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.06em; flex: 1; }
+    .family-count { font-size: 10px; color: rgba(255,255,255,0.35); margin-right: 4px; }
+    .family-arrow { font-size: 10px; color: rgba(255,255,255,0.4); transition: transform 0.2s; }
+    .family-arrow.open { transform: rotate(90deg); }
+    .family-species { display: none; }
+    .family-species.open { display: block; }
+    /* Species items */
+    .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 14px 4px 22px; cursor: pointer; transition: background 0.1s; }
+    .legend-item:hover { background: rgba(255,255,255,0.08); }
     .legend-item.hidden-item { display: none; }
     .legend-item input[type="checkbox"] { cursor: pointer; width: 13px; height: 13px; flex-shrink: 0; }
-    .legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
-    .legend-label { font-size: 12px; color: rgba(255,255,255,0.9); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+    .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .legend-label { font-size: 11px; color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
     .legend-label.disabled { color: rgba(255,255,255,0.3); text-decoration: line-through; }
-    .zoom-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 0 2px; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+    .zoom-btn { background: none; border: none; cursor: pointer; font-size: 12px; padding: 0 2px; color: rgba(255,255,255,0.35); flex-shrink: 0; }
     .zoom-btn:hover { color: rgba(255,255,255,0.9); }
     .mapboxgl-popup-content { background: rgba(20,20,20,0.75) !important; backdrop-filter: blur(6px); border-radius: 8px !important; padding: 10px 12px !important; box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important; color: white; }
     .mapboxgl-popup-tip { display: none !important; }
@@ -821,7 +838,7 @@ const species = [
 
 const colorMatch = ["match", ["get", "id"], "abieamab", "#bd2828", "abiebals", "#1fdf57", "abiebrac", "#9c2aed", "abieconc", "#dbca56", "abiefras", "#1cacc8", "abiegran", "#eb1388", "abielasi", "#66d641", "abiemagn", "#534ce5", "abieproc", "#d45211", "acacberl", "#2cd294", "acacchor", "#d436e2", "acacfarn", "#cbef42", "acacgreg", "#2872bd", "acacmacr", "#df1f47", "acacrigi", "#2aed3b", "acacroem", "#8856db", "acactort", "#c88f1c", "acacwrig", "#13ebe3", "acerbarb", "#d641b1", "acercirc", "#92e54c", "acerglab", "#1131d4", "acergran", "#d2412c", "acerleuc", "#36e27e", "acermacr", "#bd42ef", "acernegu", "#bcbd28", "acernigr", "#1fa6df", "acerpens", "#ed2a7b", "acerrubr", "#66db56", "acersacc", "#3a1cc8", "acersacr", "#eb7713", "acerspic", "#41d6b2", "acoewrig", "#e54cde", "aesccali", "#92d411", "aescglab", "#2c6ad2", "aescocta", "#e23643", "aescparv", "#42ef67", "aescpavi", "#7328bd", "aescsylv", "#dfb81f", "agavutah", "#2adced", "alnumari", "#db56a8", "alnuoblo", "#55c81c", "alnurhom", "#131aeb", "alnurubr", "#d66741", "alnurugo", "#4ce5a0", "alnuserr", "#b411d4", "alnusinu", "#bcd22c", "alnutenu", "#3699e2", "alvaamor", "#ef4273", "amelalni", "#28bd29", "amelarbo", "#581fdf", "amelinte", "#ed9d2a", "amelsang", "#56dbcb", "amelutah", "#c81caa", "amphlati", "#86eb13", "amyrbals", "#4165d6", "amyrelem", "#e5534c", "annoglab", "#11d453", "aralspin", "#952cd2", "arbuariz", "#e2d536", "arbumenz", "#42caef", "arbutexa", "#bd2871", "arctprin", "#46df1f", "ardiesca", "#3c2aed", "artetrid", "#db8956", "asimparv", "#1cc890", "asimtril", "#e413eb", "avicgerm", "#b0d641", "bacchali", "#4c91e5", "betualle", "#d4112f", "betulent", "#2cd242", "betunana", "#7f36e2", "betunigr", "#efbe42", "betuocci", "#28bbbd", "betupapy", "#df1fa5", "betupopu", "#7aed2a", "betuuber", "#5665db", "bourovat", "#c83b1c", "bourradu", "#13eb78", "bumecela", "#b341d6", "bumelanu", "#dde54c", "bumelyci", "#1191d4", "bumetena", "#d22c68", "bursfaga", "#42e236", "bursmicr", "#6842ef", "burssima", "#bd7428", "byrsluci", "#1fdfb9", "caesmexi", "#ed2adb", "calypall", "#a8db56", "calyzuzy", "#1c54c8", "canewint", "#eb1319", "canoholo", "#41d668", "cappcyno", "#a14ce5", "cappflex", "#d4b611", "carpcaro", "#2cbbd2", "caryaqua", "#e23698", "carycord", "#72ef42", "caryflor", "#2a28bd", "caryglab", "#df5a1f", "caryilli", "#2aed9f", "carylaci", "#cc56db", "carymyri", "#a9c81c", "caryovat", "#1385eb", "carypall", "#d64164", "carytexa", "#4ce554", "carytome", "#5411d4", "castalni", "#d2962c", "castchry", "#36e2d6", "castdent", "#ef42c9", "castozar", "#70bd28", "castpumi", "#1f44df", "catabign", "#ed3d2a", "cataspec", "#56db8a", "ceanarbo", "#921cc8", "ceanspin", "#ebe613", "ceanthyr", "#41afd6", "celtlaev", "#e54c90", "celtlind", "#2ed411", "celtocci", "#432cd2", "celtreti", "#e28036", "celttenu", "#42efbf", "cephocci", "#bd28ba", "cercbetu", "#a4df1f", "cercbrev", "#2a78ed", "cerccana", "#db5665", "cercflor", "#1cc83c", "cercledi", "#7a13eb", "cercmacr", "#d6b441", "cercmicr", "#4cdce5", "cercocci", "#d4118f", "cerctras", "#67d22c", "ceregiga", "#3641e2", "cererobi", "#ef6942", "chamlaws", "#28bd75", "chamnoot", "#ba1fdf", "chamthyo", "#daed2a", "chilline", "#56a7db", "chiovirg", "#c81c52", "chryicac", "#18eb13", "chryoliv", "#6941d6", "cithberl", "#e5a24c", "cithfrut", "#11d4b7", "cladkent", "#d22cba", "cletacum", "#97e236", "clifmono", "#4271ef", "clusrose", "#bd2b28", "coccarge", "#1fdf5b", "coccdive", "#a02aed", "coccuvif", "#dbcd56", "coluarbo", "#1ca8c8", "colucube", "#eb1384", "coluelli", "#63d641", "condglob", "#554ce5", "condhook", "#d45611", "conoerec", "#2cd297", "cordbois", "#d736e2", "cordsebe", "#c7ef42", "cornalte", "#286fbd", "corndrum", "#df1f43", "cornflor", "#2aed3f", "cornglab", "#8b56db", "cornnutt", "#c8931c", "cornocci", "#13ebe7", "cornrace", "#d641ae", "cornrugo", "#8fe54c", "cornsess", "#112dd4", "cornstol", "#d2442c", "cornstri", "#36e281", "corycorn", "#c042ef", "cotiobov", "#b9bd28", "cowamexi", "#1fa3df", "cratchry", "#ed2a77", "cratcolu", "#64db56", "cratdoug", "#3d1cc8", "crateryt", "#eb7b13", "cratsali", "#41d6b5", "cratsucc", "#e54cdb", "crattrac", "#8ed411", "crosrhac", "#2c66d2", "cupaglab", "#e23640", "cuprariz", "#42ef6a", "cuprbake", "#7628bd", "cuprgove", "#dfbb1f", "cuprguad", "#2ad8ed", "cuprmacn", "#db56a6", "cuprmacr", "#51c81c", "cuprsarg", "#1316eb", "cyrirace", "#d66a41", "dalespin", "#4ce5a3", "diostexa", "#b811d4", "diosvirg", "#b9d22c", "diphsali", "#3696e2", "dodovisc", "#ef4270", "drypdive", "#28bd2b", "dryplate", "#5c1fdf", "ehreanac", "#eda12a", "ellirace", "#56dbce", "erytflab", "#c81ca7", "erytherb", "#82eb13", "esenberl", "#4163d6", "eugeaxil", "#e5564c", "eugeconf", "#11d457", "eugefoet", "#982cd2", "eugerhom", "#e2d836", "euonatro", "#42c6ef", "euonocci", "#bd286e", "exoscari", "#42df1f", "exotpani", "#402aed", "eysepoly", "#db8c56", "eysetexa", "#1cc894", "fagugran", "#e813eb", "ficuaure", "#add641", "ficucitr", "#4c8ee5", "foreacum", "#d4112c", "foreangu", "#2cd246", "forephil", "#8236e2", "foresegr", "#efc242", "franalat", "#28b9bd", "fraxamer", "#df1fa1", "fraxanom", "#76ed2a", "fraxberl", "#5663db", "fraxcaro", "#c83e1c", "fraxcusp", "#13eb7c", "fraxdipe", "#b541d6", "fraxgood", "#dae54c", "fraxgreg", "#118dd4", "fraxlati", "#d22c65", "fraxnigr", "#3fe236", "fraxpapi", "#6b42ef", "fraxpenn", "#bd7728", "fraxprof", "#1fdfbd", "fraxquad", "#ed2ad7", "fraxtexe", "#a5db56", "fraxvelu", "#1c50c8", "fremcali", "#eb1315", "fremmexi", "#41d66b", "garrelli", "#a44ce5", "geniclus", "#d4b911", "gledaqua", "#2cb8d2", "gledtria", "#e23695", "gordlasi", "#6fef42", "guaiangu", "#2c28bd", "guaisanc", "#df5d1f", "guapdisc", "#2aeda2", "guetelli", "#cf56db", "guetscab", "#a6c81c", "gymilati", "#1381eb", "gymndioi", "#d64162", "gymnluci", "#4ce557", "halecaro", "#5811d4", "haledipt", "#d2992c", "haleparv", "#36e2d9", "hamavirg", "#ef42c5", "hamepate", "#6dbd28", "heliparv", "#1f41df", "hippmanc", "#ed412a", "holaemor", "#56db8c", "hypetrif", "#951cc8", "ilexambi", "#ebea13", "ilexamel", "#41acd6", "ilexcass", "#e54c8d", "ilexcori", "#2ad411", "ilexdeci", "#472cd2", "ilexkrug", "#e28336", "ilexlaev", "#42efc3", "ilexlong", "#bd28b8", "ilexmont", "#a0df1f", "ilexmyrt", "#2a75ed", "ilexopac", "#db5662", "ilexvert", "#1cc83f", "ilexvomi", "#7e13eb", "illiflor", "#d6b641", "illiparv", "#4cd9e5", "jacqkeye", "#d4118c", "juglcali", "#64d22c", "juglcine", "#363ee2", "juglhind", "#ef6c42", "juglmajo", "#28bd78", "juglmicr", "#be1fdf", "juglnigr", "#d6ed2a", "juniashe", "#56a4db", "junicali", "#c81c4f", "junicomm", "#14eb13", "junidepp", "#6c41d6", "junieryt", "#e5a54c", "juniflac", "#11d4bb", "junihori", "#d22cb7", "junimono", "#94e236", "juniocci", "#426eef", "junioste", "#bd2d28", "junipinc", "#1fdf5f", "juniscop", "#a42aed", "junisili", "#dbcf56", "junivirg", "#1ca5c8", "kalmlati", "#eb1380", "koebspin", "#61d641", "krugferr", "#584ce5", "lagurace", "#d45911", "larilari", "#2cd29a", "larilyal", "#da36e2", "lariocci", "#c4ef42", "larrdiva", "#286cbd", "leitflor", "#df1f40", "leucpulv", "#2aed42", "leucretu", "#8d56db", "libodecu", "#c8961c", "licatria", "#13ebeb", "liqustyr", "#d641ab", "lirituli", "#8ce54c", "lithdens", "#1129d4", "lyonferr", "#d2482c", "lyonflor", "#36e285", "lysilati", "#c442ef", "lysimicr", "#b7bd28", "maclpomi", "#1f9fdf", "magnacum", "#ed2a73", "magnashe", "#61db56", "magnfras", "#401cc8", "magngran", "#eb7f13", "magnmacr", "#41d6b7", "magnpyra", "#e54cd8", "magntrip", "#8ad411", "magnvirg", "#2c63d2", "maluangu", "#e2363d", "malucoro", "#42ef6d", "maludive", "#7928bd", "maluioen", "#dfbf1f", "manibaha", "#2ad5ed", "mastfoet", "#db56a3", "maytphyl", "#4ec81c", "metotoxi", "#1313eb", "morumicr", "#d66d41", "morurubr", "#4ce5a6", "myrcfrag", "#bc11d4", "myricali", "#b6d22c", "myriceri", "#3692e2", "myrihete", "#ef426d", "myriinod", "#28bd2e", "myripens", "#601fdf", "nectcori", "#eda52a", "nemocoll", "#56dbd0", "nolibige", "#c81ca4", "nyssaqua", "#7eeb13", "nyssogec", "#4160d6", "nysssylv", "#e5594c", "olneteso", "#11d45b", "opunfulg", "#9b2cd2", "osmaamer", "#e2db36", "ostrchis", "#42c3ef", "ostrknow", "#bd286b", "ostrvirg", "#3edf1f", "oxydarbo", "#442aed", "parkacul", "#db8e56", "persborb", "#1cc897", "photarbu", "#eb13ea", "picebrew", "#aad641", "picechih", "#4c8be5", "piceenge", "#d41128", "piceglau", "#2cd249", "picemari", "#8636e2", "picepung", "#efc542", "picerube", "#28b6bd", "picesitc", "#df1f9e", "picrpent", "#72ed2a", "pincpube", "#5660db", "pinualbi", "#c8411c", "pinuaris", "#13eb81", "pinuatte", "#b841d6", "pinuayac", "#d7e54c", "pinubalf", "#1189d4", "pinubank", "#d22c62", "pinucari", "#3ce236", "pinucemb", "#6f42ef", "pinuclau", "#bd7a28", "pinucont", "#1fdfc0", "pinucoop", "#ed2ad3", "pinucoul", "#a2db56", "pinucube", "#1c4dc8", "pinuculm", "#eb1413", "pinudoug", "#41d66e", "pinudura", "#a74ce5", "pinuechi", "#d4bd11", "pinuedul", "#2cb5d2", "pinuelli", "#e23691", "pinuenge", "#6cef42", "pinuflex", "#2f28bd", "pinuglab", "#df611f", "pinugreg", "#2aeda6", "pinuhart", "#d156db", "pinujeff", "#a3c81c", "pinulamb", "#137deb", "pinulaws", "#d6415f", "pinuleio", "#4ce55a", "pinulong", "#5c11d4", "pinulumh", "#d29c2c", "pinumaxi", "#36e2dd", "pinumich", "#ef42c2", "pinumono", "#6abd28", "pinumont", "#1f3ddf", "pinumtez", "#ed452a", "pinumuri", "#56db8f", "pinunels", "#981cc8", "pinuocci", "#e9eb13", "pinuooca", "#41a9d6", "pinupalu", "#e54c8a", "pinupatu", "#27d411", "pinupinc", "#4a2cd2", "pinupond", "#e28736", "pinuprin", "#42efc6", "pinupseu", "#bd28b5", "pinupung", "#9cdf1f", "pinuquad", "#2a71ed", "pinuradi", "#db5660", "pinuresi", "#1cc842", "pinurigi", "#8213eb", "pinusabi", "#d6b941", "pinusero", "#4cd6e5", "pinustrb", "#d41188", "pinustro", "#61d22c", "pinutaed", "#363ae2", "pinuteoc", "#ef7042", "pinutorr", "#28bd7b", "pinutrop", "#c21fdf", "pinuvirg", "#d2ed2a", "pinuwash", "#56a2db", "piscpisc", "#c81c4c", "pisorotu", "#13eb16", "pisttexa", "#6f41d6", "pithflex", "#e5a84c", "pithguad", "#11d4be", "pithpall", "#d22cb4", "pithungu", "#90e236", "planaqua", "#426aef", "platocci", "#bd3028", "platrace", "#1fdf62", "platwrig", "#a72aed", "popuangu", "#dbd256", "popuariz", "#1ca2c8", "popubals", "#eb137b", "popudelt", "#5ed641", "popufrem", "#5b4ce5", "popugran", "#d45d11", "popuhete", "#2cd29d", "popuhinc", "#de36e2", "poputrem", "#c1ef42", "poputric", "#2869bd", "prosjuli", "#df1f3c", "prospube", "#2aed46", "prunalle", "#9056db", "prunamer", "#c8991c", "prunangu", "#13e7eb", "pruncaro", "#d641a8", "prunemar", "#89e54c", "prunfrem", "#1125d4", "prunhort", "#d24b2c", "prunilic", "#36e288", "prunlyon", "#c742ef", "prunmexi", "#b4bd28", "prunmuns", "#1f9bdf", "prunmyrt", "#ed2a70", "prunnigr", "#5fdb56", "prunpens", "#431cc8", "prunsero", "#eb8313", "prunsubc", "#41d6ba", "prunumbe", "#e54cd5", "prunvirg", "#87d411", "pseumacr", "#2c60d2", "pseumenz", "#e23639", "pseusarg", "#42ef71", "psidlong", "#7c28bd", "ptelcren", "#dfc31f", "pteltrif", "#2ad1ed", "queragri", "#db56a1", "querajoe", "#4bc81c", "queralba", "#1713eb", "querariz", "#d67041", "querarka", "#4ce5a9", "querbico", "#c011d4", "querchap", "#b3d22c", "querchry", "#368fe2", "quercocc", "#ef4269", "querdoug", "#28bd31", "querdunn", "#631fdf", "querdura", "#eda92a", "querelli", "#56dbd3", "queremor", "#c81ca1", "querenge", "#7aeb13", "querfalc", "#415dd6", "quergamb", "#e55c4c", "quergarr", "#11d45e", "quergeor", "#9f2cd2", "querglau", "#e2df36", "quergrac", "#42c0ef", "quergrav", "#bd2868", "quergris", "#3bdf1f", "querhava", "#472aed", "querhypo", "#db9156", "querilic", "#1cc89a", "querimbr", "#eb13e6", "querinca", "#a7d641", "querkell", "#4c88e5", "querlaev", "#d41124", "querlaur", "#2cd24c", "querloba", "#8936e2", "querlyra", "#efc842", "quermacd", "#28b3bd", "quermacr", "#df1f9a", "quermari", "#6eed2a", "quermich", "#565edb", "quermohr", "#c8451c", "quermueh", "#13eb85", "quermyrt", "#bb41d6", "quernigr", "#d4e54c", "quernutt", "#1185d4", "queroblo", "#d22c5f", "querogle", "#38e236", "querpalu", "#7242ef", "querphel", "#bd7d28", "querprin", "#1fdfc4", "querpung", "#ed2ad0", "querrubr", "#a0db56", "querrugo", "#1c4ac8", "quershum", "#eb1913", "querstel", "#41d671", "quertome", "#aa4ce5", "quertoum", "#d4c111", "querturb", "#2cb2d2", "quervelu", "#e2368e", "quervirg", "#68ef42", "querwisl", "#3228bd", "rapapunc", "#df651f", "reynsept", "#2aedaa", "rhambetu", "#d456db", "rhamcali", "#9fc81c", "rhamcaro", "#1379eb", "rhamcroc", "#d6415c", "rhampurs", "#4ce55d", "rhizmang", "#6011d4", "rhodcata", "#d2a02c", "rhodmacr", "#36e2e0", "rhodmaxi", "#ef42bf", "rhuschor", "#68bd28", "rhuscopa", "#1f39df", "rhusglab", "#ed492a", "rhusinte", "#56db92", "rhuskear", "#9b1cc8", "rhuslanc", "#e5eb13", "rhuslaur", "#41a6d6", "rhusmicr", "#e54c87", "rhusovat", "#23d411", "rhustyph", "#4d2cd2", "robikels", "#e28a36", "robineom", "#42efc9", "robipseu", "#bd28b2", "robivisc", "#99df1f", "royselat", "#2a6ded", "sabamexi", "#db565d", "sabamino", "#1cc846", "sabapalm", "#8613eb", "salialax", "#d6bc41", "saliamyg", "#4cd3e5", "saliarbu", "#d41184", "salibebb", "#5ed22c", "salibonp", "#3637e2", "salicaro", "#ef7342", "salidisc", "#28bd7d", "saliexig", "#c51fdf", "saliflor", "#ceed2a", "salifluv", "#569fdb", "saligeye", "#c81c49", "salihind", "#13eb1a", "salihook", "#7241d6", "salilaev", "#e5ab4c", "salilasi", "#11d4c2", "salilaso", "#d22cb0", "saliluci", "#8de236", "salimack", "#4267ef", "salinigr", "#bd3328", "salipell", "#1fdf66", "salipeti", "#ab2aed", "salipyri", "#dbd456", "saliscou", "#1c9ec8", "saliseri", "#eb1377", "salisess", "#5bd641", "salisitc", "#5e4ce5", "salitaxi", "#d46111", "salitrac", "#2cd2a1", "sambcall", "#e136e2", "sambcana", "#beef42", "sambglau", "#2867bd", "sambmela", "#df1f38", "sambmexi", "#2aed4a", "sambvelu", "#9256db", "sapibilo", "#c89d1c", "sapidrum", "#13e3eb", "sapisapo", "#d641a5", "sassalbi", "#86e54c", "savibaha", "#1122d4", "schafrut", "#d24e2c", "schochry", "#36e28b", "sequgiga", "#ca42ef", "sequsemp", "#b1bd28", "sererepe", "#1f98df", "sheparge", "#ed2a6c", "simaglau", "#5cdb56", "solaeria", "#471cc8", "sophaffi", "#eb8713", "sophsecu", "#41d6bd", "sorbamer", "#e54cd2", "sorbdeco", "#83d411", "sorbscop", "#2c5dd2", "sorbsitc", "#e23636", "stapbola", "#42ef74", "staptrif", "#7e28bd", "stewmala", "#dfc61f", "stewovat", "#2acded", "styramer", "#db569e", "styrgran", "#47c81c", "styrplat", "#1b13eb", "surimari", "#d67341", "swiemaha", "#4ce5ac", "symptinc", "#c311d4", "taxodist", "#afd22c", "taxomucr", "#368ce2", "taxubrev", "#ef4266", "taxucana", "#28bd34", "taxuflor", "#671fdf", "tetrbico", "#edac2a", "thrimorr", "#56dbd5", "thriradi", "#c81c9d", "thujocci", "#76eb13", "thujplic", "#415ad6", "tiliamer", "#e55f4c", "tilicaro", "#11d462", "tilihete", "#a22cd2", "torrcali", "#e2e236", "torrtaxi", "#42bcef", "toxivern", "#bd2866", "tremlama", "#37df1f", "tremmicr", "#4b2aed", "tsugcana", "#db9356", "tsugcaro", "#1cc89e", "tsughete", "#eb13e2", "tsugmert", "#a4d641", "ulmualat", "#4c85e5", "ulmuamer", "#d41120", "ulmucras", "#2cd24f", "ulmurubr", "#8c36e2", "ulmusero", "#efcc42", "ulmuthom", "#28b0bd", "umbecali", "#df1f96", "ungnspec", "#6bed2a", "vaccarbo", "#565bdb", "vauqcali", "#c8481c", "vauqpauc", "#13eb89", "vibulent", "#be41d6", "vibunudu", "#d1e54c", "vibuobov", "#1182d4", "vibuprun", "#d22c5c", "viburufi", "#36e236", "vibutril", "#7542ef", "washfili", "#bd7f28", "ximeamer", "#1fdfc8", "yuccaloi", "#ed2acc", "yuccbrev", "#9ddb56", "yucccarn", "#1c46c8", "yuccelat", "#eb1d13", "yuccfaxo", "#41d674", "yuccglor", "#ac4ce5", "yuccmoha", "#d4c511", "yuccrost", "#2caed2", "yuccscho", "#e2368b", "yucctorr", "#65ef42", "yucctrec", "#3528bd", "zantamer", "#df681f", "zantclav", "#2aedae", "zantcori", "#d656db", "zantfaga", "#9cc81c", "zantflav", "#1374eb", "zanthirs", "#d64159", "#cccccc"];
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXVtYW4iLCJhIjoiY21zbDFpam9zMDRidjJ5cHZiazk2eHFtZSJ9.bML0bt0b6r2UXDdw7MxccA';
+mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -891,6 +908,18 @@ searchBox.addEventListener('input', (e) => {
     const match = !query || item.dataset.name.includes(query) || item.dataset.latin.includes(query);
     item.classList.toggle('hidden-item', !match);
   });
+  // Show/hide family groups and auto-expand matching ones
+  document.querySelectorAll('.family-group').forEach(group => {
+    const hasVisible = group.querySelectorAll('.legend-item:not(.hidden-item)').length > 0;
+    group.style.display = hasVisible ? '' : 'none';
+    if (query && hasVisible) {
+      group.querySelector('.family-species').classList.add('open');
+      group.querySelector('.family-arrow').classList.add('open');
+    } else if (!query) {
+      group.querySelector('.family-species').classList.remove('open');
+      group.querySelector('.family-arrow').classList.remove('open');
+    }
+  });
   updateCount();
 });
 
@@ -899,6 +928,10 @@ document.getElementById('select-all-btn').addEventListener('click', () => {
   document.querySelectorAll('.legend-item input').forEach(cb => {
     cb.checked = true;
     cb.closest('.legend-item').querySelector('.legend-label').classList.remove('disabled');
+  });
+  document.querySelectorAll('.family-checkbox').forEach(cb => {
+    cb.checked = true;
+    cb.indeterminate = false;
   });
   updateFilters();
 });
@@ -909,34 +942,329 @@ document.getElementById('deselect-all-btn').addEventListener('click', () => {
     cb.checked = false;
     cb.closest('.legend-item').querySelector('.legend-label').classList.add('disabled');
   });
+  document.querySelectorAll('.family-checkbox').forEach(cb => {
+    cb.checked = false;
+    cb.indeterminate = false;
+  });
   updateFilters();
 });
 
-// Build legend
-species.forEach(s => {
-  const item = document.createElement('div');
-  item.className = 'legend-item';
-  item.dataset.name = s.name.toLowerCase();
-  item.dataset.latin = s.latin.toLowerCase();
-  item.innerHTML = `
-    <input type="checkbox" id="toggle-${s.id}" checked>
-    <div class="legend-swatch" style="background:${s.color}"></div>
-    <label class="legend-label" for="toggle-${s.id}" title="${s.name} (${s.latin})">${s.name}</label>
-    <button class="zoom-btn" title="Zoom to ${s.name}" data-id="${s.id}">⌖</button>
-  `;
-  legend.appendChild(item);
+const genusToFamily = {
+  'Abies': 'Pinaceae',
+  'Acacia': 'Fabaceae',
+  'Acer': 'Sapindaceae',
+  'Acoelorrhaphe': 'Arecaceae',
+  'Aesculus': 'Sapindaceae',
+  'Agave': 'Asparagaceae',
+  'Alnus': 'Betulaceae',
+  'Alvaradoa': 'Simaroubaceae',
+  'Amelanchier': 'Rosaceae',
+  'Amphitecna': 'Bignoniaceae',
+  'Amyris': 'Rutaceae',
+  'Annona': 'Annonaceae',
+  'Aralia': 'Araliaceae',
+  'Arbutus': 'Ericaceae',
+  'Arctostaphylos': 'Ericaceae',
+  'Ardisia': 'Primulaceae',
+  'Artemisia': 'Asteraceae',
+  'Asimina': 'Annonaceae',
+  'Avicennia': 'Acanthaceae',
+  'Baccharis': 'Asteraceae',
+  'Betula': 'Betulaceae',
+  'Bourreria': 'Boraginaceae',
+  'Bumelia': 'Sapotaceae',
+  'Bursera': 'Burseraceae',
+  'Byrsonima': 'Malpighiaceae',
+  'Caesalpinia': 'Fabaceae',
+  'Calyptranthes': 'Myrtaceae',
+  'Canella': 'Canellaceae',
+  'Canotia': 'Celastraceae',
+  'Capparis': 'Capparaceae',
+  'Carpinus': 'Betulaceae',
+  'Carya': 'Juglandaceae',
+  'Castanea': 'Fagaceae',
+  'Castanopsis': 'Fagaceae',
+  'Catalpa': 'Bignoniaceae',
+  'Ceanothus': 'Rhamnaceae',
+  'Celtis': 'Cannabaceae',
+  'Cephalanthus': 'Rubiaceae',
+  'Cercidium': 'Fabaceae',
+  'Cercis': 'Fabaceae',
+  'Cercocarpus': 'Rosaceae',
+  'Cereus': 'Cactaceae',
+  'Chamaecyparis': 'Cupressaceae',
+  'Chilopsis': 'Bignoniaceae',
+  'Chionanthus': 'Oleaceae',
+  'Chrysobalanus': 'Chrysobalanaceae',
+  'Chrysophyllum': 'Sapotaceae',
+  'Citharexylum': 'Verbenaceae',
+  'Cladrastis': 'Fabaceae',
+  'Clethra': 'Clethraceae',
+  'Cliftonia': 'Cyrillaceae',
+  'Clusia': 'Clusiaceae',
+  'Coccoloba': 'Polygonaceae',
+  'Coccothrinax': 'Arecaceae',
+  'Colubrina': 'Rhamnaceae',
+  'Condalia': 'Rhamnaceae',
+  'Conocarpus': 'Combretaceae',
+  'Cordia': 'Boraginaceae',
+  'Cornus': 'Cornaceae',
+  'Corylus': 'Betulaceae',
+  'Cotinus': 'Anacardiaceae',
+  'Cowania': 'Rosaceae',
+  'Crataegus': 'Rosaceae',
+  'Crossopetalum': 'Celastraceae',
+  'Cupania': 'Sapindaceae',
+  'Cupressus': 'Cupressaceae',
+  'Cyrilla': 'Cyrillaceae',
+  'Dalea': 'Fabaceae',
+  'Diospyros': 'Ebenaceae',
+  'Dipholis': 'Sapotaceae',
+  'Dodonaea': 'Sapindaceae',
+  'Drypetes': 'Euphorbiaceae',
+  'Ehretia': 'Boraginaceae',
+  'Elliottia': 'Ericaceae',
+  'Erythrina': 'Fabaceae',
+  'Esenbeckia': 'Rutaceae',
+  'Eugenia': 'Myrtaceae',
+  'Euonymus': 'Celastraceae',
+  'Exostema': 'Rubiaceae',
+  'Exothea': 'Sapindaceae',
+  'Eysenhardtia': 'Fabaceae',
+  'Fagus': 'Fagaceae',
+  'Ficus': 'Moraceae',
+  'Forestiera': 'Oleaceae',
+  'Franklinia': 'Theaceae',
+  'Fraxinus': 'Oleaceae',
+  'Fremontodendron': 'Malvaceae',
+  'Garrya': 'Garryaceae',
+  'Genipa': 'Rubiaceae',
+  'Gleditsia': 'Fabaceae',
+  'Gordonia': 'Theaceae',
+  'Guaiacum': 'Zygophyllaceae',
+  'Guapira': 'Nyctaginaceae',
+  'Guettarda': 'Rubiaceae',
+  'Gyminda': 'Celastraceae',
+  'Gymnanthes': 'Euphorbiaceae',
+  'Gymnocladus': 'Fabaceae',
+  'Halesia': 'Styracaceae',
+  'Hamamelis': 'Hamamelidaceae',
+  'Hamelia': 'Rubiaceae',
+  'Helietta': 'Rutaceae',
+  'Hippomane': 'Euphorbiaceae',
+  'Holacantha': 'Simaroubaceae',
+  'Hypelate': 'Sapindaceae',
+  'Ilex': 'Aquifoliaceae',
+  'Illicium': 'Schisandraceae',
+  'Jacquinia': 'Primulaceae',
+  'Juglans': 'Juglandaceae',
+  'Juniperus': 'Cupressaceae',
+  'Kalmia': 'Ericaceae',
+  'Koeberlinia': 'Koeberliniaceae',
+  'Krugiodendron': 'Rhamnaceae',
+  'Laguncularia': 'Combretaceae',
+  'Larix': 'Pinaceae',
+  'Larrea': 'Zygophyllaceae',
+  'Leitneria': 'Leitneriaceae',
+  'Leucaena': 'Fabaceae',
+  'Libocedrus': 'Cupressaceae',
+  'Licaria': 'Lauraceae',
+  'Liquidambar': 'Hamamelidaceae',
+  'Liriodendron': 'Magnoliaceae',
+  'Lithocarpus': 'Fagaceae',
+  'Lyonia': 'Ericaceae',
+  'Lyonothamnus': 'Rosaceae',
+  'Lysiloma': 'Fabaceae',
+  'Maclura': 'Moraceae',
+  'Magnolia': 'Magnoliaceae',
+  'Malus': 'Rosaceae',
+  'Manilkara': 'Sapotaceae',
+  'Mastichodendron': 'Sapotaceae',
+  'Maytenus': 'Celastraceae',
+  'Metopium': 'Anacardiaceae',
+  'Morus': 'Moraceae',
+  'Myrcianthes': 'Myrtaceae',
+  'Myrica': 'Myricaceae',
+  'Nectandra': 'Lauraceae',
+  'Nemopanthus': 'Aquifoliaceae',
+  'Nolina': 'Asparagaceae',
+  'Nyssa': 'Cornaceae',
+  'Olneya': 'Fabaceae',
+  'Opuntia': 'Cactaceae',
+  'Osmanthus': 'Oleaceae',
+  'Ostrya': 'Betulaceae',
+  'Oxydendrum': 'Ericaceae',
+  'Parkinsonia': 'Fabaceae',
+  'Persea': 'Lauraceae',
+  'Photinia': 'Rosaceae',
+  'Picea': 'Pinaceae',
+  'Picramnia': 'Simaroubaceae',
+  'Pinckneya': 'Rubiaceae',
+  'Pinus': 'Pinaceae',
+  'Piscidia': 'Fabaceae',
+  'Pisonia': 'Nyctaginaceae',
+  'Pistacia': 'Anacardiaceae',
+  'Pithecellobium': 'Fabaceae',
+  'Planera': 'Ulmaceae',
+  'Platanus': 'Platanaceae',
+  'Populus': 'Salicaceae',
+  'Prosopis': 'Fabaceae',
+  'Prunus': 'Rosaceae',
+  'Pseudophoenix': 'Arecaceae',
+  'Pseudotsuga': 'Pinaceae',
+  'Psidium': 'Myrtaceae',
+  'Ptelea': 'Rutaceae',
+  'Quercus': 'Fagaceae',
+  'Rapanea': 'Primulaceae',
+  'Reynosia': 'Rhamnaceae',
+  'Rhamnus': 'Rhamnaceae',
+  'Rhizophora': 'Rhizophoraceae',
+  'Rhododendron': 'Ericaceae',
+  'Rhus': 'Anacardiaceae',
+  'Robinia': 'Fabaceae',
+  'Roystonea': 'Arecaceae',
+  'Sabal': 'Arecaceae',
+  'Salix': 'Salicaceae',
+  'Sambucus': 'Adoxaceae',
+  'Sapindus': 'Sapindaceae',
+  'Sapium': 'Euphorbiaceae',
+  'Sassafras': 'Lauraceae',
+  'Savia': 'Euphorbiaceae',
+  'Schaefferia': 'Celastraceae',
+  'Schoepfia': 'Schoepfiaceae',
+  'Sequoia': 'Cupressaceae',
+  'Sequoiadendron': 'Cupressaceae',
+  'Serenoa': 'Arecaceae',
+  'Shepherdia': 'Elaeagnaceae',
+  'Simarouba': 'Simaroubaceae',
+  'Solanum': 'Solanaceae',
+  'Sophora': 'Fabaceae',
+  'Sorbus': 'Rosaceae',
+  'Staphylea': 'Staphyleaceae',
+  'Stewartia': 'Theaceae',
+  'Styrax': 'Styracaceae',
+  'Suriana': 'Surianaceae',
+  'Swietenia': 'Meliaceae',
+  'Symplocos': 'Styracaceae',
+  'Taxodium': 'Cupressaceae',
+  'Taxus': 'Taxaceae',
+  'Tetrazygia': 'Melastomataceae',
+  'Thrinax': 'Arecaceae',
+  'Thuja': 'Cupressaceae',
+  'Tilia': 'Malvaceae',
+  'Torreya': 'Cupressaceae',
+  'Toxicodendron': 'Anacardiaceae',
+  'Trema': 'Cannabaceae',
+  'Tsuga': 'Pinaceae',
+  'Ulmus': 'Ulmaceae',
+  'Umbellularia': 'Lauraceae',
+  'Ungnadia': 'Sapindaceae',
+  'Vaccinium': 'Ericaceae',
+  'Vauquelinia': 'Rosaceae',
+  'Viburnum': 'Adoxaceae',
+  'Washingtonia': 'Arecaceae',
+  'Ximenia': 'Olacaceae',
+  'Yucca': 'Asparagaceae',
+  'Zanthoxylum': 'Rutaceae'
+};
 
-  item.querySelector('input').addEventListener('change', (e) => {
-    if (e.target.checked) hiddenSpecies.delete(s.id);
-    else hiddenSpecies.add(s.id);
-    item.querySelector('.legend-label').classList.toggle('disabled', !e.target.checked);
+// Build legend grouped by family
+const familyGroups = {};
+species.forEach(s => {
+  const genus = s.latin.split(' ')[0];
+  const family = genusToFamily[genus] || 'Other';
+  if (!familyGroups[family]) familyGroups[family] = [];
+  familyGroups[family].push(s);
+});
+
+// Sort families alphabetically
+const sortedFamilies = Object.keys(familyGroups).sort();
+
+sortedFamilies.forEach(family => {
+  const familySpecies = familyGroups[family].sort((a, b) => a.name.localeCompare(b.name));
+
+  // Family group container
+  const group = document.createElement('div');
+  group.className = 'family-group';
+  group.dataset.family = family.toLowerCase();
+
+  // Family header
+  const header = document.createElement('div');
+  header.className = 'family-header';
+  header.innerHTML = `
+    <input type="checkbox" class="family-checkbox" id="family-${family}" checked title="Select/deselect all ${family}">
+    <span class="family-arrow">▶</span>
+    <span class="family-name">${family}</span>
+    <span class="family-count">${familySpecies.length}</span>
+  `;
+  group.appendChild(header);
+
+  // Species list
+  const speciesList = document.createElement('div');
+  speciesList.className = 'family-species';
+  group.appendChild(speciesList);
+
+  // Toggle expand/collapse on header click (but not checkbox)
+  header.addEventListener('click', (e) => {
+    if (e.target.classList.contains('family-checkbox')) return;
+    const arrow = header.querySelector('.family-arrow');
+    arrow.classList.toggle('open');
+    speciesList.classList.toggle('open');
+  });
+
+  // Family checkbox — select/deselect all species in family
+  const familyCb = header.querySelector('.family-checkbox');
+  familyCb.addEventListener('change', (e) => {
+    const checked = e.target.checked;
+    speciesList.querySelectorAll('.legend-item input').forEach(cb => {
+      cb.checked = checked;
+      const id = cb.id.replace('toggle-', '');
+      if (checked) hiddenSpecies.delete(id);
+      else hiddenSpecies.add(id);
+      cb.closest('.legend-item').querySelector('.legend-label').classList.toggle('disabled', !checked);
+    });
     updateFilters();
   });
 
-  item.querySelector('.zoom-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    zoomToSpecies(s.id, s.name);
+  // Keep family checkbox in sync when individual species are toggled
+  function syncFamilyCheckbox() {
+    const allCbs = speciesList.querySelectorAll('.legend-item input');
+    const allChecked = [...allCbs].every(cb => cb.checked);
+    const noneChecked = [...allCbs].every(cb => !cb.checked);
+    familyCb.checked = allChecked;
+    familyCb.indeterminate = !allChecked && !noneChecked;
+  }
+
+  // Add species items
+  familySpecies.forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.dataset.name = s.name.toLowerCase();
+    item.dataset.latin = s.latin.toLowerCase();
+    item.dataset.family = family.toLowerCase();
+    item.innerHTML = `
+      <input type="checkbox" id="toggle-${s.id}" checked>
+      <div class="legend-swatch" style="background:${s.color}"></div>
+      <label class="legend-label" for="toggle-${s.id}" title="${s.name} (${s.latin})">${s.name}</label>
+      <button class="zoom-btn" title="Zoom to ${s.name}" data-id="${s.id}">⌖</button>
+    `;
+    speciesList.appendChild(item);
+
+    item.querySelector('input').addEventListener('change', (e) => {
+      if (e.target.checked) hiddenSpecies.delete(s.id);
+      else hiddenSpecies.add(s.id);
+      item.querySelector('.legend-label').classList.toggle('disabled', !e.target.checked);
+      syncFamilyCheckbox();
+      updateFilters();
+    });
+
+    item.querySelector('.zoom-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      zoomToSpecies(s.id, s.name);
+    });
   });
+
+  legend.appendChild(group);
 });
 
 updateCount();
